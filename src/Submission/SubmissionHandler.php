@@ -44,6 +44,11 @@ final class SubmissionHandler {
 			exit;
 		}
 
+		$pll_lang = '';
+		if ( isset( $_POST['wpis_pll_lang'] ) ) {
+			$pll_lang = sanitize_key( wp_unslash( $_POST['wpis_pll_lang'] ) );
+		}
+
 		$ip = self::client_ip();
 		if ( ! self::check_rate_limit( $ip ) ) {
 			wp_die( esc_html__( 'Please wait before submitting again.', 'wpis-plugin' ), 429 );
@@ -93,6 +98,13 @@ final class SubmissionHandler {
 		}
 		update_post_meta( $post_id, '_wpis_source_platform', $platform );
 
+		if ( '' !== $pll_lang && function_exists( 'pll_languages_list' ) && function_exists( 'pll_set_post_language' ) ) {
+			$valid_slugs = pll_languages_list( array( 'fields' => 'slug' ) );
+			if ( is_array( $valid_slugs ) && in_array( $pll_lang, $valid_slugs, true ) ) {
+				pll_set_post_language( (int) $post_id, $pll_lang );
+			}
+		}
+
 		if ( $has_file && ! empty( $_FILES['wpis_screenshot']['tmp_name'] ) ) {
 			require_once ABSPATH . 'wp-admin/includes/file.php';
 			require_once ABSPATH . 'wp-admin/includes/media.php';
@@ -115,11 +127,6 @@ final class SubmissionHandler {
 		 */
 		do_action( 'wpis_quote_submitted', $post_id );
 
-		$lang_hint = '';
-		if ( isset( $_POST['wpis_pll_lang'] ) ) {
-			$lang_hint = sanitize_key( wp_unslash( $_POST['wpis_pll_lang'] ) );
-		}
-
 		/**
 		 * Redirect URL for the public thank-you page (token appended server-side).
 		 *
@@ -127,7 +134,7 @@ final class SubmissionHandler {
 		 * @param int    $post_id   New quote ID.
 		 * @param string $lang_hint Language slug from the form (Polylang), if any.
 		 */
-		$url = apply_filters( 'wpis_submission_redirect_url', home_url( '/submitted/' ), $post_id, $lang_hint );
+		$url = apply_filters( 'wpis_submission_redirect_url', home_url( '/submitted/' ), $post_id, $pll_lang );
 		wp_safe_redirect( add_query_arg( 't', rawurlencode( $token ), $url ) );
 		exit;
 	}
@@ -191,12 +198,43 @@ final class SubmissionHandler {
 	 * @return void
 	 */
 	public static function maybe_noindex_profile(): void {
-		if ( ! is_page() ) {
+		if ( ! self::is_profile_queried_page() ) {
 			return;
 		}
-		$slug = get_post_field( 'post_name', get_queried_object_id() );
-		if ( 'profile' === $slug || 'my-profile' === $slug ) {
-			header( 'X-Robots-Tag: noindex, nofollow', true );
+		header( 'X-Robots-Tag: noindex, nofollow', true );
+	}
+
+	/**
+	 * Whether the main query is a profile page (including Polylang translations).
+	 *
+	 * @return bool
+	 */
+	private static function is_profile_queried_page(): bool {
+		if ( ! is_page() ) {
+			return false;
 		}
+		$qid  = get_queried_object_id();
+		$slug = get_post_field( 'post_name', $qid );
+		if ( in_array( $slug, array( 'profile', 'my-profile' ), true ) ) {
+			return true;
+		}
+		$base = get_page_by_path( 'profile', OBJECT, 'page' );
+		if ( ! $base instanceof \WP_Post ) {
+			$base = get_page_by_path( 'my-profile', OBJECT, 'page' );
+		}
+		if ( ! $base instanceof \WP_Post ) {
+			return false;
+		}
+		if ( function_exists( 'pll_get_post_translations' ) ) {
+			$translations = pll_get_post_translations( (int) $base->ID );
+			if ( is_array( $translations ) ) {
+				foreach ( $translations as $tid ) {
+					if ( (int) $tid === (int) $qid ) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 }
