@@ -1,6 +1,6 @@
 <?php
 /**
- * Uninstall handler for WPIS Core.
+ * Uninstall handler for WordPress Is… (wpis-plugin).
  *
  * Runs when the plugin is deleted (not deactivated) via the WordPress admin.
  *

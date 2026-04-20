@@ -19,7 +19,7 @@ Each chantier below is designed as **one focused Cursor conversation**. Copy the
 ### Handoff inputs (all from this Claude conversation)
 - `wordpress-is-vision.md` — the spec
 - `wordpress-is-mockup.html` — the design reference (open it in a browser while working)
-- `wpis-core.zip` — v0.1.0 scaffold from the **`wpis-plugin`** repo (unzip into `wp-content/plugins/wpis-core/` as starting point, or extract contents into your fresh repo)
+- `wpis-plugin.zip` — v0.1.0 scaffold from the **`wpis-plugin`** repo (unzip into `wp-content/plugins/wpis-plugin/` as starting point, or extract contents into your fresh repo)
 
 ### Rules of engagement with Cursor
 - **One chantier, one branch, one PR.** Never mix concerns.
@@ -58,7 +58,7 @@ Each chantier below is designed as **one focused Cursor conversation**. Copy the
 ### Prompt to paste into Cursor
 
 ```
-You are helping me build the foundations of a WordPress plugin whose directory and text domain are **`wpis-core`**, developed in the **`wpis-plugin`** Git repository.
+You are helping me build the foundations of a WordPress plugin whose directory and text domain are **`wpis-plugin`** (GitHub **`jaz-on/wpis-plugin`**).
 
 Context: read the vision doc at the root of this workspace (wordpress-is-vision.md) for the full picture. Focus specifically on the "Database structure" and "Submission flow" sections.
 
@@ -124,7 +124,7 @@ Commit after: CPT, taxonomies, meta, admin columns, tests. Open a PR from a feat
 ### Prompt to paste into Cursor
 
 ```
-We're extending the **`wpis-core`** plugin package (repo **`wpis-plugin`**).
+We're extending the **`wpis-plugin`** WordPress package.
 
 Read wordpress-is-vision.md sections "Deduplication and merge" and "Multilingual model (with Polylang)" carefully — they define the behavior precisely.
 
@@ -400,7 +400,7 @@ Goal for this chantier:
    - Submit button posts to admin-post.php with action=wpis_submit_quote
    - Nonce field with wp_nonce_field()
 
-2. In the **`wpis-plugin`** codebase (`wpis-core/` plugin folder), register the admin-post handler:
+2. In this codebase, register the admin-post handler:
    - admin_post_wpis_submit_quote AND admin_post_nopriv_wpis_submit_quote
    - Validation:
      - Nonce valid
@@ -463,7 +463,7 @@ Approach:
 
 Goal for this chantier:
 
-1. In the **`wpis-plugin`** repo (`wpis-core` plugin):
+1. In the **`jaz-on/wpis-plugin`** repository:
    - Function `wpis_get_user_stats( int $user_id ): array` returning:
      - total_submitted, validated, pending, rejected, merged, acceptance_rate (percentage)
    - Register REST endpoint /wp-json/wpis/v1/my-stats returning the current user's stats (auth required)
@@ -566,7 +566,7 @@ Wire up MCP abilities for WPIS operations.
 
 Prerequisites:
 - MCP Adapter plugin active
-- **wpis-core** v0.1.0 (from **`wpis-plugin`**) already registers a dedicated MCP server at /wp-json/wpis/v1/wpis
+- **wpis-plugin** v0.1.0 already registers a dedicated MCP server at /wp-json/wpis/v1/wpis
 - Chantiers 1-2 give us the data model and merge logic to expose
 
 Goal for this chantier:
@@ -598,7 +598,7 @@ Goal for this chantier:
      - Permissions: read (public)
      - Output: { total_quotes, by_status: {...}, by_sentiment: {...}, by_claim_type: {...}, by_language: {...} }
 
-2. Update the MCP server registration in wpis-core.php to expose these abilities (add them to the $abilities filter callback).
+2. Update the MCP server registration in wpis-plugin.php to expose these abilities (add them to the $abilities filter callback).
 
 3. Tests: for each ability, test that it's registered, has correct permission callback, and that execution returns expected output shape.
 
@@ -699,21 +699,21 @@ Create `.cursor/rules/wpis.md` in each repo:
 - WordPress 6.9.4
 - PHP 8.0+ syntax, 7.4 minimum compatibility
 - Block theme (FSE), Polylang, MCP Adapter
-- Custom plugin **`wpis-core`** in **`wpis-plugin`** repo (this repo OR sibling)
+- Custom plugin **`wpis-plugin`** in **`jaz-on/wpis-plugin`** (this repo OR sibling)
 
 ## Conventions
 - PSR-4 autoload, namespace WPIS\Core\*
 - WordPress coding standards for hooks, filenames, function names
 - Meta field prefix: _wpis_
 - Action/filter prefix: wpis_
-- Text domain: wpis-core (or wpis-theme per repo)
+- Text domain: wpis-plugin (or wpis-theme per repo)
 - No Oxford commas in English copy
 - French uses proper French typographic rules (we have a plugin for that: French Typo)
 
 ## Multilingual
 - Polylang, peer translation model (no master)
 - English is the matching pivot for deduplication
-- Some meta copied across translations, some not — see wpis-core Polylang integration
+- Some meta copied across translations, some not — see wpis-plugin Polylang integration
 
 ## Testing
 - PHPUnit for plugin code

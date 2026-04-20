@@ -4,7 +4,7 @@
 
 **Last updated:** April 2026
 **Project lead:** Jason Rouet (Jasonnade, `jaz_on`)
-**Repository target:** `github.com/jaz-on/wpis-plugin` (plugin codebase; deploy folder on site remains `wpis-core/`)
+**Repository target:** `github.com/jaz-on/wpis-plugin` (plugin codebase; deploy folder on site remains `wpis-plugin/`)
 **Site:** `wpis.jasonrouet.com` (subdomain, will migrate later)
 
 ---
@@ -55,7 +55,7 @@ Saying "WordPress isn't for me" is fine. Saying "WordPress is bad" without conte
 - **Mockup** designed and iterated (11 screens, mobile-first, dark mode, dynamic filters + sort + infinite load, accessibility baseline)
 - **WordPress install**: vanilla 6.9.4 on `wpis.jasonrouet.com`
 - **MCP Adapter** plugin installed and active
-- **`wpis-core` plugin v0.1.0** scaffolded — registers a dedicated MCP server exposing 2 core abilities
+- **`wpis-plugin` plugin v0.1.0** scaffolded — registers a dedicated MCP server exposing 2 core abilities
 - **Stack choices** validated (see below)
 
 ### What's pending
@@ -92,7 +92,7 @@ Building the theme, plugin, and content through Claude web chat is too constrain
 
 ### Plugins (custom)
 
-- **`wpis-core`** — CPT, taxonomies, meta fields, MCP server, content-level logic (deduplication helpers, counter sync)
+- **`wpis-plugin`** — CPT, taxonomies, meta fields, MCP server, content-level logic (deduplication helpers, counter sync)
 - **Bot plugins (later)** — `wpis-bot-mastodon`, `wpis-bot-bluesky`, each autonomous
 
 ### Plugins (third-party)
@@ -268,7 +268,7 @@ No separate "submission" entity. Everything is a quote in a given state.
 ## Tooling strategy
 
 **Cursor** — primary build tool for all code work:
-- Plugin development (`wpis-core`, later bot plugins)
+- Plugin development (`wpis-plugin`, later bot plugins)
 - Block theme (FSE, custom templates and patterns)
 - Tests, linting, deployment scripts
 - Git workflow, pushes to GitHub
@@ -295,7 +295,7 @@ No separate "submission" entity. Everything is a quote in a given state.
 
 1. **`wordpress-is-vision.md`** — this document
 2. **`wordpress-is-mockup.html`** — interactive low-fi mockup, 11 screens, validated
-3. **`wpis-core.zip`** (from **`wpis-plugin`** repo) — v0.1.0 plugin scaffold, MCP server registration (will be extended in Cursor)
+3. **`wpis-plugin.zip`** (from **`wpis-plugin`** repo) — v0.1.0 plugin scaffold, MCP server registration (will be extended in Cursor)
 4. **`wordpress-is-cursor-plan.md`** — staged roadmap for the build phase in Cursor
 
 These four files are the handoff package. Cursor takes over from there.

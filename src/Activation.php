@@ -15,9 +15,9 @@ use WPIS\Core\Taxonomies\SentimentTaxonomy;
  */
 final class Activation {
 
-	public const SCHEMA_VERSION = '0.5.0';
+	public const SCHEMA_VERSION = '0.6.0';
 
-	private const OPTION_KEY = 'wpis_core_schema_version';
+	private const OPTION_KEY = 'wpis_plugin_schema_version';
 
 	/**
 	 * Run on plugin activation.
@@ -43,10 +43,10 @@ final class Activation {
 	 */
 	public static function seed_default_terms(): void {
 		$sentiments = array(
-			'positive' => __( 'Positive', 'wpis-core' ),
-			'negative' => __( 'Negative', 'wpis-core' ),
-			'neutral'  => __( 'Neutral', 'wpis-core' ),
-			'mixed'    => __( 'Mixed', 'wpis-core' ),
+			'positive' => __( 'Positive', 'wpis-plugin' ),
+			'negative' => __( 'Negative', 'wpis-plugin' ),
+			'neutral'  => __( 'Neutral', 'wpis-plugin' ),
+			'mixed'    => __( 'Mixed', 'wpis-plugin' ),
 		);
 
 		foreach ( $sentiments as $slug => $name ) {
@@ -56,14 +56,14 @@ final class Activation {
 		}
 
 		$claims = array(
-			'performance'        => __( 'Performance', 'wpis-core' ),
-			'security'           => __( 'Security', 'wpis-core' ),
-			'ease-of-use'        => __( 'Ease of use', 'wpis-core' ),
-			'community'          => __( 'Community', 'wpis-core' ),
-			'ecosystem'          => __( 'Ecosystem', 'wpis-core' ),
-			'business-viability' => __( 'Business viability', 'wpis-core' ),
-			'accessibility'      => __( 'Accessibility', 'wpis-core' ),
-			'modernity'          => __( 'Modernity', 'wpis-core' ),
+			'performance'        => __( 'Performance', 'wpis-plugin' ),
+			'security'           => __( 'Security', 'wpis-plugin' ),
+			'ease-of-use'        => __( 'Ease of use', 'wpis-plugin' ),
+			'community'          => __( 'Community', 'wpis-plugin' ),
+			'ecosystem'          => __( 'Ecosystem', 'wpis-plugin' ),
+			'business-viability' => __( 'Business viability', 'wpis-plugin' ),
+			'accessibility'      => __( 'Accessibility', 'wpis-plugin' ),
+			'modernity'          => __( 'Modernity', 'wpis-plugin' ),
 		);
 
 		foreach ( $claims as $slug => $name ) {

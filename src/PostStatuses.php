@@ -21,7 +21,7 @@ final class PostStatuses {
 		register_post_status(
 			'rejected',
 			array(
-				'label'                     => _x( 'Rejected', 'post status', 'wpis-core' ),
+				'label'                     => _x( 'Rejected', 'post status', 'wpis-plugin' ),
 				'public'                    => false,
 				'exclude_from_search'       => true,
 				'show_in_admin_all_list'    => true,
@@ -30,7 +30,7 @@ final class PostStatuses {
 				'label_count'               => _n_noop(
 					'Rejected <span class="count">(%s)</span>',
 					'Rejected <span class="count">(%s)</span>',
-					'wpis-core'
+					'wpis-plugin'
 				),
 			)
 		);
@@ -38,7 +38,7 @@ final class PostStatuses {
 		register_post_status(
 			'merged',
 			array(
-				'label'                     => _x( 'Merged', 'post status', 'wpis-core' ),
+				'label'                     => _x( 'Merged', 'post status', 'wpis-plugin' ),
 				'public'                    => false,
 				'exclude_from_search'       => true,
 				'show_in_admin_all_list'    => true,
@@ -47,7 +47,7 @@ final class PostStatuses {
 				'label_count'               => _n_noop(
 					'Merged <span class="count">(%s)</span>',
 					'Merged <span class="count">(%s)</span>',
-					'wpis-core'
+					'wpis-plugin'
 				),
 			)
 		);

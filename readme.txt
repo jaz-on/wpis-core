@@ -4,7 +4,7 @@ Tags: mcp, abilities-api, ai, wordpress-is, quotes
 Requires at least: 6.9
 Tested up to: 6.9
 Requires PHP: 8.3
-Stable tag: 0.2.0
+Stable tag: 0.6.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -31,7 +31,7 @@ Features include:
 
 == Installation ==
 
-1. From the **`jaz-on/wpis-plugin`** repo, deploy the plugin directory as **`wpis-core`** under `/wp-content/plugins/` (folder name must match the plugin bootstrap).
+1. From the **`jaz-on/wpis-plugin`** repo, deploy the plugin directory as **`wpis-plugin`** under `/wp-content/plugins/` (folder name must match the plugin bootstrap).
 2. Activate the plugin through the "Plugins" menu in WordPress
 3. Visit Settings > Permalinks and save once if archives 404
 4. (Optional) Ensure MCP Adapter is active for MCP discovery
@@ -43,6 +43,10 @@ Features include:
 * `composer test` — PHPUnit (requires `WP_TESTS_DIR`; install WordPress test lib via `bin/install-wp-tests.sh` from the WP developer docs or wp-cli scaffold)
 
 == Changelog ==
+
+= 0.6.0 =
+* Align WordPress slug with repo: folder `wpis-plugin`, bootstrap `wpis-plugin.php`, text domain `wpis-plugin`
+* Schema option migrated from `wpis_core_schema_version` to `wpis_plugin_schema_version` on upgrade
 
 = 0.2.0 =
 * Chantier 1: `quote` CPT, taxonomies, meta, custom statuses, admin list enhancements

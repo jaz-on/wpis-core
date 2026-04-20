@@ -9,7 +9,7 @@
 	convertWarningsToExceptions="true"
 	>
 	<testsuites>
-		<testsuite name="wpis-core">
+		<testsuite name="wpis-plugin">
 			<directory suffix="Test.php">./tests</directory>
 		</testsuite>
 	</testsuites>

@@ -10,10 +10,10 @@ Core plugin for the [WordPress Is…](https://wpis.jasonrouet.com) project: the 
 
 ## Installation
 
-1. Clone or copy this repository into your WordPress plugins directory **as `wpis-core`** (the folder name must match the main plugin file `wpis-core.php`).
+1. Clone or copy this repository into your WordPress plugins directory **as `wpis-plugin`** (the folder name must match the main plugin file `wpis-plugin.php`).
 
    ```text
-   wp-content/plugins/wpis-core/
+   wp-content/plugins/wpis-plugin/
    ```
 
 2. From that directory, install PHP dependencies:
@@ -28,12 +28,12 @@ Core plugin for the [WordPress Is…](https://wpis.jasonrouet.com) project: the 
 
 ## Updates with Git Updater
 
-This plugin declares a [Git Updater](https://git-updater.com/knowledge-base/required-headers/) source in `wpis-core.php`:
+This plugin declares a [Git Updater](https://git-updater.com/knowledge-base/required-headers/) source in `wpis-plugin.php`:
 
 - `GitHub Plugin URI: https://github.com/jaz-on/wpis-plugin`
 - `Primary Branch: main` (required because the default branch is `main`, not `master`)
 
-Bump the **`Version:`** header in `wpis-core.php` when you ship changes you want sites to pull; Git Updater compares that to the latest commit on `main` (or to releases, if you configure release assets).
+Bump the **`Version:`** header in `wpis-plugin.php` when you ship changes you want sites to pull; Git Updater compares that to the latest commit on `main` (or to releases, if you configure release assets).
 
 ## Development
 

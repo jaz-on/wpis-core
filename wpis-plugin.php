@@ -2,12 +2,12 @@
 /**
  * Plugin Name: WordPress Is… Core
  * Description: Core plugin for the "WordPress Is…" project — quotes, taxonomies, MCP integration.
- * Version: 0.5.0
+ * Version: 0.6.0
  * Author: Jasonnade
  * Author URI: https://jasonrouet.com
  * License: GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain: wpis-core
+ * Text Domain: wpis-plugin
  * Requires at least: 6.9
  * Requires PHP: 8.3
  * GitHub Plugin URI: https://github.com/jaz-on/wpis-plugin
@@ -34,7 +34,7 @@ if ( ! function_exists( 'wp_register_ability' ) ) {
 		'admin_notices',
 		static function () {
 			echo '<div class="notice notice-error"><p>';
-			esc_html_e( 'WPIS Core requires the WordPress Abilities API (WordPress 6.9+). Please upgrade WordPress.', 'wpis-core' );
+			esc_html_e( 'WPIS Core requires the WordPress Abilities API (WordPress 6.9+). Please upgrade WordPress.', 'wpis-plugin' );
 			echo '</p></div>';
 		}
 	);
@@ -65,7 +65,7 @@ add_action(
 				'admin_notices',
 				static function () {
 					echo '<div class="notice notice-warning"><p>';
-					esc_html_e( 'WPIS Core: MCP Adapter plugin is not active. Abilities will still work but will not be exposed to MCP clients.', 'wpis-core' );
+					esc_html_e( 'WPIS Core: MCP Adapter plugin is not active. Abilities will still work but will not be exposed to MCP clients.', 'wpis-plugin' );
 					echo '</p></div>';
 				}
 			);
@@ -111,8 +111,8 @@ add_action(
 			'wpis',
 			'v1',
 			'wpis',
-			__( 'WordPress Is… MCP', 'wpis-core' ),
-			__( 'MCP server for the WordPress Is… project. Exposes a curated set of abilities.', 'wpis-core' ),
+			__( 'WordPress Is… MCP', 'wpis-plugin' ),
+			__( 'MCP server for the WordPress Is… project. Exposes a curated set of abilities.', 'wpis-plugin' ),
 			'v1.0.0',
 			array(
 				\WP\MCP\Transport\Http\RestTransport::class,

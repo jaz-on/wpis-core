@@ -40,9 +40,9 @@ final class QuoteAdminColumns {
 			$new[ $key ] = $label;
 			if ( 'title' === $key ) {
 				// Sentiment & claim type use core taxonomy columns (show_admin_column on each taxonomy).
-				$new['wpis_counter']           = __( 'Counter', 'wpis-core' );
-				$new['wpis_source_platform']   = __( 'Platform', 'wpis-core' );
-				$new['wpis_submission_source'] = __( 'Submission', 'wpis-core' );
+				$new['wpis_counter']           = __( 'Counter', 'wpis-plugin' );
+				$new['wpis_source_platform']   = __( 'Platform', 'wpis-plugin' );
+				$new['wpis_submission_source'] = __( 'Submission', 'wpis-plugin' );
 			}
 		}
 		return $new;
@@ -120,7 +120,7 @@ final class QuoteAdminColumns {
 		$current = isset( $_GET['wpis_submission_source'] ) ? sanitize_key( wp_unslash( $_GET['wpis_submission_source'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		?>
 		<select name="wpis_submission_source" id="wpis_submission_source">
-			<option value=""><?php esc_html_e( 'All submission sources', 'wpis-core' ); ?></option>
+			<option value=""><?php esc_html_e( 'All submission sources', 'wpis-plugin' ); ?></option>
 			<?php foreach ( Constants::SUBMISSION_SOURCES as $src ) : ?>
 				<option value="<?php echo esc_attr( $src ); ?>" <?php selected( $current, $src ); ?>>
 					<?php echo esc_html( $src ); ?>

@@ -18,14 +18,14 @@ Single source of truth for the build phase. Product vision: `wordpress-is-vision
 ### Target site: `wpis.jasonrouet.com`
 
 1. Production runs **WordPress 6.9.4**, **PHP 8.3.x**, and the stack from the vision (Polylang, MCP Adapter, etc.).
-2. Deploy the plugin codebase (GitHub **`jaz-on/wpis-plugin`**) into **`wp-content/plugins/wpis-core/`**, and **`wpis-theme`** into `wp-content/themes/wpis-theme/`, per your hosting workflow (SFTP, Git pull, CI—document the exact steps when stable).
+2. Deploy the plugin codebase (GitHub **`jaz-on/wpis-plugin`**) into **`wp-content/plugins/wpis-plugin/`**, and **`wpis-theme`** into `wp-content/themes/wpis-theme/`, per your hosting workflow (SFTP, Git pull, CI—document the exact steps when stable).
 3. Required plugins on that install: **Polylang** (free), **MCP Adapter**, **Action Scheduler** when needed for jobs.
 4. Permalinks: **Post name** (or whatever Polylang’s `/en/` `/fr/` setup needs).
 
 ### Git / repo layout
 
 - **Decided:** **Two separate GitHub repos** — **`jaz-on/wpis-plugin`** (plugin) and **`jaz-on/wpis-theme`**. Clone both into one Cursor workspace (sibling folders) if you want both open at once.
-- **Naming:** Repo **`wpis-plugin`** / **`wpis-theme`**. On the server, the plugin still lives in **`wp-content/plugins/wpis-core/`** with text domain **`wpis-core`** and main file **`wpis-core.php`** (unchanged package IDs).
+- **Naming:** Repo **`wpis-plugin`** / **`wpis-theme`**. On the server, the plugin lives in **`wp-content/plugins/wpis-plugin/`** with text domain **`wpis-plugin`** and main file **`wpis-plugin.php`**.
 - Initialize each repo with `main`, add `.gitignore` (vendor/, node_modules/, .env).
 
 ### One-time setup (plugin)
@@ -43,7 +43,7 @@ When Chantier 3 adds tooling:
 
 ### Activate plugin (on `wpis.jasonrouet.com`)
 
-- Upload or deploy the plugin folder to `wp-content/plugins/wpis-core/`.
+- Upload or deploy the plugin folder to `wp-content/plugins/wpis-plugin/`.
 - In **Plugins**, activate **WordPress Is… Core**.
 
 ### Verification
@@ -67,9 +67,9 @@ When Chantier 3 adds tooling:
 - **Goal:** CPT `quote`, taxonomies, meta, admin list, custom statuses, Composer PSR-4, baseline tests.
 - **Dependencies:** none
 - **Complexity:** L
-- **Deliverables:** Registration complete; terms seeded on activation; admin columns/filters; PHPUnit green; PHPCS clean; no regressions to existing MCP server block in `wpis-core.php` (extend via new files; avoid breaking `mcp_adapter_init`).
+- **Deliverables:** Registration complete; terms seeded on activation; admin columns/filters; PHPUnit green; PHPCS clean; no regressions to existing MCP server block in `wpis-plugin.php` (extend via new files; avoid breaking `mcp_adapter_init`).
 - **Decided:** Register `_wpis_opposing_quote_id` and `_wpis_editorial_note` in **Chantier 1** with the rest of the meta (REST, sanitization, uninstall story)—Chantier 4 only consumes them.
-- **Adapted prompt:** Use original Chantier 1 prompt with these changes: (1) Include meta `_wpis_opposing_quote_id` (int) and `_wpis_editorial_note` (string). (2) Replace “Brain Monkey, or just WP Mock” with **PHPUnit using WordPress test bootstrap** for registration tests; add Brain Monkey only if writing pure isolated units. (3) Clarify `register_post_status` for `rejected` and `merged` must work with CPT `quote` capabilities. (4) Keep MCP registration in `wpis-core.php` unchanged—load new code via `require` from `src/` bootstrap.
+- **Adapted prompt:** Use original Chantier 1 prompt with these changes: (1) Include meta `_wpis_opposing_quote_id` (int) and `_wpis_editorial_note` (string). (2) Replace “Brain Monkey, or just WP Mock” with **PHPUnit using WordPress test bootstrap** for registration tests; add Brain Monkey only if writing pure isolated units. (3) Clarify `register_post_status` for `rejected` and `merged` must work with CPT `quote` capabilities. (4) Keep MCP registration in `wpis-plugin.php` unchanged—load new code via `require` from `src/` bootstrap.
 - **Done when:** Checklist in original deliverable + `composer test` + activates cleanly on **`wpis.jasonrouet.com`** (or next deploy there).
 
 ### Chantier 2 — Dedup, merge, counter sync
@@ -233,7 +233,7 @@ Per-translation divergence for `_wpis_rejection_reason` / `_wpis_moderated_at` i
 | Environment | **No local WordPress.** Build and test by deploying to **`wpis.jasonrouet.com`**. |
 | `Requires PHP` | Match server (e.g. **8.3**). Not targeting WordPress.org; no need for a low minimum. |
 | Privacy Policy | **Not required** before launch or before the submission form; owner remains Jason Rouet when you add it. |
-| Repo layout | GitHub **`wpis-plugin`** + **`wpis-theme`**; WordPress plugin directory on disk stays **`wpis-core`**. Clone both into one workspace if useful. |
+| Repo layout | GitHub **`wpis-plugin`** + **`wpis-theme`**; WordPress plugin directory on disk is **`wpis-plugin`**. Clone both into one workspace if useful. |
 | Opposing / editorial meta | Register in **Chantier 1** (see chantier block). |
 | Production PHP | **8.3.x** on host. |
 | Submitted page URL | **Opaque token** (HMAC or random meta), not bare `?p=ID` — see Chantier 6. |

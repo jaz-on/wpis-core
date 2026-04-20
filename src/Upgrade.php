@@ -12,7 +12,7 @@ namespace WPIS\Core;
  */
 final class Upgrade {
 
-	private const OPTION_KEY = 'wpis_core_schema_version';
+	private const OPTION_KEY = 'wpis_plugin_schema_version';
 
 	/**
 	 * Hook upgrade checks after CPT/taxonomies register.
@@ -29,6 +29,12 @@ final class Upgrade {
 	 * @return void
 	 */
 	public static function maybe_upgrade(): void {
+		$legacy = (string) get_option( 'wpis_core_schema_version', '' );
+		if ( '' !== $legacy && '' === (string) get_option( self::OPTION_KEY, '' ) ) {
+			update_option( self::OPTION_KEY, $legacy, true );
+			delete_option( 'wpis_core_schema_version' );
+		}
+
 		$current = (string) get_option( self::OPTION_KEY, '' );
 		if ( version_compare( $current, Activation::SCHEMA_VERSION, '>=' ) ) {
 			return;

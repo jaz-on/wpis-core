@@ -52,8 +52,8 @@ final class AbilitiesRegistry {
 		wp_register_ability(
 			'wpis/quote-create',
 			array(
-				'label'               => __( 'Create quote', 'wpis-core' ),
-				'description'         => __( 'Create a new quote submission.', 'wpis-core' ),
+				'label'               => __( 'Create quote', 'wpis-plugin' ),
+				'description'         => __( 'Create a new quote submission.', 'wpis-plugin' ),
 				'category'            => 'wpis',
 				'input_schema'        => array(
 					'type'       => 'object',
@@ -74,8 +74,8 @@ final class AbilitiesRegistry {
 		wp_register_ability(
 			'wpis/quote-update',
 			array(
-				'label'               => __( 'Update quote', 'wpis-core' ),
-				'description'         => __( 'Update quote content, status, or terms.', 'wpis-core' ),
+				'label'               => __( 'Update quote', 'wpis-plugin' ),
+				'description'         => __( 'Update quote content, status, or terms.', 'wpis-plugin' ),
 				'category'            => 'wpis',
 				'input_schema'        => array(
 					'type'       => 'object',
@@ -96,8 +96,8 @@ final class AbilitiesRegistry {
 		wp_register_ability(
 			'wpis/quote-merge',
 			array(
-				'label'               => __( 'Merge quotes', 'wpis-core' ),
-				'description'         => __( 'Merge a source quote into a target quote.', 'wpis-core' ),
+				'label'               => __( 'Merge quotes', 'wpis-plugin' ),
+				'description'         => __( 'Merge a source quote into a target quote.', 'wpis-plugin' ),
 				'category'            => 'wpis',
 				'input_schema'        => array(
 					'type'       => 'object',
@@ -115,8 +115,8 @@ final class AbilitiesRegistry {
 		wp_register_ability(
 			'wpis/quote-find-duplicates',
 			array(
-				'label'               => __( 'Find duplicate quotes', 'wpis-core' ),
-				'description'         => __( 'Rank similar existing quotes by string similarity.', 'wpis-core' ),
+				'label'               => __( 'Find duplicate quotes', 'wpis-plugin' ),
+				'description'         => __( 'Rank similar existing quotes by string similarity.', 'wpis-plugin' ),
 				'category'            => 'wpis',
 				'input_schema'        => array(
 					'type'       => 'object',
@@ -135,8 +135,8 @@ final class AbilitiesRegistry {
 		wp_register_ability(
 			'wpis/stats-summary',
 			array(
-				'label'               => __( 'WPIS stats summary', 'wpis-core' ),
-				'description'         => __( 'Aggregate quote counts by status, sentiment, and claim type.', 'wpis-core' ),
+				'label'               => __( 'WPIS stats summary', 'wpis-plugin' ),
+				'description'         => __( 'Aggregate quote counts by status, sentiment, and claim type.', 'wpis-plugin' ),
 				'category'            => 'wpis',
 				'input_schema'        => array(
 					'type' => 'object',
@@ -184,7 +184,7 @@ final class AbilitiesRegistry {
 	public static function ability_create( array $input ) {
 		$text = isset( $input['text'] ) ? (string) $input['text'] : '';
 		if ( '' === trim( $text ) ) {
-			return new \WP_Error( 'wpis_empty', __( 'Text required.', 'wpis-core' ) );
+			return new \WP_Error( 'wpis_empty', __( 'Text required.', 'wpis-plugin' ) );
 		}
 		$status = isset( $input['status'] ) ? (string) $input['status'] : 'pending';
 		if ( ! in_array( $status, array( 'pending', 'publish', 'draft' ), true ) ) {
@@ -219,7 +219,7 @@ final class AbilitiesRegistry {
 	public static function ability_update( array $input ) {
 		$id = isset( $input['quote_id'] ) ? (int) $input['quote_id'] : 0;
 		if ( $id <= 0 ) {
-			return new \WP_Error( 'wpis_bad_id', __( 'Bad quote ID.', 'wpis-core' ) );
+			return new \WP_Error( 'wpis_bad_id', __( 'Bad quote ID.', 'wpis-plugin' ) );
 		}
 		$fields = array();
 		if ( isset( $input['text'] ) ) {
