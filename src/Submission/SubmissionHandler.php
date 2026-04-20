@@ -115,7 +115,19 @@ final class SubmissionHandler {
 		 */
 		do_action( 'wpis_quote_submitted', $post_id );
 
-		$url = apply_filters( 'wpis_submission_redirect_url', home_url( '/submitted/' ), $post_id );
+		$lang_hint = '';
+		if ( isset( $_POST['wpis_pll_lang'] ) ) {
+			$lang_hint = sanitize_key( wp_unslash( $_POST['wpis_pll_lang'] ) );
+		}
+
+		/**
+		 * Redirect URL for the public thank-you page (token appended server-side).
+		 *
+		 * @param string $url        Default URL.
+		 * @param int    $post_id   New quote ID.
+		 * @param string $lang_hint Language slug from the form (Polylang), if any.
+		 */
+		$url = apply_filters( 'wpis_submission_redirect_url', home_url( '/submitted/' ), $post_id, $lang_hint );
 		wp_safe_redirect( add_query_arg( 't', rawurlencode( $token ), $url ) );
 		exit;
 	}
