@@ -27,18 +27,19 @@ if ( is_readable( __DIR__ . '/vendor/autoload.php' ) ) {
 require_once __DIR__ . '/inc/functions-api.php';
 
 /**
- * Bail out early if WordPress is older than 6.9 (no Abilities API).
+ * Recommend WordPress 6.9+ for Abilities API; still load CPT, taxonomies, and submission
+ * even if abilities are unavailable (avoid bailing before Plugin registers).
  */
-if ( ! function_exists( 'wp_register_ability' ) ) {
+global $wp_version;
+if ( version_compare( (string) $wp_version, '6.9', '<' ) ) {
 	add_action(
 		'admin_notices',
 		static function () {
-			echo '<div class="notice notice-error"><p>';
-			esc_html_e( 'WPIS Core requires the WordPress Abilities API (WordPress 6.9+). Please upgrade WordPress.', 'wpis-plugin' );
+			echo '<div class="notice notice-warning"><p>';
+			esc_html_e( 'WPIS Core targets WordPress 6.9+ for the Abilities API. Quotes and moderation features still load; upgrade WordPress for full MCP/abilities support.', 'wpis-plugin' );
 			echo '</p></div>';
 		}
 	);
-	return;
 }
 
 register_activation_hook(

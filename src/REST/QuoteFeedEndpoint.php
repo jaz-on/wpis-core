@@ -7,6 +7,7 @@
 
 namespace WPIS\Core\REST;
 
+use WPIS\Core\Constants;
 use WPIS\Core\PostTypes\QuotePostType;
 
 /**
@@ -55,6 +56,9 @@ final class QuoteFeedEndpoint {
 						'default' => '',
 					),
 					'claim_type' => array(
+						'default' => '',
+					),
+					'platform'   => array(
 						'default' => '',
 					),
 					'lang'       => array(
@@ -123,6 +127,16 @@ final class QuoteFeedEndpoint {
 			$args['tax_query'] = $tax_query;
 		}
 
+		$plat = sanitize_key( (string) $request->get_param( 'platform' ) );
+		if ( '' !== $plat && in_array( $plat, Constants::SOURCE_PLATFORMS, true ) ) {
+			$args['meta_query'] = array(
+				array(
+					'key'   => '_wpis_source_platform',
+					'value' => $plat,
+				),
+			);
+		}
+
 		$lang = sanitize_key( (string) $request->get_param( 'lang' ) );
 		if ( '' !== $lang && function_exists( 'pll_languages_list' ) ) {
 			$list = pll_languages_list( array( 'fields' => 'slug' ) );
@@ -156,45 +170,44 @@ final class QuoteFeedEndpoint {
 	 * @return string
 	 */
 	private static function render_card( \WP_Post $post ): string {
-		$title   = get_the_title( $post );
 		$link    = get_permalink( $post );
-		$excerpt = wp_trim_words( wp_strip_all_tags( (string) $post->post_content ), 35, '…' );
+		$body    = wp_strip_all_tags( (string) $post->post_content );
+		$excerpt = wp_trim_words( $body, 40, '…' );
 		$read    = __( 'Read', 'wpis-plugin' );
 
-		$ct_line = self::term_line( $post, 'claim_type' );
-		$st_line = self::term_line( $post, 'sentiment' );
-		$meta    = array_filter( array( $ct_line, $st_line ) );
-		$meta_s  = ! empty( $meta ) ? implode( ' · ', $meta ) : '';
-
-		$inner  = '<h3 class="wp-block-post-title has-large-font-size"><a href="' . esc_url( $link ) . '">' . esc_html( $title ) . '</a></h3>';
-		$inner .= '<div class="wp-block-post-excerpt has-small-font-size"><p>' . esc_html( $excerpt ) . ' <a href="' . esc_url( $link ) . '">' . esc_html( $read ) . '</a></p></div>';
-		if ( '' !== $meta_s ) {
-			$inner .= '<div class="wp-block-group has-small-font-size" style="display:flex;flex-wrap:wrap;gap:0.5rem">' . $meta_s . '</div>';
-		}
-
-		return '<div class="wp-block-group wpis-quote-card" style="border-bottom-color:var(--wp--preset--color--ink);border-bottom-width:1px;border-bottom-style:solid;padding-top:1.25rem;padding-bottom:1.25rem">' . $inner . '</div>';
-	}
-
-	/**
-	 * @param \WP_Post $post Post.
-	 * @param string   $tax Taxonomy slug.
-	 * @return string Linked term names or empty.
-	 */
-	private static function term_line( \WP_Post $post, string $tax ): string {
-		$terms = get_the_terms( $post, $tax );
-		if ( ! is_array( $terms ) || empty( $terms ) ) {
-			return '';
-		}
-		$parts = array();
-		foreach ( $terms as $term ) {
-			if ( ! $term instanceof \WP_Term ) {
-				continue;
+		$sent = 'neutral';
+		$st   = get_the_terms( $post, 'sentiment' );
+		if ( is_array( $st ) && ! empty( $st ) && $st[0] instanceof \WP_Term ) {
+			$slug = $st[0]->slug;
+			if ( in_array( $slug, array( 'positive', 'negative', 'neutral', 'mixed' ), true ) ) {
+				$sent = $slug;
 			}
-			$url     = get_term_link( $term );
-			$parts[] = is_wp_error( $url )
-				? esc_html( $term->name )
-				: '<a href="' . esc_url( $url ) . '">' . esc_html( $term->name ) . '</a>';
 		}
-		return implode( ' · ', $parts );
+
+		$ct_terms = get_the_terms( $post, 'claim_type' );
+		$claim    = '';
+		if ( is_array( $ct_terms ) && ! empty( $ct_terms ) && $ct_terms[0] instanceof \WP_Term ) {
+			$claim = $ct_terms[0]->name;
+		}
+
+		$counter = (int) get_post_meta( $post->ID, '_wpis_counter', true );
+		if ( $counter < 1 ) {
+			$counter = 1;
+		}
+		$plat = (string) get_post_meta( $post->ID, '_wpis_source_platform', true );
+
+		$inner  = '<p class="wpis-quote-card__text"><a class="wpis-quote-card__link" href="' . esc_url( $link ) . '">' . esc_html( $excerpt ) . '</a></p>';
+		$inner .= '<div class="wpis-quote-card__footer">';
+		if ( '' !== $claim ) {
+			$inner .= '<span class="wpis-quote-card__claim">' . esc_html( $claim ) . '</span>';
+		}
+		$inner .= '<span class="wpis-quote-card__badge" aria-label="' . esc_attr__( 'Echo count', 'wpis-plugin' ) . '">×' . esc_html( (string) $counter ) . '</span>';
+		if ( '' !== $plat ) {
+			$inner .= '<span class="wpis-quote-card__plat">' . esc_html( strtoupper( $plat ) ) . '</span>';
+		}
+		$inner .= '<a class="wpis-quote-card__read" href="' . esc_url( $link ) . '">' . esc_html( $read ) . '</a>';
+		$inner .= '</div>';
+
+		return '<article class="wpis-quote-card wpis-sentiment-' . esc_attr( $sent ) . ' wp-block-post">' . $inner . '</article>';
 	}
 }
