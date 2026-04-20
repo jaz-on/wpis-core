@@ -31,7 +31,7 @@ Features include:
 
 == Installation ==
 
-1. Upload the `wpis-core` folder to `/wp-content/plugins/`
+1. From the **`jaz-on/wpis-plugin`** repo, deploy the plugin directory as **`wpis-core`** under `/wp-content/plugins/` (folder name must match the plugin bootstrap).
 2. Activate the plugin through the "Plugins" menu in WordPress
 3. Visit Settings > Permalinks and save once if archives 404
 4. (Optional) Ensure MCP Adapter is active for MCP discovery

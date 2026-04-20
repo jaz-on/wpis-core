@@ -1,5 +1,5 @@
 {
-	"name": "jaz-on/wpis-core",
+	"name": "jaz-on/wpis-plugin",
 	"description": "Core plugin for the WordPress Is… project",
 	"type": "wordpress-plugin",
 	"version": "0.2.0",
