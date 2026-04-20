@@ -4,7 +4,7 @@ Tags: mcp, abilities-api, ai, wordpress-is, quotes
 Requires at least: 6.9
 Tested up to: 6.9
 Requires PHP: 8.2
-Stable tag: 0.6.1
+Stable tag: 0.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -44,20 +44,8 @@ Features include:
 
 == Changelog ==
 
-= 0.6.1 =
-* Lower minimum PHP to 8.2 for broader hosting compatibility
-
-= 0.6.0 =
-* Align WordPress slug with repo: folder `wpis-plugin`, bootstrap `wpis-plugin.php`, text domain `wpis-plugin`
-* Schema option migrated from `wpis_core_schema_version` to `wpis_plugin_schema_version` on upgrade
-
-= 0.2.0 =
-* Chantier 1: `quote` CPT, taxonomies, meta, custom statuses, admin list enhancements
-* Composer PSR-4 autoload (`WPIS\Core\`), PHPCS, PHPUnit scaffold
-* MCP registration unchanged; version bump
-
 = 0.1.0 =
-* Initial release — MCP server registration and core abilities allowlist
+* WordPress Is… Core — `quote` CPT, taxonomies, meta, submission, REST, abilities/MCP allowlist, Git Updater headers (`wpis-plugin` slug, PHP 8.2+).
 
 == Links ==
 

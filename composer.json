@@ -2,7 +2,7 @@
 	"name": "jaz-on/wpis-plugin",
 	"description": "Core plugin for the WordPress Is… project",
 	"type": "wordpress-plugin",
-	"version": "0.6.1",
+	"version": "0.1.0",
 	"license": "GPL-2.0-or-later",
 	"require": {
 		"php": "^8.2"

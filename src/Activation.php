@@ -15,7 +15,7 @@ use WPIS\Core\Taxonomies\SentimentTaxonomy;
  */
 final class Activation {
 
-	public const SCHEMA_VERSION = '0.6.0';
+	public const SCHEMA_VERSION = '0.1.0';
 
 	private const OPTION_KEY = 'wpis_plugin_schema_version';
 
