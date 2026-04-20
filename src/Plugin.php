@@ -85,6 +85,7 @@ final class Plugin {
 		\WPIS\Core\Submission\SubmissionHandler::register();
 		\WPIS\Core\Submission\CronCleanup::register();
 		\WPIS\Core\REST\RestRegistrar::register();
+		\WPIS\Core\REST\QuoteFeedEndpoint::register();
 		\WPIS\Core\Polylang\PolylangSetup::register();
 		\WPIS\Core\Abilities\AbilitiesRegistry::register();
 	}
