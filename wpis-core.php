@@ -10,6 +10,8 @@
  * Text Domain: wpis-core
  * Requires at least: 6.9
  * Requires PHP: 8.3
+ * GitHub Plugin URI: https://github.com/jaz-on/wpis-plugin
+ * Primary Branch: main
  *
  * @package WPIS\Core
  */
