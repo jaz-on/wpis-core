@@ -3,8 +3,8 @@ Contributors: jaz_on
 Tags: mcp, abilities-api, ai, wordpress-is, quotes
 Requires at least: 6.9
 Tested up to: 6.9
-Requires PHP: 8.3
-Stable tag: 0.6.0
+Requires PHP: 8.2
+Stable tag: 0.6.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -26,7 +26,7 @@ Features include:
 == Requirements ==
 
 * WordPress 6.9 or higher (Abilities API)
-* PHP 8.3 or higher
+* PHP 8.2 or higher
 * MCP Adapter plugin (recommended for MCP exposure; optional for other features)
 
 == Installation ==
@@ -43,6 +43,9 @@ Features include:
 * `composer test` — PHPUnit (requires `WP_TESTS_DIR`; install WordPress test lib via `bin/install-wp-tests.sh` from the WP developer docs or wp-cli scaffold)
 
 == Changelog ==
+
+= 0.6.1 =
+* Lower minimum PHP to 8.2 for broader hosting compatibility
 
 = 0.6.0 =
 * Align WordPress slug with repo: folder `wpis-plugin`, bootstrap `wpis-plugin.php`, text domain `wpis-plugin`

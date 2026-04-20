@@ -2,14 +2,14 @@
 /**
  * Plugin Name: WordPress Is… Core
  * Description: Core plugin for the "WordPress Is…" project — quotes, taxonomies, MCP integration.
- * Version: 0.6.0
+ * Version: 0.6.1
  * Author: Jasonnade
  * Author URI: https://jasonrouet.com
  * License: GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: wpis-plugin
  * Requires at least: 6.9
- * Requires PHP: 8.3
+ * Requires PHP: 8.2
  * GitHub Plugin URI: https://github.com/jaz-on/wpis-plugin
  * Primary Branch: main
  *

@@ -5,7 +5,7 @@ Core plugin for the [WordPress Is…](https://wpis.jasonrouet.com) project: the 
 ## Requirements
 
 - WordPress **6.9+** (Abilities API)
-- PHP **8.3+**
+- PHP **8.2+**
 - [MCP Adapter](https://github.com/WordPress/mcp-adapter) recommended if you want MCP exposure (optional for other features)
 
 ## Installation

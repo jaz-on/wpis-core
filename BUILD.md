@@ -8,7 +8,7 @@ Single source of truth for the build phase. Product vision: `wordpress-is-vision
 
 ### Tools (recommended versions)
 
-- **PHP** **8.3.x** on the server; on your machine, PHP/Composer only for tooling and tests. Plugin **`Requires PHP`** should match the server (not WordPress.org—project will not ship there), e.g. **8.3** unless you intentionally support older runtimes.
+- **PHP** **8.2.x** on the server; on your machine, PHP/Composer only for tooling and tests. Plugin **`Requires PHP`** should match the server (not WordPress.org—project will not ship there), e.g. **8.2** unless you intentionally support older runtimes.
 - **Composer** 2.x
 - **Node.js** 20 LTS (for theme tooling if/when `@wordpress/scripts` or similar is added)
 - **Git**
@@ -17,7 +17,7 @@ Single source of truth for the build phase. Product vision: `wordpress-is-vision
 
 ### Target site: `wpis.jasonrouet.com`
 
-1. Production runs **WordPress 6.9.4**, **PHP 8.3.x**, and the stack from the vision (Polylang, MCP Adapter, etc.).
+1. Production runs **WordPress 6.9.4**, **PHP 8.2.x**, and the stack from the vision (Polylang, MCP Adapter, etc.).
 2. Deploy the plugin codebase (GitHub **`jaz-on/wpis-plugin`**) into **`wp-content/plugins/wpis-plugin/`**, and **`wpis-theme`** into `wp-content/themes/wpis-theme/`, per your hosting workflow (SFTP, Git pull, CI—document the exact steps when stable).
 3. Required plugins on that install: **Polylang** (free), **MCP Adapter**, **Action Scheduler** when needed for jobs.
 4. Permalinks: **Post name** (or whatever Polylang’s `/en/` `/fr/` setup needs).
@@ -188,7 +188,7 @@ When Chantier 3 adds tooling:
 
 ## 3d. Execution order (phased)
 
-**Phase 0 — Tooling:** PHP **8.3.x** / Composer / Node on your machine; PHPCS + PHPUnit scaffold in the **`wpis-plugin`** repo; **two repos** cloned; deploy path to **`wpis.jasonrouet.com`** understood.
+**Phase 0 — Tooling:** PHP **8.2.x** / Composer / Node on your machine; PHPCS + PHPUnit scaffold in the **`wpis-plugin`** repo; **two repos** cloned; deploy path to **`wpis.jasonrouet.com`** understood.
 
 **Phase 1 — Parallel foundation:** **Chantier 1** + **Chantier 3** (plugin data + theme shell).
 
@@ -231,11 +231,11 @@ Per-translation divergence for `_wpis_rejection_reason` / `_wpis_moderated_at` i
 |--------|----------|
 | Git | **Two separate repos:** `jaz-on/wpis-plugin` and `jaz-on/wpis-theme` (not a monorepo). |
 | Environment | **No local WordPress.** Build and test by deploying to **`wpis.jasonrouet.com`**. |
-| `Requires PHP` | Match server (e.g. **8.3**). Not targeting WordPress.org; no need for a low minimum. |
+| `Requires PHP` | Match server (e.g. **8.2**). Not targeting WordPress.org; no need for a low minimum. |
 | Privacy Policy | **Not required** before launch or before the submission form; owner remains Jason Rouet when you add it. |
 | Repo layout | GitHub **`wpis-plugin`** + **`wpis-theme`**; WordPress plugin directory on disk is **`wpis-plugin`**. Clone both into one workspace if useful. |
 | Opposing / editorial meta | Register in **Chantier 1** (see chantier block). |
-| Production PHP | **8.3.x** on host. |
+| Production PHP | **8.2.x** on host. |
 | Submitted page URL | **Opaque token** (HMAC or random meta), not bare `?p=ID` — see Chantier 6. |
 | Polylang | **Polylang Free** for MVP; revisit Pro only if needed. |
 | Theme repo / slug | **wpis-theme** — repo, folder, GitHub slug, text domain. |
@@ -248,5 +248,5 @@ Per-translation divergence for `_wpis_rejection_reason` / `_wpis_moderated_at` i
 ## Document history
 
 - Generated from handoff review April 2026. Update as decisions land.
-- April 2026: §3e filled with moderation rule + Jaz decisions (layout, PHP 8.3, Polylang Free, tokens, infinite scroll in scope, no staging).
+- April 2026: §3e filled with moderation rule + Jaz decisions (layout, PHP 8.2, Polylang Free, tokens, infinite scroll in scope, no staging).
 - April 2026: separate repos, deploy-only testing on `wpis.jasonrouet.com`, flexible `Requires PHP`, Privacy Policy not a launch blocker.

@@ -2,10 +2,10 @@
 	"name": "jaz-on/wpis-plugin",
 	"description": "Core plugin for the WordPress Is… project",
 	"type": "wordpress-plugin",
-	"version": "0.6.0",
+	"version": "0.6.1",
 	"license": "GPL-2.0-or-later",
 	"require": {
-		"php": "^8.3"
+		"php": "^8.2"
 	},
 	"require-dev": {
 		"dealerdirect/phpcodesniffer-composer-installer": "^1.0",
@@ -29,7 +29,7 @@
 			"dealerdirect/phpcodesniffer-composer-installer": true
 		},
 		"platform": {
-			"php": "8.3"
+			"php": "8.2"
 		}
 	},
 	"scripts": {
