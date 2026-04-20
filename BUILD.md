@@ -17,8 +17,8 @@ Single source of truth for the build phase. Product vision: `wordpress-is-vision
 
 ### Target site: `wpis.jasonrouet.com`
 
-1. Production runs **WordPress 6.9.4**, **PHP 8.2.x**, and the stack from the vision (Polylang, MCP Adapter, etc.).
-2. Deploy the plugin codebase (GitHub **`jaz-on/wpis-plugin`**) into **`wp-content/plugins/wpis-plugin/`**, and **`wpis-theme`** into `wp-content/themes/wpis-theme/`, per your hosting workflow (SFTP, Git pull, CI—document the exact steps when stable).
+1. Production runs **WordPress 6.9.4**, **PHP 8.2.x** and the stack from the vision (Polylang, MCP Adapter, etc.).
+2. Deploy the plugin codebase (GitHub **`jaz-on/wpis-plugin`**) into **`wp-content/plugins/wpis-plugin/`** and **`wpis-theme`** into `wp-content/themes/wpis-theme/`, per your hosting workflow (SFTP, Git pull, CI—document the exact steps when stable).
 3. Required plugins on that install: **Polylang** (free), **MCP Adapter**, **Action Scheduler** when needed for jobs.
 4. Permalinks: **Post name** (or whatever Polylang’s `/en/` `/fr/` setup needs).
 
@@ -69,7 +69,7 @@ When Chantier 3 adds tooling:
 - **Complexity:** L
 - **Deliverables:** Registration complete; terms seeded on activation; admin columns/filters; PHPUnit green; PHPCS clean; no regressions to existing MCP server block in `wpis-plugin.php` (extend via new files; avoid breaking `mcp_adapter_init`).
 - **Decided:** Register `_wpis_opposing_quote_id` and `_wpis_editorial_note` in **Chantier 1** with the rest of the meta (REST, sanitization, uninstall story)—Chantier 4 only consumes them.
-- **Adapted prompt:** Use original Chantier 1 prompt with these changes: (1) Include meta `_wpis_opposing_quote_id` (int) and `_wpis_editorial_note` (string). (2) Replace “Brain Monkey, or just WP Mock” with **PHPUnit using WordPress test bootstrap** for registration tests; add Brain Monkey only if writing pure isolated units. (3) Clarify `register_post_status` for `rejected` and `merged` must work with CPT `quote` capabilities. (4) Keep MCP registration in `wpis-plugin.php` unchanged—load new code via `require` from `src/` bootstrap.
+- **Adapted prompt:** Use original Chantier 1 prompt with these changes: (1) Include meta `_wpis_opposing_quote_id` (int) and `_wpis_editorial_note` (string). (2) Replace “Brain Monkey or just WP Mock” with **PHPUnit using WordPress test bootstrap** for registration tests; add Brain Monkey only if writing pure isolated units. (3) Clarify `register_post_status` for `rejected` and `merged` must work with CPT `quote` capabilities. (4) Keep MCP registration in `wpis-plugin.php` unchanged—load new code via `require` from `src/` bootstrap.
 - **Done when:** Checklist in original deliverable + `composer test` + activates cleanly on **`wpis.jasonrouet.com`** (or next deploy there).
 
 ### Chantier 2 — Dedup, merge, counter sync
@@ -117,7 +117,7 @@ When Chantier 3 adds tooling:
 - **Dependencies:** 1
 - **Complexity:** M
 - **Deliverables:** `admin-post` handlers; honeypot + rate limit; optional screenshot upload with lifecycle; tests for validation/cron.
-- **Decided:** Do **not** expose raw post IDs in public confirmation URLs. **Pattern:** on successful submit, generate an opaque single-use or time-limited token (e.g. random key in post meta, or `hash_hmac( 'sha256', $post_id . '|' . $issued, wp_salt( 'auth' ) )` with expiry), redirect to `/submitted/?token=…`. Validate in the template handler. WordPress core does not ship a “confirmation page” primitive; **nonces** protect actions, not bookmarkable thank-you URLs—so a **server-verified secret** is the standard approach.
+- **Decided:** Do **not** expose raw post IDs in public confirmation URLs. **Pattern:** on successful submit, generate an opaque single-use or time-limited token (e.g. random key in post meta or `hash_hmac( 'sha256', $post_id . '|' . $issued, wp_salt( 'auth' ) )` with expiry), redirect to `/submitted/?token=…`. Validate in the template handler. WordPress core does not ship a “confirmation page” primitive; **nonces** protect actions, not bookmarkable thank-you URLs—so a **server-verified secret** is the standard approach.
 - **Adapted prompt:** Original Chantier 6 unchanged in spirit; ensure redirect URL matches Polylang prefix once Chantier 8 lands (add TODO if built before 8).
 - **Done when:** End-to-end manual submit works.
 
@@ -182,7 +182,7 @@ When Chantier 3 adds tooling:
 - **`.cursor/rules/`:** One rule file per package (`wpis.md`) — stack, prefixes `_wpis_` / `wpis_`, text domains, “no Oxford commas” in EN copy; **omit French Typo plugin** until added to vision.
 - **Secrets:** `.env` not committed; bot API keys in **wp_options** or env-injected in CI; never log secrets.
 - **Deployment:** Primary target **`wpis.jasonrouet.com`** — document the exact deploy path (SFTP, GitHub Actions, etc.) when stable. Cloudflare in front per vision.
-- **Staging:** **No** separate staging; **no local WordPress** — tests and smoke checks happen on **`wpis.jasonrouet.com`**. Use backups, small changesets, and maintenance mode if you need to reduce risk.
+- **Staging:** **No** separate staging; **no local WordPress** — tests and smoke checks happen on **`wpis.jasonrouet.com`**. Use backups, small changesets and maintenance mode if you need to reduce risk.
 
 ---
 
@@ -214,7 +214,7 @@ When Chantier 3 adds tooling:
 
 WordPress stores **`post_status` per post**. Polylang treats each language as a **separate post** linked in a **translation group**. Nothing in core or Polylang automatically keeps moderation status aligned across translations.
 
-**Rule — group-level lifecycle:** For the `quote` CPT, any transition to **`publish`**, **`pending`**, **`rejected`**, or **`merged`** performed in wp-admin on one post in a Polylang translation group **must be applied to all other posts in that group** (same new status), using Polylang’s translation map (`PLL()->model->post->get_translations()` or current API equivalent).
+**Rule — group-level lifecycle:** For the `quote` CPT, any transition to **`publish`**, **`pending`**, **`rejected`** or **`merged`** performed in wp-admin on one post in a Polylang translation group **must be applied to all other posts in that group** (same new status), using Polylang’s translation map (`PLL()->model->post->get_translations()` or current API equivalent).
 
 **Rationale:** Matches the vision (one conceptual quote, merged counters, no contradictory FR/EN publication states). Merge/unmerge already implies multi-post translation coordination; moderation should behave the same way.
 

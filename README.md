@@ -1,6 +1,6 @@
 # WordPress Is… Core (`wpis-plugin`)
 
-Core plugin for the [WordPress Is…](https://wpis.jasonrouet.com) project: the `quote` post type, taxonomies, merge and deduplication logic, public submission handling, REST endpoints, and [Git Updater](https://git-updater.com/)–compatible metadata for installs that track this repository.
+Core plugin for the [WordPress Is…](https://wpis.jasonrouet.com) project: the `quote` post type, taxonomies, merge and deduplication logic, public submission handling, REST endpoints and [Git Updater](https://git-updater.com/)–compatible metadata for installs that track this repository.
 
 ## Requirements
 

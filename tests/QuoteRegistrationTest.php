@@ -1,6 +1,6 @@
 <?php
 /**
- * Tests for CPT, taxonomies, meta, and statuses registration.
+ * Tests for CPT, taxonomies, meta and statuses registration.
  *
  * @package WPIS\Core\Tests
  */

@@ -65,7 +65,7 @@ Saying "WordPress isn't for me" is fine. Saying "WordPress is bad" without conte
 
 ### Decision: technical work moves to Cursor
 
-Building the theme, plugin, and content through Claude web chat is too constrained for the volume of work ahead. From here on:
+Building the theme, plugin and content through Claude web chat is too constrained for the volume of work ahead. From here on:
 
 - **Cursor handles code and repeatable technical tasks** (plugin code, block theme, templates, tests, deployment)
 - **Claude web chat keeps design, strategy, copywriting, content review, audits** (where conversation and iteration matter more than tooling)
@@ -84,7 +84,7 @@ Building the theme, plugin, and content through Claude web chat is too constrain
 ### Theme
 
 - **Block theme (FSE)** — no classical PHP templates unless absolutely necessary
-- **Base**: either TT5/TT6 as parent, or fork from scratch with minimal `theme.json`
+- **Base**: either TT5/TT6 as parent or fork from scratch with minimal `theme.json`
 - **Design tokens** from mockup: Fraunces (display), JetBrains Mono (meta), custom palette, dark mode support
 - **Template parts**: header, footer
 - **Templates**: home (feed), single-quote, archive-claim_type, page-submit, page-about, page-how, 404

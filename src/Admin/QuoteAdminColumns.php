@@ -10,7 +10,7 @@ namespace WPIS\Core\Admin;
 use WPIS\Core\Constants;
 use WPIS\Core\PostTypes\QuotePostType;
 /**
- * Custom columns, sorting, and filters.
+ * Custom columns, sorting and filters.
  */
 final class QuoteAdminColumns {
 

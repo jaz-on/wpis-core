@@ -75,7 +75,7 @@ final class AbilitiesRegistry {
 			'wpis/quote-update',
 			array(
 				'label'               => __( 'Update quote', 'wpis-plugin' ),
-				'description'         => __( 'Update quote content, status, or terms.', 'wpis-plugin' ),
+				'description'         => __( 'Update quote content, status or terms.', 'wpis-plugin' ),
 				'category'            => 'wpis',
 				'input_schema'        => array(
 					'type'       => 'object',
@@ -136,7 +136,7 @@ final class AbilitiesRegistry {
 			'wpis/stats-summary',
 			array(
 				'label'               => __( 'WPIS stats summary', 'wpis-plugin' ),
-				'description'         => __( 'Aggregate quote counts by status, sentiment, and claim type.', 'wpis-plugin' ),
+				'description'         => __( 'Aggregate quote counts by status, sentiment and claim type.', 'wpis-plugin' ),
 				'category'            => 'wpis',
 				'input_schema'        => array(
 					'type' => 'object',

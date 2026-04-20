@@ -19,7 +19,7 @@ Each chantier below is designed as **one focused Cursor conversation**. Copy the
 ### Handoff inputs (all from this Claude conversation)
 - `wordpress-is-vision.md` — the spec
 - `wordpress-is-mockup.html` — the design reference (open it in a browser while working)
-- `wpis-plugin.zip` — v0.1.0 scaffold from the **`wpis-plugin`** repo (unzip into `wp-content/plugins/wpis-plugin/` as starting point, or extract contents into your fresh repo)
+- `wpis-plugin.zip` — v0.1.0 scaffold from the **`wpis-plugin`** repo (unzip into `wp-content/plugins/wpis-plugin/` as starting point or extract contents into your fresh repo)
 
 ### Rules of engagement with Cursor
 - **One chantier, one branch, one PR.** Never mix concerns.
@@ -93,7 +93,7 @@ Goal for this chantier:
 
 5. Register the "rejected" and "merged" post statuses properly via register_post_status() — they should appear in the admin post list filters.
 
-6. Write unit tests (PHPUnit + Brain Monkey, or just WP Mock) for the registration functions, covering: CPT registered, taxonomies registered, meta fields registered, statuses registered.
+6. Write unit tests (PHPUnit + Brain Monkey or just WP Mock) for the registration functions, covering: CPT registered, taxonomies registered, meta fields registered, statuses registered.
 
 7. Ensure the plugin activates cleanly on a fresh WordPress 6.9.4 install with no PHP notices/warnings.
 
@@ -219,7 +219,7 @@ Goal for this chantier:
    - assets/fonts/ (host Fraunces + JetBrains Mono locally, no Google Fonts CDN for GDPR)
 
 2. theme.json should define:
-   - All color palette entries (both modes if possible, or just light + we handle dark via CSS vars)
+   - All color palette entries (both modes if possible or just light + we handle dark via CSS vars)
    - Typography: font families, font sizes (fluid), line heights
    - Layout widths
    - Spacing
@@ -281,7 +281,7 @@ Goal for this chantier:
 2. templates/single-quote.html — the individual quote page.
    - Breadcrumb: Feed / [claim_type] / this quote
    - Claim meta line: claim_type tag + submission count info
-   - Big quote as h1 (core/post-title with custom styling, or custom block)
+   - Big quote as h1 (core/post-title with custom styling or custom block)
    - "Someone disagrees" block — this is the opposing view section. For MVP, make it manual: a custom field on the quote `_wpis_opposing_quote_id` pointing to another quote, rendered as a callout block
    - Spread stats: submissions, platforms, languages, variants merged — these are computed. Custom dynamic block.
    - Variants compact list: all quotes with `_wpis_parent_id = this.id` (the merged ones)
@@ -600,7 +600,7 @@ Goal for this chantier:
 
 2. Update the MCP server registration in wpis-plugin.php to expose these abilities (add them to the $abilities filter callback).
 
-3. Tests: for each ability, test that it's registered, has correct permission callback, and that execution returns expected output shape.
+3. Tests: for each ability, test that it's registered, has correct permission callback and that execution returns expected output shape.
 
 4. Document each ability with a clear `description` field — remember, these descriptions are what AI agents read to decide when to use them.
 
@@ -754,7 +754,7 @@ Create `.cursor/rules/wpis.md` in each repo:
 - [ ] RGPD mentions legal (privacy policy page) — Claude web chat can help draft
 - [ ] Domain strategy decided: stay on wpis.jasonrouet.com or move to dedicated domain
 
-When these are checked, announce it publicly on LinkedIn and Mastodon, open submissions to the community, and start thinking about bots.
+When these are checked, announce it publicly on LinkedIn and Mastodon, open submissions to the community and start thinking about bots.
 
 ---
 

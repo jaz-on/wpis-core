@@ -11,4 +11,4 @@ In **English** user-facing strings (UI, `readme.txt`, comments meant for admins,
 - **Prefer:** “quotes, submissions and profiles”
 - **Avoid:** “quotes, submissions**,** and profiles”
 
-Apply this to new or edited English text in **`wpis-plugin`**, **`wpis-theme`**, and workspace docs. **French** and other languages follow their own typographic rules (do not impose this rule on non-English copy).
+Apply this to new or edited English text in **`wpis-plugin`**, **`wpis-theme`** and workspace docs. **French** and other languages follow their own typographic rules (do not impose this rule on non-English copy).

@@ -8,11 +8,11 @@ Stable tag: 0.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Core plugin for the "WordPress Is…" project — quotes, taxonomies, meta, and MCP integration.
+Core plugin for the "WordPress Is…" project — quotes, taxonomies, meta and MCP integration.
 
 == Description ==
 
-WordPress Is… Core powers the community archive: a `quote` custom post type, sentiment and claim-type taxonomies, REST-ready post meta, and the MCP server for AI tooling.
+WordPress Is… Core powers the community archive: a `quote` custom post type, sentiment and claim-type taxonomies, REST-ready post meta and the MCP server for AI tooling.
 
 Features include:
 
@@ -45,7 +45,7 @@ Features include:
 == Changelog ==
 
 = 0.1.0 =
-* WordPress Is… Core — `quote` CPT, taxonomies, meta, submission, REST, abilities/MCP allowlist, Git Updater headers (`wpis-plugin` slug, PHP 8.2+).
+* WordPress Is… Core — `quote` CPT, taxonomies, meta, submission, REST and abilities/MCP allowlist, Git Updater headers (`wpis-plugin` slug, PHP 8.2+).
 
 == Links ==
 
