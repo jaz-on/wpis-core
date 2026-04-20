@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: WordPress Is… Core
- * Description: Core plugin for the "WordPress Is…" project — quotes, taxonomies, MCP integration.
+ * Description: Core plugin for the "WordPress Is…" project: quotes, taxonomies, MCP integration.
  * Version: 0.1.0
  * Author: Jasonnade
  * Author URI: https://jasonrouet.com

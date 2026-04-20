@@ -3,7 +3,7 @@ description: Never bump release or package versions without explicit user approv
 alwaysApply: true
 ---
 
-# Versions — approval required
+# Versions: approval required
 
 Do **not** change version numbers unless the user **explicitly** asks (e.g. “bump to 0.7.0”, “ship a patch release”).
 

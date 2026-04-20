@@ -17,7 +17,7 @@ final class DuplicateFinder {
 	/**
 	 * Find potential duplicate quotes ranked by similarity score (0–100).
 	 *
-	 * Second pass (embeddings) can be added via `wpis_find_potential_duplicates_semantic` filter — not implemented here.
+	 * Second pass (embeddings) can be added via `wpis_find_potential_duplicates_semantic` filter: not implemented here.
 	 *
 	 * @param string $text      Text to compare.
 	 * @param string $lang      Language code (reserved for future use).

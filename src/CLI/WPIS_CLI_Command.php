@@ -88,7 +88,7 @@ final class WPIS_CLI_Command {
 		foreach ( $rows as $row ) {
 			\WP_CLI::log(
 				sprintf(
-					'%d — score %s — %s',
+					'%d | score %s | %s',
 					$row['quote_id'],
 					(string) $row['score'],
 					$row['text_preview']

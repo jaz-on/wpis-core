@@ -1,25 +1,25 @@
-# WordPress Is — Cursor build plan
+# WordPress Is – Cursor build plan
 
 **Purpose:** hand off the technical build from Claude web chat to Cursor, where code work belongs.
 
 **How to use this doc:**
-Each chantier below is designed as **one focused Cursor conversation**. Copy the prompt into a new Cursor chat, work the chantier to completion, commit, then move on. Don't try to combine chantiers — context windows and Cursor's agent work best on bounded goals.
+Each chantier below is designed as **one focused Cursor conversation**. Copy the prompt into a new Cursor chat, work the chantier to completion, commit, then move on. Don't try to combine chantiers: context windows and Cursor's agent work best on bounded goals.
 
 ---
 
 ## Prerequisites before starting
 
 ### Local dev setup
-- [ ] WordPress 6.9.4 local install (Local WP, DDEV, Lando — your choice)
+- [ ] WordPress 6.9.4 local install (Local WP, DDEV, Lando: your choice)
 - [ ] Git repo initialized: `github.com/jaz-on/wpis-plugin` (plugin) + `github.com/jaz-on/wpis-theme` (theme, separate repo)
 - [ ] Node 20+, Composer, WP-CLI available in Cursor terminal
 - [ ] Polylang Free installed + activated (for the multilingual foundations)
 - [ ] MCP Adapter kept installed but not touched for now
 
 ### Handoff inputs (all from this Claude conversation)
-- `wordpress-is-vision.md` — the spec
-- `wordpress-is-mockup.html` — the design reference (open it in a browser while working)
-- `wpis-plugin.zip` — v0.1.0 scaffold from the **`wpis-plugin`** repo (unzip into `wp-content/plugins/wpis-plugin/` as starting point or extract contents into your fresh repo)
+- `wordpress-is-vision.md`: the spec
+- `wordpress-is-mockup.html`: the design reference (open it in a browser while working)
+- `wpis-plugin.zip`: v0.1.0 scaffold from the **`wpis-plugin`** repo (unzip into `wp-content/plugins/wpis-plugin/` as starting point or extract contents into your fresh repo)
 
 ### Rules of engagement with Cursor
 - **One chantier, one branch, one PR.** Never mix concerns.
@@ -33,9 +33,9 @@ Each chantier below is designed as **one focused Cursor conversation**. Copy the
 
 | # | Chantier | Repo | Estimated effort | Blockers |
 |---|----------|------|------------------|----------|
-| 1 | Plugin foundations: CPT + taxonomies + meta | `wpis-plugin` | 1 session | — |
+| 1 | Plugin foundations: CPT + taxonomies + meta | `wpis-plugin` | 1 session |  |
 | 2 | Dedup + merge + counter sync logic | `wpis-plugin` | 1 session | #1 |
-| 3 | Block theme skeleton with `theme.json` | `wpis-theme` | 1 session | — |
+| 3 | Block theme skeleton with `theme.json` | `wpis-theme` | 1 session |  |
 | 4 | Templates: home feed + single quote | `wpis-theme` | 1-2 sessions | #1, #3 |
 | 5 | Templates: explore + taxonomy archive + static pages | `wpis-theme` | 1 session | #4 |
 | 6 | Front-end submit form | `wpis-theme` or `wpis-plugin` | 1 session | #1 |
@@ -50,10 +50,10 @@ Each chantier below is designed as **one focused Cursor conversation**. Copy the
 
 ---
 
-## Chantier 1 — Plugin foundations
+## Chantier 1: Plugin foundations
 
 **Repo:** `wpis-plugin`
-**Goal:** CPT `quote`, taxonomies (`sentiment`, `claim_type`), meta fields, admin list refinements. No custom admin UI — just native WP with sensible defaults.
+**Goal:** CPT `quote`, taxonomies (`sentiment`, `claim_type`), meta fields, admin list refinements. No custom admin UI: just native WP with sensible defaults.
 
 ### Prompt to paste into Cursor
 
@@ -62,7 +62,7 @@ You are helping me build the foundations of a WordPress plugin whose directory a
 
 Context: read the vision doc at the root of this workspace (wordpress-is-vision.md) for the full picture. Focus specifically on the "Database structure" and "Submission flow" sections.
 
-Current state: the plugin v0.1.0 exists with an MCP server registration. You can keep that code as-is — don't touch it in this chantier.
+Current state: the plugin v0.1.0 exists with an MCP server registration. You can keep that code as-is, don't touch it in this chantier.
 
 Goal for this chantier:
 1. Register a custom post type `quote` with:
@@ -73,8 +73,8 @@ Goal for this chantier:
    - REST-enabled (show_in_rest: true)
 
 2. Register two taxonomies bound to `quote`:
-   - `sentiment` (flat): positive, negative, neutral, mixed — pre-seed these terms on plugin activation
-   - `claim_type` (hierarchical): performance, security, ease-of-use, community, ecosystem, business-viability, accessibility, modernity — pre-seed as top-level terms on activation
+   - `sentiment` (flat): positive, negative, neutral, mixed: pre-seed these terms on plugin activation
+   - `claim_type` (hierarchical): performance, security, ease-of-use, community, ecosystem, business-viability, accessibility, modernity: pre-seed as top-level terms on activation
 
 3. Register these post meta fields on `quote`, all REST-enabled with show_in_rest:
    - _wpis_counter (integer, default 1)
@@ -91,7 +91,7 @@ Goal for this chantier:
    - Make sortable by counter and submission date
    - Add a filter dropdown by submission_source
 
-5. Register the "rejected" and "merged" post statuses properly via register_post_status() — they should appear in the admin post list filters.
+5. Register the "rejected" and "merged" post statuses properly via register_post_status(): they should appear in the admin post list filters.
 
 6. Write unit tests (PHPUnit + Brain Monkey or just WP Mock) for the registration functions, covering: CPT registered, taxonomies registered, meta fields registered, statuses registered.
 
@@ -102,7 +102,7 @@ Requirements:
 - Follow WordPress coding standards (PHPCS with WordPress ruleset)
 - Use namespaces: `WPIS\Core\*`
 - Organize in `src/` with PSR-4 autoloading via Composer
-- Add the plugin header block and uninstall.php already in the repo — keep them, extend uninstall.php to clean up the registered terms if the user explicitly opted in (add a setting later, for now just leave a TODO)
+- Add the plugin header block and uninstall.php already in the repo: keep them, extend uninstall.php to clean up the registered terms if the user explicitly opted in (add a setting later, for now just leave a TODO)
 
 Commit after: CPT, taxonomies, meta, admin columns, tests. Open a PR from a feature branch.
 ```
@@ -116,7 +116,7 @@ Commit after: CPT, taxonomies, meta, admin columns, tests. Open a PR from a feat
 
 ---
 
-## Chantier 2 — Dedup, merge, counter sync
+## Chantier 2: Dedup, merge, counter sync
 
 **Repo:** `wpis-plugin`
 **Goal:** the logic that makes the project not a dumpster fire: deduplication helpers, merge operation, counter synchronization across Polylang translations.
@@ -126,7 +126,7 @@ Commit after: CPT, taxonomies, meta, admin columns, tests. Open a PR from a feat
 ```
 We're extending the **`wpis-plugin`** WordPress package.
 
-Read wordpress-is-vision.md sections "Deduplication and merge" and "Multilingual model (with Polylang)" carefully — they define the behavior precisely.
+Read wordpress-is-vision.md sections "Deduplication and merge" and "Multilingual model (with Polylang)" carefully: they define the behavior precisely.
 
 Goal for this chantier:
 
@@ -135,7 +135,7 @@ Goal for this chantier:
    - On merge:
      - Source quote status becomes `merged`
      - Source meta `_wpis_parent_id` = target_id
-     - Target quote meta `_wpis_counter` = target.counter + source.counter (NOT +1 — sum the counters, since source might itself have absorbed duplicates before)
+     - Target quote meta `_wpis_counter` = target.counter + source.counter (NOT +1: sum the counters, since source might itself have absorbed duplicates before)
      - Source Polylang translations (if any) each merge into target's corresponding language (A-FR merges into B-FR, A-EN into B-EN)
      - Emit a `wpis_quote_merged` action hook with ($source_id, $target_id)
    - Flat hierarchy enforcement: if source has existing children pointing to it (`_wpis_parent_id = source.id`), re-parent them directly to target
@@ -154,16 +154,16 @@ Goal for this chantier:
 4. Duplicate detection helper:
    - Function `wpis_find_potential_duplicates( string $text, string $lang = 'en', int $threshold = 70 ): array`
    - Returns a ranked list of quote IDs with similarity score
-   - First pass: simple similarity (similar_text() or levenshtein on normalized strings — lowercase, strip punctuation, collapse spaces)
+   - First pass: simple similarity (similar_text() or levenshtein on normalized strings: lowercase, strip punctuation, collapse spaces)
    - Second pass (TODO comment in code): hook for future semantic similarity (embeddings). Don't implement the embeddings now, just leave the hook.
    - This helper is used by moderation and by the submission flow to show "potential duplicates" to moderators
 
 5. WP-CLI commands:
    - `wp wpis merge <source> <target>`
    - `wp wpis unmerge <quote_id>`
-   - `wp wpis find-duplicates <quote_id>` — output ranked list
+   - `wp wpis find-duplicates <quote_id>`: output ranked list
 
-6. Tests covering all of the above. This is the data-integrity core of the project — tests are non-negotiable here.
+6. Tests covering all of the above. This is the data-integrity core of the project: tests are non-negotiable here.
 
 Commit in logical chunks. Open a PR.
 ```
@@ -178,7 +178,7 @@ Commit in logical chunks. Open a PR.
 
 ---
 
-## Chantier 3 — Block theme skeleton
+## Chantier 3: Block theme skeleton
 
 **Repo:** `wpis-theme`
 **Goal:** empty but fully-configured block theme with `theme.json` matching mockup design tokens, font-face, template parts (header, footer), ready to receive templates.
@@ -212,7 +212,7 @@ Goal for this chantier:
 1. Scaffold the theme with the correct files:
    - style.css (header only, required by WP)
    - theme.json (the real config)
-   - functions.php (minimal — font enqueueing, potentially image size registration)
+   - functions.php (minimal: font enqueueing, potentially image size registration)
    - templates/ (empty, templates come in chantier 4)
    - parts/ (header.html, footer.html)
    - patterns/ (empty, later chantiers)
@@ -228,8 +228,8 @@ Goal for this chantier:
    - settings.typography.fluid enabled
 
 3. Template parts:
-   - header.html — matches mockup header: site title on the left full-height, right side with two rows (lang switcher + theme toggle on top, main nav below). Use core/site-title, core/navigation, core/template-part.
-   - footer.html — matches mockup footer: "WordPress Is… a Jasonnade project · open-source · community-driven" line + trademark line below. Keep it minimal.
+   - header.html: matches mockup header: site title on the left full-height, right side with two rows (lang switcher + theme toggle on top, main nav below). Use core/site-title, core/navigation, core/template-part.
+   - footer.html: matches mockup footer: "WordPress Is… a Jasonnade project · open-source · community-driven" line + trademark line below. Keep it minimal.
 
 4. Font loading:
    - Download Fraunces (variable) and JetBrains Mono from Google Fonts (or fontsource.org for Fraunces variable) to assets/fonts/
@@ -242,7 +242,7 @@ Goal for this chantier:
    - Dark mode JS can be in a small enqueued script OR inline in header.html
    - Respect user preference (localStorage)
 
-7. No parent theme — this is a standalone block theme.
+7. No parent theme: this is a standalone block theme.
 
 Commit the scaffold. Open a PR.
 ```
@@ -256,7 +256,7 @@ Commit the scaffold. Open a PR.
 
 ---
 
-## Chantier 4 — Templates: home + single quote
+## Chantier 4: Templates: home + single quote
 
 **Repo:** `wpis-theme`
 **Goal:** the two most important templates of the site. Everything else flows from these.
@@ -270,26 +270,26 @@ Reference: wordpress-is-mockup.html screens "home" (01) and "detail" (02). Open 
 
 Goal for this chantier:
 
-1. templates/index.html — the home page displaying a feed of `quote` posts.
+1. templates/index.html: the home page displaying a feed of `quote` posts.
    - Hero section at top: eyebrow, big "WordPress is…" title with red italic dots, intro paragraph, stats row (total quotes, platforms, languages)
-     - Stats should come from dynamic blocks or a custom block — acceptable here to register one custom block via block.json (server-side rendered)
+     - Stats should come from dynamic blocks or a custom block: acceptable here to register one custom block via block.json (server-side rendered)
    - Feed: use core/query with post-type=quote, status=publish, per-page=18
-   - Quote card pattern — register as a synced pattern or as a block template-part
+   - Quote card pattern: register as a synced pattern or as a block template-part
    - Sort buttons (Recent/Most repeated/Random) and filter selects (Sentiment/Claim/Platform): these are client-side interactive. Register as a custom block or inline script. Start simple: sort = URL query param, filter = URL query param, no JS magic. Page reloads on change. It's fine.
    - "Load more" button: server-side pagination for now (next page), not infinite scroll. Infinite scroll can come later.
 
-2. templates/single-quote.html — the individual quote page.
+2. templates/single-quote.html: the individual quote page.
    - Breadcrumb: Feed / [claim_type] / this quote
    - Claim meta line: claim_type tag + submission count info
    - Big quote as h1 (core/post-title with custom styling or custom block)
-   - "Someone disagrees" block — this is the opposing view section. For MVP, make it manual: a custom field on the quote `_wpis_opposing_quote_id` pointing to another quote, rendered as a callout block
-   - Spread stats: submissions, platforms, languages, variants merged — these are computed. Custom dynamic block.
+   - "Someone disagrees" block: this is the opposing view section. For MVP, make it manual: a custom field on the quote `_wpis_opposing_quote_id` pointing to another quote, rendered as a callout block
+   - Spread stats: submissions, platforms, languages, variants merged: these are computed. Custom dynamic block.
    - Variants compact list: all quotes with `_wpis_parent_id = this.id` (the merged ones)
-   - Editorial note: core/paragraph with specific styling — this is per-quote manual content stored as a custom meta `_wpis_editorial_note` OR just as part of post_content after the main quote. Decide what's cleaner, document in a comment.
+   - Editorial note: core/paragraph with specific styling: this is per-quote manual content stored as a custom meta `_wpis_editorial_note` OR just as part of post_content after the main quote. Decide what's cleaner, document in a comment.
 
 3. Register two patterns for reuse:
-   - `wpis/quote-card` — the card shown in feeds
-   - `wpis/opposing-block` — the "someone disagrees" block
+   - `wpis/quote-card`: the card shown in feeds
+   - `wpis/opposing-block`: the "someone disagrees" block
 
 4. Accessibility:
    - Use semantic HTML (proper h1/h2/h3 hierarchy)
@@ -299,7 +299,7 @@ Goal for this chantier:
 
 5. Minimal JS:
    - One script that handles the client-side theme toggle (if not done in chantier 3)
-   - No other JS yet — filter/sort work via URL params + page reload
+   - No other JS yet: filter/sort work via URL params + page reload
 
 Performance note: the feed page will have 18 quote cards with meta lookups. Use the wpis-counter meta as an indexed meta query if needed. Don't over-engineer, but don't ship N+1 queries either.
 
@@ -315,7 +315,7 @@ Commit in chunks. Open a PR.
 
 ---
 
-## Chantier 5 — Templates: explore + taxonomy + static pages
+## Chantier 5: Templates: explore + taxonomy + static pages
 
 **Repo:** `wpis-theme`
 **Goal:** the rest of the public site templates.
@@ -329,29 +329,29 @@ Reference: mockup screens 03 (explore), 04 (taxonomy), 05 (search), 06 (about), 
 
 Goal for this chantier:
 
-1. templates/page-explore.html — a page template assigned to a Page called "Explore"
+1. templates/page-explore.html: a page template assigned to a Page called "Explore"
    - List each claim_type parent term with: count, short description (from term description), sentiment breakdown bar (negative/positive/mixed ratio)
    - Register a dynamic block `wpis/tax-overview-card` that renders one card given a term ID
    - A loop over all top-level claim_type terms rendering the block for each
 
-2. templates/taxonomy-claim_type.html — archive template for claim_type terms
+2. templates/taxonomy-claim_type.html: archive template for claim_type terms
    - Hero: term name + description (short, one-liner)
    - Subcat bar: if current term has children, list them as chips with counts; if not, hide the bar
    - Quote feed (same as home feed, filtered by this term)
 
-3. templates/taxonomy-sentiment.html — archive for sentiment terms (optional, can fall back to default taxonomy template)
+3. templates/taxonomy-sentiment.html: archive for sentiment terms (optional, can fall back to default taxonomy template)
 
-4. templates/search.html — search results
+4. templates/search.html: search results
    - core/search block prominently at top
    - core/query filtered to post-type=quote with search context
    - <mark> highlighting of matched terms
 
 5. Static content pages (Pages in WP admin, not templates):
-   - About — content from mockup screen 06
-   - How it works — content from mockup screen 07, as 6 numbered steps (use core/list or custom pattern)
-   - Submit — the submission form lives here but form itself is chantier 6. For now just a placeholder or the static copy + RGPD notice
+   - About: content from mockup screen 06
+   - How it works: content from mockup screen 07, as 6 numbered steps (use core/list or custom pattern)
+   - Submit: the submission form lives here but form itself is chantier 6. For now just a placeholder or the static copy + RGPD notice
 
-6. templates/404.html — from mockup screen 10
+6. templates/404.html: from mockup screen 10
    - Big red "?" character
    - "WordPress is… not here." heading
    - Link back to Explore
@@ -379,7 +379,7 @@ Commit in chunks. Open PR.
 
 ---
 
-## Chantier 6 — Front-end submit form
+## Chantier 6: Front-end submit form
 
 **Repo:** `wpis-plugin` (form handling) + theme (form markup/style)
 **Goal:** a working submission form that creates a pending `quote` post.
@@ -444,7 +444,7 @@ Commit. Open PR.
 
 ---
 
-## Chantier 7 — Contributor profile
+## Chantier 7: Contributor profile
 
 **Repo:** `wpis-theme` + `wpis-plugin`
 **Goal:** the private /profile/ page for logged-in contributors.
@@ -458,7 +458,7 @@ Reference: mockup screen 11 (profile).
 
 Approach:
 - Login required. Redirect anonymous users to wp-login.
-- Page is completely private — user sees only their own data.
+- Page is completely private: user sees only their own data.
 - No role custom needed; any Subscriber role works.
 
 Goal for this chantier:
@@ -472,12 +472,12 @@ Goal for this chantier:
 2. In wpis-theme:
    - templates/page-profile.html assigned to a Page called "My profile"
    - Profile header: "Your contributions", member-since date
-   - Stats grid: 4 cards (total, validated, acceptance rate, pending) — custom dynamic block `wpis/user-stats` that fetches from the REST endpoint
-   - Submissions list: the user's own quotes with status badges — custom dynamic block `wpis/user-submissions`
+   - Stats grid: 4 cards (total, validated, acceptance rate, pending): custom dynamic block `wpis/user-stats` that fetches from the REST endpoint
+   - Submissions list: the user's own quotes with status badges: custom dynamic block `wpis/user-submissions`
 
 3. Privacy: profile page enforces login and renders nothing for guests (redirect). Also set X-Robots-Tag: noindex on this page via a header hook.
 
-4. Access rights: a user can never see another user's profile data. If someone constructs a URL like /profile/?user_id=X, ignore it — always use get_current_user_id().
+4. Access rights: a user can never see another user's profile data. If someone constructs a URL like /profile/?user_id=X, ignore it: always use get_current_user_id().
 
 5. Tests for the stats calculation and the REST endpoints (auth enforced).
 
@@ -492,7 +492,7 @@ Commit. Open PR.
 
 ---
 
-## Chantier 8 — Polylang + FR/EN
+## Chantier 8: Polylang + FR/EN
 
 **Repo:** `wpis-plugin` + `wpis-theme`
 **Goal:** multilingual setup with FR + EN, with the custom peer-translation model documented in vision.md.
@@ -506,7 +506,7 @@ Prerequisites:
 - Polylang Free installed and activated
 - Chantiers 1-7 complete
 
-Read wordpress-is-vision.md section "Multilingual model (with Polylang)" — this is specific and custom.
+Read wordpress-is-vision.md section "Multilingual model (with Polylang)": this is specific and custom.
 
 Goal for this chantier:
 
@@ -514,7 +514,7 @@ Goal for this chantier:
    - Enable languages: English (en_US) and French (fr_FR)
    - Make `quote` a translatable post type
    - Make `sentiment` and `claim_type` translatable taxonomies
-   - Make meta fields synced across translations: _wpis_source_domain, _wpis_source_platform, _wpis_submission_source, _wpis_counter (COPIED, not shared — we sync manually in chantier 2's counter sync code)
+   - Make meta fields synced across translations: _wpis_source_domain, _wpis_source_platform, _wpis_submission_source, _wpis_counter (COPIED, not shared: we sync manually in chantier 2's counter sync code)
    - Make sensitive meta NOT synced: _wpis_rejection_reason, _wpis_parent_id, _wpis_moderated_at (each translation has its own moderation state theoretically)
 
 2. Implement the counter sync that chantier 2 scaffolded: on _wpis_counter update on any quote, propagate to all translations in the Polylang group.
@@ -537,7 +537,7 @@ Goal for this chantier:
 
 7. Ensure all REST endpoints respect the current language context when queried.
 
-8. Test that submitting a quote in FR creates an FR-only post (no auto-translation for MVP — AI translation comes in a later chantier). Moderation handles the translation manually.
+8. Test that submitting a quote in FR creates an FR-only post (no auto-translation for MVP: AI translation comes in a later chantier). Moderation handles the translation manually.
 
 Commit. Open PR.
 ```
@@ -552,7 +552,7 @@ Commit. Open PR.
 
 ---
 
-## Chantier 9 — Abilities + MCP wiring
+## Chantier 9: Abilities + MCP wiring
 
 **Repo:** `wpis-plugin`
 **Goal:** expose WPIS operations as MCP abilities, so Claude (or any MCP client) can manage content programmatically.
@@ -573,27 +573,27 @@ Goal for this chantier:
 
 1. Register the following abilities via wp_register_ability(), on the wp_abilities_api_init action:
 
-   - `wpis/quote-create` — create a new quote
+   - `wpis/quote-create`: create a new quote
      - Input: text (required), language (required, en or fr), source_url (optional), source_platform (optional), status (optional, defaults to pending)
      - Permissions: manage_options OR user can create posts
      - Output: { quote_id, status, url }
 
-   - `wpis/quote-update` — update a quote's content or status
+   - `wpis/quote-update`: update a quote's content or status
      - Input: quote_id, text?, status?, sentiment?, claim_type?
      - Permissions: edit_post capability for this quote
      - Output: { quote_id, updated_fields }
 
-   - `wpis/quote-merge` — merge two quotes (wraps wpis_merge_quote from chantier 2)
+   - `wpis/quote-merge`: merge two quotes (wraps wpis_merge_quote from chantier 2)
      - Input: source_id, target_id
      - Permissions: manage_options
      - Output: { target_id, new_counter }
 
-   - `wpis/quote-find-duplicates` — find potential duplicates (wraps wpis_find_potential_duplicates)
+   - `wpis/quote-find-duplicates`: find potential duplicates (wraps wpis_find_potential_duplicates)
      - Input: text, language, threshold?
      - Permissions: edit_posts
      - Output: array of { quote_id, score, text_preview }
 
-   - `wpis/stats-summary` — overall site stats
+   - `wpis/stats-summary`: overall site stats
      - Input: none
      - Permissions: read (public)
      - Output: { total_quotes, by_status: {...}, by_sentiment: {...}, by_claim_type: {...}, by_language: {...} }
@@ -602,7 +602,7 @@ Goal for this chantier:
 
 3. Tests: for each ability, test that it's registered, has correct permission callback and that execution returns expected output shape.
 
-4. Document each ability with a clear `description` field — remember, these descriptions are what AI agents read to decide when to use them.
+4. Document each ability with a clear `description` field: remember, these descriptions are what AI agents read to decide when to use them.
 
 5. Optional: add `meta.mcp.public = true` on all these abilities so they'd also be available on the default MCP server if someone uses that instead.
 
@@ -617,7 +617,7 @@ Commit. Open PR.
 
 ---
 
-## Chantier 10 — Seed content
+## Chantier 10: Seed content
 
 **No repo, this is content work.**
 **Goal:** enough real quotes to make the site feel alive.
@@ -643,7 +643,7 @@ Commit. Open PR.
 
 ---
 
-## Chantier 11 — Bots (Mastodon + Bluesky)
+## Chantier 11: Bots (Mastodon + Bluesky)
 
 **Repos:** `wpis-bot-mastodon`, `wpis-bot-bluesky` (separate plugins)
 **Goal:** automated candidate discovery from public firehoses.
@@ -656,7 +656,7 @@ Commit. Open PR.
 - Bot polls its platform's public API periodically (Action Scheduler cron)
 - Simple string matching on "WordPress is…" variants (multiple languages)
 - Creates `pending` quote posts via the plugin API (`wpis-plugin` repo) with _wpis_submission_source = bot-mastodon or bot-bluesky
-- Deduplication via wpis_find_potential_duplicates before creating — if a close match exists, just increment counter
+- Deduplication via wpis_find_potential_duplicates before creating: if a close match exists, just increment counter
 - Admin settings page per bot: API credentials, polling interval, keywords, on/off switch
 - Observability: log every run with candidate count, created count, deduped count
 
@@ -664,7 +664,7 @@ Prompts for these will be written when we're ready to build them.
 
 ---
 
-## Chantier 12 — Browser extension
+## Chantier 12: Browser extension
 
 **Repo:** `wpis-extension` (separate from WP entirely)
 **Goal:** Firefox + Chrome extension that lets users contribute from any page.
@@ -675,7 +675,7 @@ Prompts for these will be written when we're ready to build them.
 - On click: open a popup pre-filled with selected text + page URL
 - User can edit, add notes, submit
 - Submits via the form endpoint (same as chantier 6 form)
-- Authenticated? Optional — if user has logged in once via the extension, their user_id is attached. Otherwise anonymous.
+- Authenticated? Optional: if user has logged in once via the extension, their user_id is attached. Otherwise anonymous.
 
 Defer until the site is live and has some traction.
 
@@ -693,7 +693,7 @@ Defer until the site is live and has some traction.
 Create `.cursor/rules/wpis.md` in each repo:
 
 ```
-# WordPress Is — project rules
+# WordPress Is – project rules
 
 ## Stack
 - WordPress 6.9.4
@@ -713,7 +713,7 @@ Create `.cursor/rules/wpis.md` in each repo:
 ## Multilingual
 - Polylang, peer translation model (no master)
 - English is the matching pivot for deduplication
-- Some meta copied across translations, some not — see wpis-plugin Polylang integration
+- Some meta copied across translations, some not: see wpis-plugin Polylang integration
 
 ## Testing
 - PHPUnit for plugin code
@@ -751,7 +751,7 @@ Create `.cursor/rules/wpis.md` in each repo:
 - [ ] Submission form tested end-to-end with 5+ real submissions reviewed
 - [ ] Site passes accessibility audit (keyboard nav, contrast, screen reader smoke test)
 - [ ] Site passes Lighthouse perf >85 on home and taxonomy pages
-- [ ] RGPD mentions legal (privacy policy page) — Claude web chat can help draft
+- [ ] RGPD mentions legal (privacy policy page): Claude web chat can help draft
 - [ ] Domain strategy decided: stay on wpis.jasonrouet.com or move to dedicated domain
 
 When these are checked, announce it publicly on LinkedIn and Mastodon, open submissions to the community and start thinking about bots.
@@ -760,6 +760,6 @@ When these are checked, announce it publicly on LinkedIn and Mastodon, open subm
 
 ## Final note
 
-This plan is a map, not a script. Every chantier will surface things we didn't anticipate. That's fine. The vision doc is the north star — if a decision comes up that's not covered, ask "does this serve the vision?" not "what does the plan say?".
+This plan is a map, not a script. Every chantier will surface things we didn't anticipate. That's fine. The vision doc is the north star: if a decision comes up that's not covered, ask "does this serve the vision?" not "what does the plan say?".
 
 Good luck. And come back to Claude web chat anytime for the non-code stuff.

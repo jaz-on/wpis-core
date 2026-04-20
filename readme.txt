@@ -8,7 +8,7 @@ Stable tag: 0.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Core plugin for the "WordPress Is…" project — quotes, taxonomies, meta and MCP integration.
+Core plugin for the "WordPress Is…" project: quotes, taxonomies, meta and MCP integration.
 
 == Description ==
 
@@ -38,14 +38,14 @@ Features include:
 
 == Development ==
 
-* `composer install` — PHP dependencies and PHPCS/PHPUnit
-* `composer lint` — PHPCS
-* `composer test` — PHPUnit (requires `WP_TESTS_DIR`; install WordPress test lib via `bin/install-wp-tests.sh` from the WP developer docs or wp-cli scaffold)
+* `composer install`: PHP dependencies and PHPCS/PHPUnit
+* `composer lint`: PHPCS
+* `composer test`: PHPUnit (requires `WP_TESTS_DIR`; install WordPress test lib via `bin/install-wp-tests.sh` from the WP developer docs or wp-cli scaffold)
 
 == Changelog ==
 
 = 0.1.0 =
-* WordPress Is… Core — `quote` CPT, taxonomies, meta, submission, REST and abilities/MCP allowlist, Git Updater headers (`wpis-plugin` slug, PHP 8.2+).
+* WordPress Is… Core: `quote` CPT, taxonomies, meta, submission, REST and abilities/MCP allowlist, Git Updater headers (`wpis-plugin` slug, PHP 8.2+).
 
 == Links ==
 

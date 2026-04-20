@@ -63,11 +63,11 @@ final class QuoteAdminColumns {
 				break;
 			case 'wpis_source_platform':
 				$v = get_post_meta( $post_id, '_wpis_source_platform', true );
-				echo esc_html( $v ? (string) $v : '—' );
+				echo esc_html( $v ? (string) $v : '–' );
 				break;
 			case 'wpis_submission_source':
 				$v = get_post_meta( $post_id, '_wpis_submission_source', true );
-				echo esc_html( $v ? (string) $v : '—' );
+				echo esc_html( $v ? (string) $v : '–' );
 				break;
 		}
 	}
