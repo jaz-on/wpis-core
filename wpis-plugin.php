@@ -108,14 +108,13 @@ add_action(
 
 		$adapter->create_server(
 			'wpis-server',
-			'wpis',
-			'v1',
+			'wpis/v1',
 			'wpis',
 			__( 'WordPress Is… MCP', 'wpis-plugin' ),
 			__( 'MCP server for the WordPress Is… project. Exposes a curated set of abilities.', 'wpis-plugin' ),
 			'v1.0.0',
 			array(
-				\WP\MCP\Transport\Http\RestTransport::class,
+				\WP\MCP\Transport\HttpTransport::class,
 			),
 			\WP\MCP\Infrastructure\ErrorHandling\ErrorLogMcpErrorHandler::class,
 			null,
