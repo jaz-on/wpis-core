@@ -47,6 +47,10 @@ composer lint
 
 FSE block theme `wpis-theme` (separate path in the monorepo) expects the `quote` CPT, taxonomies, and REST rules documented in [docs/THEME-API-CONTRACT.md](docs/THEME-API-CONTRACT.md). If you add breaking URL or `register_post_type` changes, update that file and coordinate with the theme.
 
+## Optional: Relevanssi (site search)
+
+Install [Relevanssi](https://wordpress.org/plugins/relevanssi/) as a normal plugin. This repo includes a small integration that keeps internal `_wpis_*` meta out of the search index. Admin steps: [docs/RELEVANSSI.md](docs/RELEVANSSI.md).
+
 ## License
 
 GPL-2.0-or-later

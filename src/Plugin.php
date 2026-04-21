@@ -34,6 +34,7 @@ final class Plugin {
 		$this->register_cli();
 		$this->register_front_features();
 		add_action( 'init', array( $this, 'register_admin' ), 30 );
+		add_action( 'plugins_loaded', array( $this, 'register_relevanssi' ), 20 );
 	}
 
 	/**
@@ -88,5 +89,17 @@ final class Plugin {
 		\WPIS\Core\REST\QuoteFeedEndpoint::register();
 		\WPIS\Core\Polylang\PolylangSetup::register();
 		\WPIS\Core\Abilities\AbilitiesRegistry::register();
+	}
+
+	/**
+	 * Third-party: Relevanssi (optional plugin).
+	 *
+	 * @return void
+	 */
+	public function register_relevanssi(): void {
+		if ( ! defined( 'RELEVANSSI_VERSION' ) ) {
+			return;
+		}
+		\WPIS\Core\Search\RelevanssiIntegration::register();
 	}
 }
