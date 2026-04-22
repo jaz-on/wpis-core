@@ -287,7 +287,7 @@ final class QuoteCardShortcodes {
 				$langs[] = $lang;
 			}
 		}
-		$meta = (string) get_post_meta( $post_id, '_wpis_language', true );
+		$meta = (string) get_post_meta( $post_id, '_wpis_source_language', true );
 		if ( '' !== $meta ) {
 			$langs[] = $meta;
 		}
