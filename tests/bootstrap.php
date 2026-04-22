@@ -27,10 +27,10 @@ require_once $_tests_dir . '/includes/functions.php';
 /**
  * Load this plugin.
  */
-function _wpis_plugin_manually_load_plugin(): void {
+function _wpis_core_tests_load_plugin(): void {
 	require dirname( __DIR__ ) . '/wpis-core.php';
 }
 
-tests_add_filter( 'muplugins_loaded', '_wpis_plugin_manually_load_plugin' );
+tests_add_filter( 'muplugins_loaded', '_wpis_core_tests_load_plugin' );
 
 require $_tests_dir . '/includes/bootstrap.php';

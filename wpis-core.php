@@ -43,7 +43,7 @@ if ( version_compare( PHP_VERSION, '8.2.0', '<' ) ) {
 	 * On hosts that only get a Git or zip copy of src/ + inc/, the runtime PSR-4 autoloader loads the same code without composer install.
 	 */
 	require_once __DIR__ . '/inc/autoload-runtime.php';
-	wpis_plugin_load_autoloader();
+	wpis_core_load_autoloader();
 	$wpis_core_loaded = true;
 	require_once __DIR__ . '/inc/functions-api.php';
 }
@@ -77,7 +77,7 @@ if ( $wpis_core_loaded ) {
 				return;
 			}
 			require_once __DIR__ . '/inc/autoload-runtime.php';
-			wpis_plugin_load_autoloader();
+			wpis_core_load_autoloader();
 			if ( class_exists( '\WPIS\Core\Activation' ) ) {
 				\WPIS\Core\Activation::activate();
 			}

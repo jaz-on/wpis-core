@@ -1,12 +1,12 @@
 # WordPress Is… Core (`wpis-core`)
 
-Core plugin for the [WordPress Is…](https://wpis.jasonrouet.com) project: the `quote` post type, taxonomies, merge and deduplication logic, public submission handling, REST endpoints and [Git Updater](https://git-updater.com/)–compatible metadata for installs that track this repository.
+**wpis-core** (WordPress plugin) for the [WordPress Is…](https://wpis.jasonrouet.com) project: the `quote` post type, taxonomies, merge and deduplication logic, public submission handling, REST endpoints and [Git Updater](https://git-updater.com/)–compatible metadata for installs that track this repository.
 
 **Repository on GitHub:** [`jaz-on/wpis-core`](https://github.com/jaz-on/wpis-core).
 
 ### Monorepo and the canonical repository
 
-This plugin is often vendored as `packages/wpis-core` inside a larger workspace. **GitHub [`jaz-on/wpis-core`](https://github.com/jaz-on/wpis-core)** remains the canonical source for releases, Git Updater and version history. If you see a nested `.git` inside that folder, it is usually a full clone used for subtree or standalone work—do not assume the monorepo root and the plugin repo share the same remote. Prefer **git subtree**, a **submodule** or a simple copy with a documented sync process so `main` on `jaz-on/wpis-core` stays the single place that matches the **`Version:`** header in `wpis-core.php`.
+It is often vendored as `packages/wpis-core` inside a larger workspace. **GitHub [`jaz-on/wpis-core`](https://github.com/jaz-on/wpis-core)** remains the canonical source for releases, Git Updater and version history. If you see a nested `.git` inside that folder, it is usually a full clone used for subtree or standalone work—do not assume the monorepo root and this repository share the same remote. Prefer **git subtree**, a **submodule** or a simple copy with a documented sync process so `main` on `jaz-on/wpis-core` stays the single place that matches the **`Version:`** header in `wpis-core.php`.
 
 ## Requirements
 
@@ -22,7 +22,7 @@ This plugin is often vendored as `packages/wpis-core` inside a larger workspace.
    wp-content/plugins/wpis-core/
    ```
 
-2. **Autoload:** the plugin uses `inc/autoload-runtime.php` (PSR-4 for `WPIS\Core\` from `src/`). You do **not** need to run Composer on the server. Optional: after `composer install` locally, `vendor/autoload.php` is used if present; otherwise the same classes load from `src/`.
+2. **Autoload:** wpis-core uses `inc/autoload-runtime.php` (PSR-4 for `WPIS\Core\` from `src/`). You do **not** need to run Composer on the server. Optional: after `composer install` locally, `vendor/autoload.php` is used if present; otherwise the same classes load from `src/`.
 
 3. Activate **WordPress Is… Core** in the Plugins screen.
 
@@ -30,7 +30,7 @@ This plugin is often vendored as `packages/wpis-core` inside a larger workspace.
 
 ## Updates with Git Updater
 
-This plugin declares a [Git Updater](https://git-updater.com/knowledge-base/required-headers/) source in `wpis-core.php`:
+**wpis-core** declares a [Git Updater](https://git-updater.com/knowledge-base/required-headers/) source in `wpis-core.php`:
 
 - `GitHub Plugin URI: https://github.com/jaz-on/wpis-core`
 - `Primary Branch: main` (required because the default branch is `main`, not `master`)

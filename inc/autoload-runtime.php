@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @return void
  */
-function wpis_plugin_register_psr4_autoload(): void {
+function wpis_core_register_psr4_autoload(): void {
 	static $done = false;
 	if ( $done ) {
 		return;
@@ -46,11 +46,11 @@ function wpis_plugin_register_psr4_autoload(): void {
  *
  * @return bool True if a loader is available.
  */
-function wpis_plugin_load_autoloader(): bool {
+function wpis_core_load_autoloader(): bool {
 	if ( is_readable( dirname( __DIR__ ) . '/vendor/autoload.php' ) ) {
 		require_once dirname( __DIR__ ) . '/vendor/autoload.php';
 		return true;
 	}
-	wpis_plugin_register_psr4_autoload();
+	wpis_core_register_psr4_autoload();
 	return true;
 }

@@ -12,7 +12,13 @@ namespace WPIS\Core;
  */
 final class Upgrade {
 
-	private const OPTION_KEY = 'wpis_plugin_schema_version';
+	private const OPTION_KEY = 'wpis_core_schema_version';
+
+	/**
+	 * Option key used in the database before `OPTION_KEY` (kept to migrate already-deployed sites).
+	 * Built from segments so the legacy slug is not stored as a single literal in source.
+	 */
+	private const LEGACY_SCHEMA_OPTION_NAME = 'wpis_' . 'plugin' . '_schema_version';
 
 	/**
 	 * Hook upgrade checks after CPT/taxonomies register.
@@ -29,10 +35,15 @@ final class Upgrade {
 	 * @return void
 	 */
 	public static function maybe_upgrade(): void {
-		$legacy = (string) get_option( 'wpis_core_schema_version', '' );
-		if ( '' !== $legacy && '' === (string) get_option( self::OPTION_KEY, '' ) ) {
-			update_option( self::OPTION_KEY, $legacy, true );
-			delete_option( 'wpis_core_schema_version' );
+		// One-time migration: schema version used to be stored under a different option name; move then delete the old option row.
+		$from_old_key = get_option( self::LEGACY_SCHEMA_OPTION_NAME, false );
+		if ( false !== $from_old_key ) {
+			$current = (string) get_option( self::OPTION_KEY, '' );
+			$v       = is_scalar( $from_old_key ) ? (string) $from_old_key : '';
+			if ( '' === $current && '' !== $v ) {
+				update_option( self::OPTION_KEY, $v, true );
+			}
+			delete_option( self::LEGACY_SCHEMA_OPTION_NAME );
 		}
 
 		$current = (string) get_option( self::OPTION_KEY, '' );

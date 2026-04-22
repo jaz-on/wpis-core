@@ -1,9 +1,9 @@
 ---
-description: WordPress Is… Core plugin — CPT, REST, submission, MCP
+description: WordPress Is… Core (wpis-core) — CPT, REST, submission, MCP
 globs: packages/wpis-core/**
 ---
 
-# WPIS Core plugin rules
+# WPIS Core (`wpis-core`) rules
 
 - **Namespace** `WPIS\Core\` under `src/`, PSR-4 via Composer. **Text domain** `wpis-core`.
 - **Meta keys** use prefix `_wpis_` ; public functions `wpis_*` where exposed in `inc/functions-api.php`.

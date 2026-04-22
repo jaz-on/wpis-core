@@ -18,7 +18,7 @@ final class Activation {
 
 	public const SCHEMA_VERSION = '0.1.0';
 
-	private const OPTION_KEY = 'wpis_plugin_schema_version';
+	private const OPTION_KEY = 'wpis_core_schema_version';
 
 	/**
 	 * Run on plugin activation.
