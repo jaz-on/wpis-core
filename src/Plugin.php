@@ -87,6 +87,7 @@ final class Plugin {
 	private function register_front_features(): void {
 		\WPIS\Core\Shortcodes\ProfileScreenShortcode::register();
 		\WPIS\Core\Shortcodes\PublicScreenShortcodes::register();
+		\WPIS\Core\Shortcodes\ComponentsShowcaseShortcode::register();
 		\WPIS\Core\Submission\SubmissionHandler::register();
 		\WPIS\Core\Submission\SubmitFormRenderer::register();
 		\WPIS\Core\Submission\CronCleanup::register();
