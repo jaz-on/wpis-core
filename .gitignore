@@ -12,3 +12,4 @@
 vendor/*
 !vendor/autoload.php
 !vendor/composer/
+vendor/composer/autoload_files.php
