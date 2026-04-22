@@ -5,6 +5,5 @@
 *.log
 .DS_Store
 
-# Local maintainer / AI notes (not part of the deployable tree)
+# Local maintainer notes (not part of the deployable tree)
 .doc/
-.cursor/
