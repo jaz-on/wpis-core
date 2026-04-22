@@ -4,6 +4,10 @@ Core plugin for the [WordPress Is…](https://wpis.jasonrouet.com) project: the 
 
 **Repo name on GitHub:** [`jaz-on/wpis-core`](https://github.com/jaz-on/wpis-core) (was `jaz-on/wpis-plugin` — [rename the GitHub repo](https://docs.github.com/en/repositories/creating-and-managing-repositories/renaming-a-repository) to match if yours still uses the old slug).
 
+### Monorepo and the canonical repository
+
+This plugin is often vendored as `packages/wpis-core` inside a larger workspace. **GitHub [`jaz-on/wpis-core`](https://github.com/jaz-on/wpis-core)** remains the canonical source for releases, Git Updater and version history. If you see a nested `.git` inside that folder, it is usually a full clone used for subtree or standalone work—do not assume the monorepo root and the plugin repo share the same remote. Prefer **git subtree**, a **submodule** or a simple copy with a documented sync process so `main` on `jaz-on/wpis-core` stays the single place that matches the **`Version:`** header in `wpis-core.php`.
+
 ## Requirements
 
 - WordPress **6.9+** (Abilities API)

@@ -286,8 +286,34 @@ final class AbilitiesRegistry {
 	 * @return array<string, mixed>
 	 */
 	public static function ability_stats(): array {
-		$statuses = array( 'publish', 'pending', 'rejected', 'merged' );
-		$by       = array();
+		$statuses = self::countable_post_statuses();
+		$by       = self::count_quotes_by_status( $statuses );
+		$total    = array_sum( $by );
+
+		return array(
+			'total_quotes'  => $total,
+			'by_status'     => $by,
+			'by_sentiment'  => self::count_quotes_by_taxonomy( SentimentTaxonomy::TAXONOMY, $statuses ),
+			'by_claim_type' => self::count_quotes_by_taxonomy( ClaimTypeTaxonomy::TAXONOMY, $statuses ),
+			'by_language'   => self::count_quotes_by_language( $statuses, $total ),
+		);
+	}
+
+	/**
+	 * Post statuses that participate in aggregate stats.
+	 *
+	 * @return string[]
+	 */
+	private static function countable_post_statuses(): array {
+		return array( 'publish', 'pending', 'rejected', 'merged' );
+	}
+
+	/**
+	 * @param string[] $statuses Post statuses.
+	 * @return array<string, int> Keys are status slugs.
+	 */
+	private static function count_quotes_by_status( array $statuses ): array {
+		$by = array();
 		foreach ( $statuses as $st ) {
 			$q         = new \WP_Query(
 				array(
@@ -300,13 +326,81 @@ final class AbilitiesRegistry {
 			);
 			$by[ $st ] = count( $q->posts );
 		}
+		return $by;
+	}
 
-		return array(
-			'total_quotes'  => array_sum( $by ),
-			'by_status'     => $by,
-			'by_sentiment'  => array(),
-			'by_claim_type' => array(),
-			'by_language'   => array(),
+	/**
+	 * Count quotes per term slug for a taxonomy (all given statuses).
+	 *
+	 * @param string   $taxonomy  Registered taxonomy.
+	 * @param string[] $statuses  Post status slugs.
+	 * @return array<string, int> Keys are term slugs.
+	 */
+	private static function count_quotes_by_taxonomy( string $taxonomy, array $statuses ): array {
+		$terms = get_terms(
+			array(
+				'taxonomy'   => $taxonomy,
+				'hide_empty' => false,
+			)
 		);
+		if ( is_wp_error( $terms ) || ! is_array( $terms ) ) {
+			return array();
+		}
+		$out = array();
+		foreach ( $terms as $term ) {
+			if ( ! $term instanceof \WP_Term ) {
+				continue;
+			}
+			$query              = new \WP_Query(
+				array(
+					'post_type'      => QuotePostType::POST_TYPE,
+					'post_status'    => $statuses,
+					'posts_per_page' => -1,
+					'fields'         => 'ids',
+					'no_found_rows'  => true,
+					'tax_query'      => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
+						array(
+							'taxonomy' => $taxonomy,
+							'field'    => 'term_id',
+							'terms'    => (int) $term->term_id,
+						),
+					),
+				)
+			);
+			$out[ $term->slug ] = count( $query->posts );
+		}
+		return $out;
+	}
+
+	/**
+	 * When Polylang is active, count quotes per language slug; otherwise one bucket for the site.
+	 *
+	 * @param string[] $statuses Post status slugs.
+	 * @param int      $total    Total quote count (used when Polylang is off).
+	 * @return array<string, int>
+	 */
+	private static function count_quotes_by_language( array $statuses, int $total ): array {
+		if ( ! function_exists( 'pll_languages_list' ) ) {
+			return array( '_all' => $total );
+		}
+		$langs = pll_languages_list( array( 'fields' => 'slug' ) );
+		if ( ! is_array( $langs ) || array() === $langs ) {
+			return array( '_all' => $total );
+		}
+		$out = array();
+		foreach ( $langs as $slug ) {
+			$query                 = new \WP_Query(
+				array(
+					'post_type'      => QuotePostType::POST_TYPE,
+					'post_status'    => $statuses,
+					'lang'           => $slug,
+					'posts_per_page' => -1,
+					'fields'         => 'ids',
+					'no_found_rows'  => true,
+				)
+			);
+			$out[ (string) $slug ] = count( $query->posts );
+		}
+		return $out;
 	}
 }

@@ -62,7 +62,7 @@ final class PublicScreenShortcodes {
 
 		$out = '<div class="wpis-hero-stats-inner">';
 		foreach ( $items as $row ) {
-			$n = (int) $row['n'];
+			$n    = (int) $row['n'];
 			$out .= '<p class="wp-block-paragraph"><strong>' . esc_html( (string) number_format_i18n( $n ) ) . '</strong>' . esc_html( $row['label'] ) . '</p>';
 		}
 		$out .= '</div>';
@@ -185,15 +185,15 @@ final class PublicScreenShortcodes {
 	private static function count_in_term_by_sentiment( int $term_id, string $sent ): int {
 		$q = new \WP_Query(
 			array(
-				'post_type'                => QuotePostType::POST_TYPE,
-				'post_status'              => 'publish',
-				'posts_per_page'           => 1,
-				'fields'                   => 'ids',
-				'no_found_rows'            => false,
-				'update_post_meta_cache'   => false,
-				'update_post_term_cache'   => false,
-				'suppress_filters'         => true,
-				'tax_query'                => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
+				'post_type'              => QuotePostType::POST_TYPE,
+				'post_status'            => 'publish',
+				'posts_per_page'         => 1,
+				'fields'                 => 'ids',
+				'no_found_rows'          => false,
+				'update_post_meta_cache' => false,
+				'update_post_term_cache' => false,
+				'suppress_filters'       => true,
+				'tax_query'              => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
 					'relation' => 'AND',
 					array(
 						'taxonomy' => ClaimTypeTaxonomy::TAXONOMY,
@@ -214,24 +214,35 @@ final class PublicScreenShortcodes {
 	/**
 	 * Turn three counts into safe column widths.
 	 *
+	 * @param int $pos Count for the positive segment.
+	 * @param int $neg Count for the negative segment.
+	 * @param int $mix Count for the mixed segment.
 	 * @return array{neg_w: int, pos_w: int, mix_w: int}
 	 */
 	private static function bar_percent_triplet( int $pos, int $neg, int $mix ): array {
 		$t = $pos + $neg + $mix;
 		if ( $t < 1 ) {
-			return array( 'neg_w' => 33, 'pos_w' => 34, 'mix_w' => 33 );
+			return array(
+				'neg_w' => 33,
+				'pos_w' => 34,
+				'mix_w' => 33,
+			);
 		}
 		$neg_w = (int) round( 100 * $neg / $t );
 		$pos_w = (int) round( 100 * $pos / $t );
 		$mix_w = 100 - $neg_w - $pos_w;
 		if ( $mix_w < 0 ) {
-			$mix_w  = 0;
-			$pos_w  = 100 - $neg_w;
+			$mix_w = 0;
+			$pos_w = 100 - $neg_w;
 		}
 		if ( $neg_w < 1 && $neg > 0 ) {
 			$neg_w = 1;
 		}
-		return array( 'neg_w' => $neg_w, 'pos_w' => $pos_w, 'mix_w' => $mix_w );
+		return array(
+			'neg_w' => $neg_w,
+			'pos_w' => $pos_w,
+			'mix_w' => $mix_w,
+		);
 	}
 
 	/**
@@ -323,15 +334,15 @@ final class PublicScreenShortcodes {
 	 */
 	private static function platform_label( string $slug ): string {
 		$map = array(
-			'mastodon'  => 'Mastodon',
-			'bluesky'   => 'Bluesky',
-			'linkedin'  => 'LinkedIn',
-			'youtube'   => 'YouTube',
-			'reddit'    => 'Reddit',
-			'blog'      => 'Blog',
-			'x'         => 'X',
-			'hn'        => 'HN',
-			'other'     => 'Other',
+			'mastodon' => 'Mastodon',
+			'bluesky'  => 'Bluesky',
+			'linkedin' => 'LinkedIn',
+			'youtube'  => 'YouTube',
+			'reddit'   => 'Reddit',
+			'blog'     => 'Blog',
+			'x'        => 'X',
+			'hn'       => 'HN',
+			'other'    => 'Other',
 		);
 		return $map[ $slug ] ?? $slug;
 	}

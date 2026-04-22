@@ -126,5 +126,4 @@ final class DemoSeeder {
 		$t = wp_html_excerpt( $text, 72, '…' );
 		return $t ? $t : 'Quote';
 	}
-
 }
