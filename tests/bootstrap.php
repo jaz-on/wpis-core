@@ -17,22 +17,7 @@ $GLOBALS['wp_tests_options'] = array(
 $_tests_dir = getenv( 'WP_TESTS_DIR' );
 
 if ( ! $_tests_dir ) {
-	$candidates = array(
-		rtrim( sys_get_temp_dir(), '/' ) . '/wordpress-tests-lib',
-		'/tmp/wordpress-tests-lib',
-	);
-	foreach ( $candidates as $dir ) {
-		if ( is_readable( $dir . '/includes/functions.php' ) ) {
-			$_tests_dir = $dir;
-			putenv( 'WP_TESTS_DIR=' . $dir );
-			break;
-		}
-	}
-}
-
-if ( ! $_tests_dir || ! is_readable( $_tests_dir . '/includes/functions.php' ) ) {
-	echo 'WP_TESTS_DIR is not set and no wordpress-tests-lib was found under common temp paths.' . PHP_EOL;
-	echo 'Install the WordPress test suite, e.g.:' . PHP_EOL;
+	echo 'WP_TESTS_DIR is not set. Install the WordPress test suite, e.g.:' . PHP_EOL;
 	echo '  bash bin/install-wp-tests.sh wordpress_test root "" localhost latest' . PHP_EOL;
 	exit( 1 );
 }
