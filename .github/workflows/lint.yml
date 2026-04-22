@@ -22,3 +22,24 @@ jobs:
 
       - name: PHPCS
         run: composer lint
+
+  vendor-sync:
+    name: Production vendor matches commit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          tools: composer:v2
+
+      - name: Regenerate production vendor
+        run: composer install --no-dev --optimize-autoloader --no-interaction --no-progress
+
+      - name: Verify vendor/ is in sync
+        run: |
+          if ! git diff --exit-code vendor/; then
+            echo "::error::vendor/ is out of date. Run: composer install --no-dev --optimize-autoloader && git add vendor && git commit"
+            exit 1
+          fi

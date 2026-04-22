@@ -16,7 +16,7 @@ Core plugin for the [WordPress Is…](https://wpis.jasonrouet.com) project: the 
    wp-content/plugins/wpis-plugin/
    ```
 
-2. From that directory, install PHP dependencies:
+2. **Composer autoload:** the repository includes a production `vendor/` (autoload only) so Git Updater and plain `git pull` installs work without running Composer on the server. If you cloned an old copy or use a fork without `vendor/`, run:
 
    ```bash
    composer install --no-dev --optimize-autoloader
@@ -35,6 +35,8 @@ This plugin declares a [Git Updater](https://git-updater.com/knowledge-base/requ
 
 Bump the **`Version:`** header in `wpis-plugin.php` when you ship changes you want sites to pull; Git Updater compares that to the latest commit on `main` (or to releases, if you configure release assets).
 
+Maintainers: after any change to `composer.json`, `composer.lock`, or PSR-4 paths under `src/`, run `composer install --no-dev --optimize-autoloader` and **commit the updated `vendor/`** so sites that sync from `main` keep a working autoload. CI fails if `vendor/` drifts.
+
 ## Development
 
 ```bash
@@ -42,6 +44,8 @@ composer install
 composer test
 composer lint
 ```
+
+Use the full `composer install` (with dev) locally for PHPCS and PHPUnit. Before pushing to `main`, refresh the committed production tree with `composer install --no-dev --optimize-autoloader` whenever autoload inputs changed.
 
 ## Theme contract
 
