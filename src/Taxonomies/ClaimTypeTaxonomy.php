@@ -23,22 +23,22 @@ final class ClaimTypeTaxonomy {
 	 */
 	public static function register(): void {
 		$labels = array(
-			'name'                  => _x( 'Claim types', 'taxonomy general name', 'wpis-plugin' ),
-			'singular_name'         => _x( 'Claim type', 'taxonomy singular name', 'wpis-plugin' ),
-			'search_items'          => __( 'Search Claim Types', 'wpis-plugin' ),
-			'all_items'             => __( 'All Claim Types', 'wpis-plugin' ),
-			'parent_item'           => __( 'Parent Claim Type', 'wpis-plugin' ),
-			'parent_item_colon'     => __( 'Parent Claim Type:', 'wpis-plugin' ),
-			'edit_item'             => __( 'Edit Claim Type', 'wpis-plugin' ),
-			'update_item'           => __( 'Update Claim Type', 'wpis-plugin' ),
-			'add_new_item'          => __( 'Add New Claim Type', 'wpis-plugin' ),
-			'new_item_name'         => __( 'New Claim Type Name', 'wpis-plugin' ),
-			'menu_name'             => __( 'Claim Types', 'wpis-plugin' ),
-			'not_found'             => __( 'No claim types found.', 'wpis-plugin' ),
-			'no_terms'              => __( 'No claim types', 'wpis-plugin' ),
-			'filter_by_item'        => __( 'Filter by claim type', 'wpis-plugin' ),
-			'items_list_navigation' => __( 'Claim types list navigation', 'wpis-plugin' ),
-			'items_list'            => __( 'Claim types list', 'wpis-plugin' ),
+			'name'                  => _x( 'Claim types', 'taxonomy general name', 'wpis-core' ),
+			'singular_name'         => _x( 'Claim type', 'taxonomy singular name', 'wpis-core' ),
+			'search_items'          => __( 'Search Claim Types', 'wpis-core' ),
+			'all_items'             => __( 'All Claim Types', 'wpis-core' ),
+			'parent_item'           => __( 'Parent Claim Type', 'wpis-core' ),
+			'parent_item_colon'     => __( 'Parent Claim Type:', 'wpis-core' ),
+			'edit_item'             => __( 'Edit Claim Type', 'wpis-core' ),
+			'update_item'           => __( 'Update Claim Type', 'wpis-core' ),
+			'add_new_item'          => __( 'Add New Claim Type', 'wpis-core' ),
+			'new_item_name'         => __( 'New Claim Type Name', 'wpis-core' ),
+			'menu_name'             => __( 'Claim Types', 'wpis-core' ),
+			'not_found'             => __( 'No claim types found.', 'wpis-core' ),
+			'no_terms'              => __( 'No claim types', 'wpis-core' ),
+			'filter_by_item'        => __( 'Filter by claim type', 'wpis-core' ),
+			'items_list_navigation' => __( 'Claim types list navigation', 'wpis-core' ),
+			'items_list'            => __( 'Claim types list', 'wpis-core' ),
 		);
 
 		$args = array(

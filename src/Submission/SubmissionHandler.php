@@ -36,7 +36,7 @@ final class SubmissionHandler {
 	 */
 	public static function handle(): void {
 		if ( ! isset( $_POST['wpis_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wpis_nonce'] ) ), 'wpis_submit_quote' ) ) {
-			wp_die( esc_html__( 'Invalid submission.', 'wpis-plugin' ), 403 );
+			wp_die( esc_html__( 'Invalid submission.', 'wpis-core' ), 403 );
 		}
 
 		if ( ! empty( $_POST['wpis_hp'] ) ) {
@@ -51,7 +51,7 @@ final class SubmissionHandler {
 
 		$ip = self::client_ip();
 		if ( ! self::check_rate_limit( $ip ) ) {
-			wp_die( esc_html__( 'Please wait before submitting again.', 'wpis-plugin' ), 429 );
+			wp_die( esc_html__( 'Please wait before submitting again.', 'wpis-core' ), 429 );
 		}
 
 		$text = isset( $_POST['wpis_quote'] ) ? sanitize_textarea_field( wp_unslash( $_POST['wpis_quote'] ) ) : '';
@@ -59,16 +59,16 @@ final class SubmissionHandler {
 
 		$consent = isset( $_POST['wpis_rgpd'] );
 		if ( ! $consent ) {
-			wp_die( esc_html__( 'Consent is required.', 'wpis-plugin' ), 400 );
+			wp_die( esc_html__( 'Consent is required.', 'wpis-core' ), 400 );
 		}
 
 		$has_file = ! empty( $_FILES['wpis_screenshot']['name'] );
 		if ( '' === trim( $text ) && ! $has_file ) {
-			wp_die( esc_html__( 'Please enter quote text or attach a screenshot.', 'wpis-plugin' ), 400 );
+			wp_die( esc_html__( 'Please enter quote text or attach a screenshot.', 'wpis-core' ), 400 );
 		}
 
 		if ( strlen( $text ) > 1000 ) {
-			wp_die( esc_html__( 'Quote is too long.', 'wpis-plugin' ), 400 );
+			wp_die( esc_html__( 'Quote is too long.', 'wpis-core' ), 400 );
 		}
 
 		$user_id = get_current_user_id();
@@ -85,7 +85,7 @@ final class SubmissionHandler {
 		);
 
 		if ( is_wp_error( $post_id ) ) {
-			wp_die( esc_html__( 'Could not save submission.', 'wpis-plugin' ), 500 );
+			wp_die( esc_html__( 'Could not save submission.', 'wpis-core' ), 500 );
 		}
 
 		$domain   = $url ? wp_parse_url( $url, PHP_URL_HOST ) : '';
@@ -145,7 +145,7 @@ final class SubmissionHandler {
 	 */
 	private static function title_from_text( string $text ): string {
 		$t = wp_html_excerpt( $text, 80, '…' );
-		return $t ? $t : __( 'Quote submission', 'wpis-plugin' );
+		return $t ? $t : __( 'Quote submission', 'wpis-core' );
 	}
 
 	/**

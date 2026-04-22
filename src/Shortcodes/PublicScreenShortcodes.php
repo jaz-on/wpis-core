@@ -163,15 +163,15 @@ final class PublicScreenShortcodes {
 		$html .= '<h3 class="wp-block-heading" style="font-size: 22px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.15; margin: 0;">';
 		$html .= '<a href="' . esc_url( (string) $link ) . '">' . esc_html( $term->name ) . '</a>';
 		$html .= '</h3>';
-		$html .= '<p class="is-style-wpis-tax-count wp-block-paragraph">' . esc_html( sprintf( /* translators: %s: number */ _n( '%s quote', '%s quotes', $total, 'wpis-plugin' ), number_format_i18n( $total ) ) ) . '</p>';
+		$html .= '<p class="is-style-wpis-tax-count wp-block-paragraph">' . esc_html( sprintf( /* translators: %s: number */ _n( '%s quote', '%s quotes', $total, 'wpis-core' ), number_format_i18n( $total ) ) ) . '</p>';
 		$html .= '</div>';
 		$html .= '<p class="is-style-wpis-tax-desc wp-block-paragraph" style="font-size: 14px; line-height: 1.5; color: var(--muted); margin: 0 0 14px;">' . $desc . '</p>';
 
 		$html .= self::render_sentiment_bar_columns( $bar['neg_w'], $bar['pos_w'], $bar['mix_w'] );
 		$html .= '<div class="wpis-tax-breakdown is-layout-flex wp-block-group" style="display: flex; flex-wrap: wrap; gap: 12px; font-family: var(--wp--preset--font-family--jetbrains-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin: 0;">';
-		$html .= '<p class="wp-block-paragraph" style="margin: 0; display: flex; align-items: center; gap: 4px;"><span class="wpis-dot neg" aria-hidden="true"></span>' . esc_html( sprintf( /* translators: %d */ __( '%d critical', 'wpis-plugin' ), $neg ) ) . '</p>';
-		$html .= '<p class="wp-block-paragraph" style="margin: 0; display: flex; align-items: center; gap: 4px;"><span class="wpis-dot pos" aria-hidden="true"></span>' . esc_html( sprintf( /* translators: %d */ __( '%d supportive', 'wpis-plugin' ), $pos ) ) . '</p>';
-		$html .= '<p class="wp-block-paragraph" style="margin: 0; display: flex; align-items: center; gap: 4px;"><span class="wpis-dot mix" aria-hidden="true"></span>' . esc_html( sprintf( /* translators: %d */ __( '%d mixed', 'wpis-plugin' ), $mix ) ) . '</p>';
+		$html .= '<p class="wp-block-paragraph" style="margin: 0; display: flex; align-items: center; gap: 4px;"><span class="wpis-dot neg" aria-hidden="true"></span>' . esc_html( sprintf( /* translators: %d */ __( '%d critical', 'wpis-core' ), $neg ) ) . '</p>';
+		$html .= '<p class="wp-block-paragraph" style="margin: 0; display: flex; align-items: center; gap: 4px;"><span class="wpis-dot pos" aria-hidden="true"></span>' . esc_html( sprintf( /* translators: %d */ __( '%d supportive', 'wpis-core' ), $pos ) ) . '</p>';
+		$html .= '<p class="wp-block-paragraph" style="margin: 0; display: flex; align-items: center; gap: 4px;"><span class="wpis-dot mix" aria-hidden="true"></span>' . esc_html( sprintf( /* translators: %d */ __( '%d mixed', 'wpis-core' ), $mix ) ) . '</p>';
 		$html .= '</div>';
 		$html .= '</div>';
 		return $html;
@@ -297,7 +297,7 @@ final class PublicScreenShortcodes {
 		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery
 		$rows = $wpdb->get_results( $wpdb->prepare( $sql, QuotePostType::POST_TYPE ), ARRAY_A );
 		if ( ! is_array( $rows ) || count( $rows ) === 0 ) {
-			return '<p class="wp-block-paragraph" style="color: var(--muted);">' . esc_html__( 'No platform data yet. Publish quotes with a source platform.', 'wpis-plugin' ) . '</p>';
+			return '<p class="wp-block-paragraph" style="color: var(--muted);">' . esc_html__( 'No platform data yet. Publish quotes with a source platform.', 'wpis-core' ) . '</p>';
 		}
 		$out = '';
 		foreach ( $rows as $row ) {

@@ -37,7 +37,7 @@ final class PluginListLinks {
 			sprintf(
 				'<a href="%1$s">%2$s</a>',
 				esc_url( $url ),
-				esc_html__( 'Quotes', 'wpis-plugin' )
+				esc_html__( 'Quotes', 'wpis-core' )
 			)
 		);
 

@@ -44,10 +44,10 @@ final class Activation {
 	 */
 	public static function seed_default_terms(): void {
 		$sentiments = array(
-			'positive' => __( 'Positive', 'wpis-plugin' ),
-			'negative' => __( 'Negative', 'wpis-plugin' ),
-			'neutral'  => __( 'Neutral', 'wpis-plugin' ),
-			'mixed'    => __( 'Mixed', 'wpis-plugin' ),
+			'positive' => __( 'Positive', 'wpis-core' ),
+			'negative' => __( 'Negative', 'wpis-core' ),
+			'neutral'  => __( 'Neutral', 'wpis-core' ),
+			'mixed'    => __( 'Mixed', 'wpis-core' ),
 		);
 
 		foreach ( $sentiments as $slug => $name ) {
@@ -57,14 +57,14 @@ final class Activation {
 		}
 
 		$claims = array(
-			'performance'        => __( 'Performance', 'wpis-plugin' ),
-			'security'           => __( 'Security', 'wpis-plugin' ),
-			'ease-of-use'        => __( 'Ease of use', 'wpis-plugin' ),
-			'community'          => __( 'Community', 'wpis-plugin' ),
-			'ecosystem'          => __( 'Ecosystem', 'wpis-plugin' ),
-			'business-viability' => __( 'Business viability', 'wpis-plugin' ),
-			'accessibility'      => __( 'Accessibility', 'wpis-plugin' ),
-			'modernity'          => __( 'Modernity', 'wpis-plugin' ),
+			'performance'        => __( 'Performance', 'wpis-core' ),
+			'security'           => __( 'Security', 'wpis-core' ),
+			'ease-of-use'        => __( 'Ease of use', 'wpis-core' ),
+			'community'          => __( 'Community', 'wpis-core' ),
+			'ecosystem'          => __( 'Ecosystem', 'wpis-core' ),
+			'business-viability' => __( 'Business viability', 'wpis-core' ),
+			'accessibility'      => __( 'Accessibility', 'wpis-core' ),
+			'modernity'          => __( 'Modernity', 'wpis-core' ),
 		);
 
 		foreach ( $claims as $slug => $name ) {

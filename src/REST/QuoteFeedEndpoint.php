@@ -174,7 +174,7 @@ final class QuoteFeedEndpoint {
 		$link    = get_permalink( $post );
 		$body    = wp_strip_all_tags( (string) $post->post_content );
 		$excerpt = wp_trim_words( $body, 40, '…' );
-		$read    = __( 'Read', 'wpis-plugin' );
+		$read    = __( 'Read', 'wpis-core' );
 
 		$sent = 'neutral';
 		$st   = get_the_terms( $post, 'sentiment' );
@@ -202,7 +202,7 @@ final class QuoteFeedEndpoint {
 		if ( '' !== $claim ) {
 			$inner .= '<span class="wpis-quote-card__claim">' . esc_html( $claim ) . '</span>';
 		}
-		$inner .= '<span class="wpis-quote-card__badge" aria-label="' . esc_attr__( 'Echo count', 'wpis-plugin' ) . '">×' . esc_html( (string) $counter ) . '</span>';
+		$inner .= '<span class="wpis-quote-card__badge" aria-label="' . esc_attr__( 'Echo count', 'wpis-core' ) . '">×' . esc_html( (string) $counter ) . '</span>';
 		if ( '' !== $plat ) {
 			$inner .= '<span class="wpis-quote-card__plat">' . esc_html( strtoupper( $plat ) ) . '</span>';
 		}

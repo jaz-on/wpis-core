@@ -7,10 +7,11 @@
  * Author URI: https://jasonrouet.com
  * License: GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain: wpis-plugin
+ * Text Domain: wpis-core
  * Requires at least: 6.9
  * Requires PHP: 8.2
- * GitHub Plugin URI: https://github.com/jaz-on/wpis-plugin
+ * Requires Plugins: mcp-adapter
+ * GitHub Plugin URI: https://github.com/jaz-on/wpis-core
  * Primary Branch: main
  *
  * @package WPIS\Core
@@ -29,7 +30,7 @@ if ( version_compare( PHP_VERSION, '8.2.0', '<' ) ) {
 			echo esc_html(
 				sprintf(
 					/* translators: %s: current PHP version */
-					__( 'WordPress Is… Core requires PHP 8.2 or newer. This site is running PHP %s.', 'wpis-plugin' ),
+					__( 'WordPress Is… Core requires PHP 8.2 or newer. This site is running PHP %s.', 'wpis-core' ),
 					PHP_VERSION
 				)
 			);
@@ -62,7 +63,7 @@ if ( $wpis_core_loaded ) {
 			'admin_notices',
 			static function () {
 				echo '<div class="notice notice-warning"><p>';
-				esc_html_e( 'WPIS Core targets WordPress 6.9+ for the Abilities API. Quotes and moderation features still load; upgrade WordPress for full MCP/abilities support.', 'wpis-plugin' );
+				esc_html_e( 'WPIS Core targets WordPress 6.9+ for the Abilities API. Quotes and moderation features still load; upgrade WordPress for full MCP/abilities support.', 'wpis-core' );
 				echo '</p></div>';
 			}
 		);
@@ -84,25 +85,6 @@ if ( $wpis_core_loaded ) {
 	);
 
 	( new \WPIS\Core\Plugin() )->register();
-
-	/**
-	 * Bail out early if MCP Adapter is not active.
-	 */
-	add_action(
-		'plugins_loaded',
-		static function () {
-			if ( ! class_exists( '\WP\MCP\Core\McpAdapter' ) ) {
-				add_action(
-					'admin_notices',
-					static function () {
-						echo '<div class="notice notice-warning"><p>';
-						esc_html_e( 'WPIS Core: MCP Adapter plugin is not active. Abilities will still work but will not be exposed to MCP clients.', 'wpis-plugin' );
-						echo '</p></div>';
-					}
-				);
-			}
-		}
-	);
 
 	/**
 	 * Register the MCP server for the WPIS project.
@@ -141,8 +123,8 @@ if ( $wpis_core_loaded ) {
 				'wpis-server',
 				'wpis/v1',
 				'wpis',
-				__( 'WordPress Is… MCP', 'wpis-plugin' ),
-				__( 'MCP server for the WordPress Is… project. Exposes a curated set of abilities.', 'wpis-plugin' ),
+				__( 'WordPress Is… MCP', 'wpis-core' ),
+				__( 'MCP server for the WordPress Is… project. Exposes a curated set of abilities.', 'wpis-core' ),
 				'v1.0.0',
 				array(
 					\WP\MCP\Transport\HttpTransport::class,

@@ -23,17 +23,17 @@ final class QuoteMerger {
 	 */
 	public static function merge( int $source_id, int $target_id ) {
 		if ( $source_id === $target_id ) {
-			return new \WP_Error( 'wpis_merge_same', __( 'Source and target cannot be the same quote.', 'wpis-plugin' ) );
+			return new \WP_Error( 'wpis_merge_same', __( 'Source and target cannot be the same quote.', 'wpis-core' ) );
 		}
 
 		$source = get_post( $source_id );
 		$target = get_post( $target_id );
 
 		if ( ! $source || QuotePostType::POST_TYPE !== $source->post_type ) {
-			return new \WP_Error( 'wpis_merge_source', __( 'Invalid source quote.', 'wpis-plugin' ) );
+			return new \WP_Error( 'wpis_merge_source', __( 'Invalid source quote.', 'wpis-core' ) );
 		}
 		if ( ! $target || QuotePostType::POST_TYPE !== $target->post_type ) {
-			return new \WP_Error( 'wpis_merge_target', __( 'Invalid target quote.', 'wpis-plugin' ) );
+			return new \WP_Error( 'wpis_merge_target', __( 'Invalid target quote.', 'wpis-core' ) );
 		}
 
 		self::reparent_merged_children( $source_id, $target_id );
@@ -185,16 +185,16 @@ final class QuoteMerger {
 	public static function unmerge( int $quote_id ) {
 		$post = get_post( $quote_id );
 		if ( ! $post || QuotePostType::POST_TYPE !== $post->post_type ) {
-			return new \WP_Error( 'wpis_unmerge_post', __( 'Invalid quote.', 'wpis-plugin' ) );
+			return new \WP_Error( 'wpis_unmerge_post', __( 'Invalid quote.', 'wpis-core' ) );
 		}
 
 		if ( 'merged' !== $post->post_status ) {
-			return new \WP_Error( 'wpis_unmerge_status', __( 'Quote is not in merged status.', 'wpis-plugin' ) );
+			return new \WP_Error( 'wpis_unmerge_status', __( 'Quote is not in merged status.', 'wpis-core' ) );
 		}
 
 		$parent_id = (int) get_post_meta( $quote_id, '_wpis_parent_id', true );
 		if ( $parent_id <= 0 ) {
-			return new \WP_Error( 'wpis_unmerge_parent', __( 'Missing parent reference.', 'wpis-plugin' ) );
+			return new \WP_Error( 'wpis_unmerge_parent', __( 'Missing parent reference.', 'wpis-core' ) );
 		}
 
 		$source_counter = self::get_counter( $quote_id );

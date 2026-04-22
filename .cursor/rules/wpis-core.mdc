@@ -1,0 +1,13 @@
+---
+description: WordPress Is… Core plugin — CPT, REST, submission, MCP
+globs: packages/wpis-core/**
+---
+
+# WPIS Core plugin rules
+
+- **Namespace** `WPIS\Core\` under `src/`, PSR-4 via Composer. **Text domain** `wpis-core`.
+- **Meta keys** use prefix `_wpis_` ; public functions `wpis_*` where exposed in `inc/functions-api.php`.
+- **Bootstrap**: `wpis-core.php` prefers `vendor/autoload.php` when present; otherwise `inc/autoload-runtime.php`. `vendor/` is not committed; production uses the runtime autoloader.
+- **Theme boundary**: shortcodes `[wpis_submit_form]`, `[wpis_repeat_badge]` ; submission via `admin-post.php`. See `workspace/docs/wpis-plugin/boundary-submit.md` (doc path may still say “plugin”; code lives in `packages/wpis-core`).
+- **English UI strings**: workspace `.cursor/rules/no-oxford-comma-english.mdc`.
+- **Versions**: workspace `.cursor/rules/no-unauthorized-version-bumps.mdc`.

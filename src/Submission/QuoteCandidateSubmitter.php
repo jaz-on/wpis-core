@@ -176,6 +176,6 @@ final class QuoteCandidateSubmitter {
 	 */
 	private static function title_from_text( string $text ): string {
 		$t = wp_html_excerpt( $text, 80, '…' );
-		return '' !== $t ? $t : __( 'Quote submission', 'wpis-plugin' );
+		return '' !== $t ? $t : __( 'Quote submission', 'wpis-core' );
 	}
 }

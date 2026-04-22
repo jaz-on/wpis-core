@@ -44,35 +44,35 @@ final class SubmitFormRenderer {
 			<?php echo $nonce; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 			<?php echo $pll; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 			<p class="wpis-hp-wrap" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;" aria-hidden="true">
-				<label for="wpis_hp"><?php esc_html_e( 'Leave empty', 'wpis-plugin' ); ?></label>
+				<label for="wpis_hp"><?php esc_html_e( 'Leave empty', 'wpis-core' ); ?></label>
 				<input type="text" name="wpis_hp" id="wpis_hp" value="" tabindex="-1" autocomplete="off" />
 			</p>
 			<div class="form-group">
-				<label for="wpis_quote"><?php esc_html_e( 'The quote', 'wpis-plugin' ); ?> <span class="required">*</span></label>
-				<textarea id="wpis_quote" name="wpis_quote" rows="6" placeholder="<?php echo esc_attr__( 'Paste the text here: exactly as it was written, in its original language.', 'wpis-plugin' ); ?>"></textarea>
-				<div class="hint"><?php esc_html_e( '→ At least the text OR a screenshot is required.', 'wpis-plugin' ); ?></div>
+				<label for="wpis_quote"><?php esc_html_e( 'The quote', 'wpis-core' ); ?> <span class="required">*</span></label>
+				<textarea id="wpis_quote" name="wpis_quote" rows="6" placeholder="<?php echo esc_attr__( 'Paste the text here: exactly as it was written, in its original language.', 'wpis-core' ); ?>"></textarea>
+				<div class="hint"><?php esc_html_e( '→ At least the text OR a screenshot is required.', 'wpis-core' ); ?></div>
 			</div>
 			<div class="form-group">
-				<label for="wpis_screenshot"><?php esc_html_e( 'Or upload a screenshot', 'wpis-plugin' ); ?></label>
+				<label for="wpis_screenshot"><?php esc_html_e( 'Or upload a screenshot', 'wpis-core' ); ?></label>
 				<input type="file" id="wpis_screenshot" name="wpis_screenshot" accept="image/*" />
-				<div class="hint"><?php esc_html_e( '→ We will extract the text automatically. The image is deleted after validation.', 'wpis-plugin' ); ?></div>
+				<div class="hint"><?php esc_html_e( '→ We will extract the text automatically. The image is deleted after validation.', 'wpis-core' ); ?></div>
 			</div>
 			<div class="form-group">
-				<label for="wpis_source_url"><?php esc_html_e( 'Source URL (if possible)', 'wpis-plugin' ); ?></label>
+				<label for="wpis_source_url"><?php esc_html_e( 'Source URL (if possible)', 'wpis-core' ); ?></label>
 				<input type="url" id="wpis_source_url" name="wpis_source_url" placeholder="https://…" />
-				<div class="hint"><?php esc_html_e( '→ Helps us detect the platform. Only the domain is stored, never the full URL.', 'wpis-plugin' ); ?></div>
+				<div class="hint"><?php esc_html_e( '→ Helps us detect the platform. Only the domain is stored, never the full URL.', 'wpis-core' ); ?></div>
 			</div>
 			<div class="rgpd-notice">
-				<strong><?php esc_html_e( 'Privacy & data', 'wpis-plugin' ); ?></strong>
-				<?php esc_html_e( 'Screenshots are deleted after text extraction. We never store personal identifiers (names, profile URLs or photos). Only the claim itself, the platform domain and the language are kept. Submissions are moderated before appearing on the site.', 'wpis-plugin' ); ?>
+				<strong><?php esc_html_e( 'Privacy & data', 'wpis-core' ); ?></strong>
+				<?php esc_html_e( 'Screenshots are deleted after text extraction. We never store personal identifiers (names, profile URLs or photos). Only the claim itself, the platform domain and the language are kept. Submissions are moderated before appearing on the site.', 'wpis-core' ); ?>
 			</div>
 			<p class="form-group">
 				<label>
 					<input type="checkbox" name="wpis_rgpd" value="1" required />
-					<?php esc_html_e( 'I understand how my submission is used.', 'wpis-plugin' ); ?>
+					<?php esc_html_e( 'I understand how my submission is used.', 'wpis-core' ); ?>
 				</label>
 			</p>
-			<button type="submit" class="btn-primary"><?php esc_html_e( 'Submit this quote', 'wpis-plugin' ); ?></button>
+			<button type="submit" class="btn-primary"><?php esc_html_e( 'Submit this quote', 'wpis-core' ); ?></button>
 		</form>
 		<?php
 		return (string) ob_get_clean();

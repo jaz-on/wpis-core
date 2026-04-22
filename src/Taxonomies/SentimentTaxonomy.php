@@ -23,20 +23,20 @@ final class SentimentTaxonomy {
 	 */
 	public static function register(): void {
 		$labels = array(
-			'name'                       => _x( 'Sentiments', 'taxonomy general name', 'wpis-plugin' ),
-			'singular_name'              => _x( 'Sentiment', 'taxonomy singular name', 'wpis-plugin' ),
-			'search_items'               => __( 'Search Sentiments', 'wpis-plugin' ),
-			'popular_items'              => __( 'Popular Sentiments', 'wpis-plugin' ),
-			'all_items'                  => __( 'All Sentiments', 'wpis-plugin' ),
-			'edit_item'                  => __( 'Edit Sentiment', 'wpis-plugin' ),
-			'update_item'                => __( 'Update Sentiment', 'wpis-plugin' ),
-			'add_new_item'               => __( 'Add New Sentiment', 'wpis-plugin' ),
-			'new_item_name'              => __( 'New Sentiment Name', 'wpis-plugin' ),
-			'separate_items_with_commas' => __( 'Separate sentiments with commas', 'wpis-plugin' ),
-			'add_or_remove_items'        => __( 'Add or remove sentiments', 'wpis-plugin' ),
-			'choose_from_most_used'      => __( 'Choose from the most used sentiments', 'wpis-plugin' ),
-			'not_found'                  => __( 'No sentiments found.', 'wpis-plugin' ),
-			'menu_name'                  => __( 'Sentiments', 'wpis-plugin' ),
+			'name'                       => _x( 'Sentiments', 'taxonomy general name', 'wpis-core' ),
+			'singular_name'              => _x( 'Sentiment', 'taxonomy singular name', 'wpis-core' ),
+			'search_items'               => __( 'Search Sentiments', 'wpis-core' ),
+			'popular_items'              => __( 'Popular Sentiments', 'wpis-core' ),
+			'all_items'                  => __( 'All Sentiments', 'wpis-core' ),
+			'edit_item'                  => __( 'Edit Sentiment', 'wpis-core' ),
+			'update_item'                => __( 'Update Sentiment', 'wpis-core' ),
+			'add_new_item'               => __( 'Add New Sentiment', 'wpis-core' ),
+			'new_item_name'              => __( 'New Sentiment Name', 'wpis-core' ),
+			'separate_items_with_commas' => __( 'Separate sentiments with commas', 'wpis-core' ),
+			'add_or_remove_items'        => __( 'Add or remove sentiments', 'wpis-core' ),
+			'choose_from_most_used'      => __( 'Choose from the most used sentiments', 'wpis-core' ),
+			'not_found'                  => __( 'No sentiments found.', 'wpis-core' ),
+			'menu_name'                  => __( 'Sentiments', 'wpis-core' ),
 		);
 
 		$args = array(

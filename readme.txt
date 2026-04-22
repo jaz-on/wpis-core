@@ -29,14 +29,14 @@ Features include:
 
 * WordPress 6.9 or higher (Abilities API)
 * PHP 8.2 or higher
-* MCP Adapter plugin (recommended for MCP exposure; optional for other features)
+* [MCP Adapter](https://wordpress.org/plugins/mcp-adapter/) (required; listed under plugin dependencies in WordPress 6.5+)
 
 == Installation ==
 
-1. From the **`jaz-on/wpis-plugin`** repo, deploy the plugin directory as **`wpis-plugin`** under `/wp-content/plugins/` (folder name must match the plugin bootstrap).
+1. From the **`jaz-on/wpis-core`** repo, deploy the plugin directory as **`wpis-core`** under `/wp-content/plugins/` (folder name must match the main file `wpis-core.php`).
 2. Activate the plugin through the "Plugins" menu in WordPress
 3. Visit Settings > Permalinks and save once if archives 404
-4. (Optional) Ensure MCP Adapter is active for MCP discovery
+4. If upgrades change MCP wiring, re-save or flush permalinks as needed
 
 == Development ==
 
@@ -47,7 +47,7 @@ Features include:
 == Changelog ==
 
 = 0.1.0 =
-* WordPress Is… Core: `quote` CPT, taxonomies, meta, submission, REST and abilities/MCP allowlist, Git Updater headers (`wpis-plugin` slug, PHP 8.2+).
+* WordPress Is… Core: `quote` CPT, taxonomies, meta, submission, REST and abilities/MCP allowlist, Git Updater headers; text domain `wpis-core`; requires MCP Adapter; install folder `wpis-core/`, main file `wpis-core.php`.
 
 == Links ==
 

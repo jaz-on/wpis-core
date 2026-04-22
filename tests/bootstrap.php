@@ -1,6 +1,6 @@
 <?php
 /**
- * PHPUnit bootstrap for wpis-plugin (WordPress test suite).
+ * PHPUnit bootstrap for wpis-core (WordPress test suite).
  *
  * Set WP_TESTS_DIR to your wordpress-tests-lib path (from bin/install-wp-tests.sh).
  *
@@ -11,7 +11,7 @@ require_once dirname( __DIR__ ) . '/vendor/autoload.php';
 require_once dirname( __DIR__ ) . '/vendor/yoast/phpunit-polyfills/phpunitpolyfills-autoload.php';
 
 $GLOBALS['wp_tests_options'] = array(
-	'active_plugins' => array( basename( dirname( __DIR__ ) ) . '/wpis-plugin.php' ),
+	'active_plugins' => array( basename( dirname( __DIR__ ) ) . '/wpis-core.php' ),
 );
 
 $_tests_dir = getenv( 'WP_TESTS_DIR' );
@@ -28,7 +28,7 @@ require_once $_tests_dir . '/includes/functions.php';
  * Load this plugin.
  */
 function _wpis_plugin_manually_load_plugin(): void {
-	require dirname( __DIR__ ) . '/wpis-plugin.php';
+	require dirname( __DIR__ ) . '/wpis-core.php';
 }
 
 tests_add_filter( 'muplugins_loaded', '_wpis_plugin_manually_load_plugin' );

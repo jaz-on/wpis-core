@@ -1,19 +1,21 @@
-# WordPress Is… Core (`wpis-plugin`)
+# WordPress Is… Core (`wpis-core`)
 
 Core plugin for the [WordPress Is…](https://wpis.jasonrouet.com) project: the `quote` post type, taxonomies, merge and deduplication logic, public submission handling, REST endpoints and [Git Updater](https://git-updater.com/)–compatible metadata for installs that track this repository.
+
+**Repo name on GitHub:** [`jaz-on/wpis-core`](https://github.com/jaz-on/wpis-core) (was `jaz-on/wpis-plugin` — [rename the GitHub repo](https://docs.github.com/en/repositories/creating-and-managing-repositories/renaming-a-repository) to match if yours still uses the old slug).
 
 ## Requirements
 
 - WordPress **6.9+** (Abilities API)
 - PHP **8.2+**
-- [MCP Adapter](https://github.com/WordPress/mcp-adapter) recommended if you want MCP exposure (optional for other features)
+- [MCP Adapter](https://wordpress.org/plugins/mcp-adapter/) **required** (declared in plugin headers; WordPress 6.5+ shows plugin dependencies in **Plugins**)
 
 ## Installation
 
-1. Clone or copy this repository into your WordPress plugins directory **as `wpis-plugin`** (the folder name must match the main plugin file `wpis-plugin.php`).
+1. Clone or copy this repository into your WordPress plugins directory **as `wpis-core`** (the folder name must match the main plugin file `wpis-core.php`).
 
    ```text
-   wp-content/plugins/wpis-plugin/
+   wp-content/plugins/wpis-core/
    ```
 
 2. **Autoload:** the plugin uses `inc/autoload-runtime.php` (PSR-4 for `WPIS\Core\` from `src/`). You do **not** need to run Composer on the server. Optional: after `composer install` locally, `vendor/autoload.php` is used if present; otherwise the same classes load from `src/`.
@@ -24,12 +26,12 @@ Core plugin for the [WordPress Is…](https://wpis.jasonrouet.com) project: the 
 
 ## Updates with Git Updater
 
-This plugin declares a [Git Updater](https://git-updater.com/knowledge-base/required-headers/) source in `wpis-plugin.php`:
+This plugin declares a [Git Updater](https://git-updater.com/knowledge-base/required-headers/) source in `wpis-core.php`:
 
-- `GitHub Plugin URI: https://github.com/jaz-on/wpis-plugin`
+- `GitHub Plugin URI: https://github.com/jaz-on/wpis-core`
 - `Primary Branch: main` (required because the default branch is `main`, not `master`)
 
-Bump the **`Version:`** header in `wpis-plugin.php` when you ship changes you want sites to pull; Git Updater compares that to the latest commit on `main` (or to releases, if you configure release assets).
+Bump the **`Version:`** header in `wpis-core.php` when you ship changes you want sites to pull; Git Updater compares that to the latest commit on `main` (or to releases, if you configure release assets).
 
 ## Development
 
@@ -42,11 +44,3 @@ composer lint
 Use the full `composer install` (with dev) locally for PHPCS and PHPUnit. The `vendor/` directory is not committed; production sites rely on the runtime PSR-4 autoloader in `inc/autoload-runtime.php`.
 
 Internal architecture notes, API hand-offs and Cursor rules are kept **outside** this repository (for example a local `.doc/` or `.cursor/` folder on your machine).
-
-## Optional: Relevanssi (site search)
-
-Install [Relevanssi](https://wordpress.org/plugins/relevanssi/) as a normal plugin. This package includes a small integration that keeps internal `_wpis_*` meta out of the search index when Relevanssi is active.
-
-## License
-
-GPL-2.0-or-later
