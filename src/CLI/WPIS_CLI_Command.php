@@ -120,6 +120,33 @@ final class WPIS_CLI_Command {
 	}
 
 	/**
+	 * Seed sample quotes without the demo flag (meta _wpis_starter_content). Use --erase to remove them.
+	 *
+	 * ## OPTIONS
+	 *
+	 * [--count=<n>]
+	 * : How many quotes to create (max dataset size). Default: all (24).
+	 *
+	 * [--erase]
+	 * : Delete previously seeded starter quotes only.
+	 *
+	 * @param array<int, string>   $args       Positional args.
+	 * @param array<string, mixed> $assoc_args Flags.
+	 * @return void
+	 */
+	public function seed_starter( array $args, array $assoc_args ): void {
+		unset( $args );
+		if ( ! empty( $assoc_args['erase'] ) ) {
+			$n = StarterSeeder::erase();
+			\WP_CLI::success( sprintf( 'Removed %d starter quotes.', $n ) );
+			return;
+		}
+		$count = isset( $assoc_args['count'] ) ? max( 0, (int) $assoc_args['count'] ) : 0;
+		$n     = StarterSeeder::seed( $count );
+		\WP_CLI::success( sprintf( 'Created %d starter quotes.', $n ) );
+	}
+
+	/**
 	 * List potential duplicates for a quote’s text (or by ID).
 	 *
 	 * ## OPTIONS

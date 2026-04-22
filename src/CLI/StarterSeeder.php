@@ -1,6 +1,6 @@
 <?php
 /**
- * Demo quote seeding for staging and design QA.
+ * Sample quotes for local and staging without the demo flag (editorial-style dataset).
  *
  * @package WPIS\Core
  */
@@ -14,14 +14,14 @@ use WPIS\Core\Taxonomies\ClaimTypeTaxonomy;
 use WPIS\Core\Taxonomies\SentimentTaxonomy;
 
 /**
- * Creates and removes demo quotes (meta flag _wpis_demo_seed).
+ * Creates and removes starter quotes (meta _wpis_starter_content, not _wpis_demo_seed).
  */
-final class DemoSeeder {
+final class StarterSeeder {
 
-	private const DEMO_META = '_wpis_demo_seed';
+	private const STARTER_META = '_wpis_starter_content';
 
 	/**
-	 * Delete all demo quotes.
+	 * Remove starter-seeded quotes.
 	 *
 	 * @return int Number of posts deleted.
 	 */
@@ -34,7 +34,7 @@ final class DemoSeeder {
 				'fields'         => 'ids',
 				'meta_query'     => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 					array(
-						'key'   => self::DEMO_META,
+						'key'   => self::STARTER_META,
 						'value' => '1',
 					),
 				),
@@ -50,9 +50,9 @@ final class DemoSeeder {
 	}
 
 	/**
-	 * Insert demo quotes with taxonomies, meta, and opposing pairs.
+	 * Insert starter quotes (same dataset as demo, different tracking meta).
 	 *
-	 * @param int $count Target number of posts (rounded to dataset size).
+	 * @param int $count Target number of posts (0 = all rows).
 	 * @return int Number of posts created.
 	 */
 	public static function seed( int $count = 24 ): int {
@@ -78,7 +78,7 @@ final class DemoSeeder {
 			if ( is_wp_error( $post_id ) || ! $post_id ) {
 				continue;
 			}
-			update_post_meta( (int) $post_id, self::DEMO_META, 1 );
+			update_post_meta( (int) $post_id, self::STARTER_META, 1 );
 			update_post_meta( (int) $post_id, '_wpis_counter', (int) $row['counter'] );
 			update_post_meta( (int) $post_id, '_wpis_submission_source', 'form' );
 			$platform = (string) $row['platform'];
@@ -126,5 +126,4 @@ final class DemoSeeder {
 		$t = wp_html_excerpt( $text, 72, '…' );
 		return $t ? $t : 'Quote';
 	}
-
 }
