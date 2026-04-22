@@ -10,6 +10,7 @@ namespace WPIS\Core\CLI;
 use WPIS\Core\Activation;
 use WPIS\Core\Constants;
 use WPIS\Core\PostTypes\QuotePostType;
+use WPIS\Core\Submission\QuoteDefaultOwner;
 use WPIS\Core\Taxonomies\ClaimTypeTaxonomy;
 use WPIS\Core\Taxonomies\SentimentTaxonomy;
 
@@ -63,7 +64,8 @@ final class StarterSeeder {
 			$dataset = array_slice( $dataset, 0, $count );
 		}
 
-		$ids = array();
+		$ids    = array();
+		$author = QuoteDefaultOwner::get_user_id();
 		foreach ( $dataset as $row ) {
 			$post_id = wp_insert_post(
 				array(
@@ -71,7 +73,7 @@ final class StarterSeeder {
 					'post_status'  => 'publish',
 					'post_title'   => self::title_from_content( (string) $row['content'] ),
 					'post_content' => $row['content'],
-					'post_author'  => 0,
+					'post_author'  => $author,
 				),
 				true
 			);

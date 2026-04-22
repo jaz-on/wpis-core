@@ -72,6 +72,9 @@ final class SubmissionHandler {
 		}
 
 		$user_id = get_current_user_id();
+		if ( 0 === $user_id ) {
+			$user_id = QuoteDefaultOwner::get_user_id();
+		}
 
 		$post_id = wp_insert_post(
 			array(

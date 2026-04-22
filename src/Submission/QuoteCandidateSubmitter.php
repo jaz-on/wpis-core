@@ -132,7 +132,7 @@ final class QuoteCandidateSubmitter {
 				'post_status'  => 'pending',
 				'post_title'   => $title,
 				'post_content' => $body,
-				'post_author'  => 0,
+				'post_author'  => QuoteDefaultOwner::get_user_id(),
 			),
 			true
 		);

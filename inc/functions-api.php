@@ -61,3 +61,12 @@ function wpis_get_user_stats( int $user_id ): array {
 function wpis_submit_quote_candidate( array $args ): array {
 	return \WPIS\Core\Submission\QuoteCandidateSubmitter::submit( $args );
 }
+
+/**
+ * User ID for attributed seed content, bot imports, and anonymous form submissions (until claimed).
+ *
+ * @return int
+ */
+function wpis_default_quote_owner_user_id(): int {
+	return \WPIS\Core\Submission\QuoteDefaultOwner::get_user_id();
+}

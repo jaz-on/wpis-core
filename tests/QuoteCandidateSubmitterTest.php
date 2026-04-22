@@ -63,6 +63,7 @@ class QuoteCandidateSubmitterTest extends \WP_UnitTestCase {
 		$this->assertInstanceOf( \WP_Post::class, $post );
 		$this->assertSame( QuotePostType::POST_TYPE, $post->post_type );
 		$this->assertSame( 'pending', $post->post_status );
+		$this->assertSame( wpis_default_quote_owner_user_id(), (int) $post->post_author );
 		$this->assertSame( 'bot-mastodon', get_post_meta( $post->ID, '_wpis_submission_source', true ) );
 		$this->assertSame( 'mastodon', get_post_meta( $post->ID, '_wpis_source_platform', true ) );
 	}

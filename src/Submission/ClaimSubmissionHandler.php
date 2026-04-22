@@ -10,7 +10,7 @@
  *    - a confirmation if the user is already logged in (post_author is
  *      already set by SubmissionHandler);
  *    - an inline signup form (email + password) if not logged in and the
- *      token resolves to a pending post authored by user 0.
+ *      token resolves to a pending post (e.g. anonymous submit using the default owner ID).
  *    - a generic "Create an account" CTA if the token is missing or expired.
  * 3. POST to admin-post.php?action=wpis_claim_submission creates the user,
  *    signs them in, and updates `post_author` of the pending quote.

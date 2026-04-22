@@ -10,6 +10,7 @@ namespace WPIS\Core\Abilities;
 use WPIS\Core\Dedup\DuplicateFinder;
 use WPIS\Core\Merge\QuoteMerger;
 use WPIS\Core\PostTypes\QuotePostType;
+use WPIS\Core\Submission\QuoteDefaultOwner;
 use WPIS\Core\Taxonomies\ClaimTypeTaxonomy;
 use WPIS\Core\Taxonomies\SentimentTaxonomy;
 
@@ -190,13 +191,17 @@ final class AbilitiesRegistry {
 		if ( ! in_array( $status, array( 'pending', 'publish', 'draft' ), true ) ) {
 			$status = 'pending';
 		}
+		$uid = get_current_user_id();
+		if ( 0 === $uid ) {
+			$uid = QuoteDefaultOwner::get_user_id();
+		}
 		$pid = wp_insert_post(
 			array(
 				'post_type'    => QuotePostType::POST_TYPE,
 				'post_status'  => $status,
 				'post_title'   => wp_html_excerpt( $text, 80, '…' ),
 				'post_content' => $text,
-				'post_author'  => get_current_user_id(),
+				'post_author'  => $uid,
 			),
 			true
 		);
