@@ -34,7 +34,7 @@ Registered in [`Meta/QuoteMeta.php`](../src/Meta/QuoteMeta.php). Keys relevant t
 
 ## Public REST: quote feed (HTML)
 
-- `GET /wp-json/wpis/v1/quote-feed` — **public** ; returns JSON `html` fragments built with classes `wpis-quote-card` / `wpis-sentiment-{sentiment}` ([`QuoteFeedEndpoint.php`](../src/REST/QuoteFeedEndpoint.php)). Parameters include `page`, `per_page`, `wpis_sort` (`date`|`counter`), `wpis_order`, `sentiment`, `claim_type`, `platform`, optional `lang` (Polylang). The **theme** may ignore this if it uses a block Query Loop and [`parts/quote-feed-card.html`](../../wpis-theme/parts/quote-feed-card.html) instead.
+- `GET /wp-json/wpis/v1/quote-feed` — **public** ; returns JSON `html` fragments built with classes `wpis-quote-card` / `wpis-sent-{sentiment}` ([`QuoteFeedEndpoint.php`](../src/REST/QuoteFeedEndpoint.php)). Parameters include `page`, `per_page`, `wpis_sort` (`date`|`counter`), `wpis_order`, `sentiment`, `claim_type`, `platform`, optional `lang` (Polylang). The **theme** may ignore this if it uses a block Query Loop and [`parts/quote-feed-card.html`](../../wpis-theme/parts/quote-feed-card.html) instead.
 
 ## Polylang (P.9)
 

@@ -11,7 +11,8 @@ use WPIS\Core\Constants;
 use WPIS\Core\PostTypes\QuotePostType;
 
 /**
- * Serves HTML fragments matching theme quote cards (keep in sync with wpis_theme_apply_quote_feed_args).
+ * Serves HTML fragments aligned with theme selectors: `.wpis-quote-card` and `wpis-sent-*` sentiment stripes
+ * (see wpis-theme `assets/css/wpis-global.css`).
  */
 final class QuoteFeedEndpoint {
 
@@ -208,6 +209,6 @@ final class QuoteFeedEndpoint {
 		$inner .= '<a class="wpis-quote-card__read" href="' . esc_url( $link ) . '">' . esc_html( $read ) . '</a>';
 		$inner .= '</div>';
 
-		return '<article class="wpis-quote-card wpis-sentiment-' . esc_attr( $sent ) . ' wp-block-post">' . $inner . '</article>';
+		return '<article class="wpis-quote-card wpis-sent-' . esc_attr( $sent ) . ' wp-block-post">' . $inner . '</article>';
 	}
 }
