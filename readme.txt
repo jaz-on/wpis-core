@@ -23,7 +23,7 @@ Features include:
 * Admin list columns: counter, platform, submission source; sort by counter; filter by submission source
 * MCP server at `/wp-json/wpis/v1/wpis` with an ability allowlist and `wpis_mcp_abilities` filter
 * Shortcodes: `[wpis_submit_form]`, `[wpis_repeat_badge]`, plus `[wpis_site_stats]`, `[wpis_explore_claim_types]`, `[wpis_explore_platforms]` for block-theme screens
-* WP-CLI: `wp wpis seed_starter` (sample quotes without the demo flag) and `wp wpis seed_demo` (demo-flagged)
+* WP-CLI: `wp wpis seed_starter` (sample quotes without the demo flag) and `wp wpis seed_demo` (demo-flagged); with **wpis-theme** active, the same flows are available under **Appearance → WPIS import** (`themes.php?page=wpis-import`)
 
 == Requirements ==
 
