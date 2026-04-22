@@ -39,11 +39,31 @@ final class SiteNavShortcode {
 	public static function render_nav( $atts ): string {
 		unset( $atts );
 		$items = array(
-			array( 'label' => __( 'Feed', 'wpis-core' ), 'url' => '/', 'match' => array( '/', '' ) ),
-			array( 'label' => __( 'Explore', 'wpis-core' ), 'url' => '/explore/', 'match' => array( '/explore/' ) ),
-			array( 'label' => __( 'About', 'wpis-core' ), 'url' => '/about/', 'match' => array( '/about/' ) ),
-			array( 'label' => __( 'How it works', 'wpis-core' ), 'url' => '/how-it-works/', 'match' => array( '/how-it-works/' ) ),
-			array( 'label' => __( 'Submit', 'wpis-core' ), 'url' => '/submit/', 'match' => array( '/submit/', '/submitted/' ) ),
+			array(
+				'label' => __( 'Feed', 'wpis-core' ),
+				'url'   => '/',
+				'match' => array( '/', '' ),
+			),
+			array(
+				'label' => __( 'Explore', 'wpis-core' ),
+				'url'   => '/explore/',
+				'match' => array( '/explore/' ),
+			),
+			array(
+				'label' => __( 'About', 'wpis-core' ),
+				'url'   => '/about/',
+				'match' => array( '/about/' ),
+			),
+			array(
+				'label' => __( 'How it works', 'wpis-core' ),
+				'url'   => '/how-it-works/',
+				'match' => array( '/how-it-works/' ),
+			),
+			array(
+				'label' => __( 'Submit', 'wpis-core' ),
+				'url'   => '/submit/',
+				'match' => array( '/submit/', '/submitted/' ),
+			),
 		);
 
 		if ( is_user_logged_in() ) {
@@ -109,7 +129,10 @@ final class SiteNavShortcode {
 	 * @return string
 	 */
 	private static function current_path(): string {
-		$req = isset( $_SERVER['REQUEST_URI'] ) ? (string) wp_unslash( $_SERVER['REQUEST_URI'] ) : '/';
+		$req = '/';
+		if ( isset( $_SERVER['REQUEST_URI'] ) ) {
+			$req = sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) );
+		}
 		$p   = (string) wp_parse_url( $req, PHP_URL_PATH );
 		if ( '' === $p ) {
 			return '/';

@@ -171,20 +171,22 @@ final class FeedControlsShortcode {
 	private static function platform_counts(): array {
 		global $wpdb;
 		$post_type = QuotePostType::POST_TYPE;
-		$sql       = $wpdb->prepare(
-			"SELECT pm.meta_value AS slug, COUNT(DISTINCT pm.post_id) AS n
-			 FROM {$wpdb->postmeta} pm
-			 INNER JOIN {$wpdb->posts} p ON p.ID = pm.post_id
-			 WHERE pm.meta_key = %s
-			   AND p.post_type = %s
-			   AND p.post_status = %s
-			 GROUP BY pm.meta_value
-			 ORDER BY n DESC",
-			'_wpis_source_platform',
-			$post_type,
-			'publish'
-		);
-		$rows = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		$rows      = $wpdb->get_results(
+			$wpdb->prepare(
+				"SELECT pm.meta_value AS slug, COUNT(DISTINCT pm.post_id) AS n
+				 FROM {$wpdb->postmeta} pm
+				 INNER JOIN {$wpdb->posts} p ON p.ID = pm.post_id
+				 WHERE pm.meta_key = %s
+				   AND p.post_type = %s
+				   AND p.post_status = %s
+				 GROUP BY pm.meta_value
+				 ORDER BY n DESC",
+				'_wpis_source_platform',
+				$post_type,
+				'publish'
+			),
+			ARRAY_A
+		); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 		if ( ! is_array( $rows ) ) {
 			return array();
 		}
