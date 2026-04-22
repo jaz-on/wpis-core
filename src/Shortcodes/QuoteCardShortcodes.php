@@ -32,8 +32,8 @@ final class QuoteCardShortcodes {
 	}
 
 	/**
-	 * Full feed card footer: claim-tag + count-badge + platforms + langs on the
-	 * left, short date on the right.
+	 * Feed card footer: claim tag + count badge only (mockup parity). Platforms,
+	 * languages and date are intentionally omitted from the feed card.
 	 *
 	 * @param array<string, string>|string $atts Shortcode atts (ignored).
 	 * @return string
@@ -48,7 +48,6 @@ final class QuoteCardShortcodes {
 		$claim_tags = get_the_term_list( $post_id, ClaimTypeTaxonomy::TAXONOMY, '', '</span><span class="wpis-claim-tag is-style-wpis-claim-tag">', '' );
 		if ( is_string( $claim_tags ) && '' !== $claim_tags ) {
 			$claim_tags = '<span class="wpis-claim-tag is-style-wpis-claim-tag">' . $claim_tags . '</span>';
-			// strip the link underline by unwrapping <a>.
 			$claim_tags = preg_replace( '#<a[^>]*>([^<]*)</a>#i', '$1', (string) $claim_tags );
 		} else {
 			$claim_tags = '';
@@ -60,12 +59,7 @@ final class QuoteCardShortcodes {
 		}
 		$count_badge = '<span class="wpis-count-badge is-style-wpis-count-badge">×' . esc_html( (string) $count ) . '</span>';
 
-		$platforms = self::platforms_span( $post_id );
-		$langs     = self::langs_span( $post_id );
-		$date      = self::date_span( $post_id );
-
-		return '<div class="wpis-quote-footer-left">' . $claim_tags . $count_badge . $platforms . $langs . '</div>'
-			. '<div class="wpis-quote-footer-right">' . $date . '</div>';
+		return $claim_tags . $count_badge;
 	}
 
 	/**
