@@ -41,10 +41,19 @@ Bump the **`Version:`** header in `wpis-core.php` when you ship changes you want
 
 ```bash
 composer install
-composer test
 composer lint
 ```
 
 Use the full `composer install` (with dev) locally for PHPCS and PHPUnit. The `vendor/` directory is not committed; production sites rely on the runtime PSR-4 autoloader in `inc/autoload-runtime.php`.
+
+**PHPUnit** needs the WordPress test library and a MySQL (or MariaDB) server. One-time setup:
+
+```bash
+bash bin/install-wp-tests.sh wordpress_test root "" 127.0.0.1 latest
+export WP_TESTS_DIR="${TMPDIR}/wordpress-tests-lib"   # adjust if your install script used another path
+composer test
+```
+
+`bin/install-wp-tests.sh` is the standard script from [wp-cli/scaffold-command](https://github.com/wp-cli/scaffold-command/blob/master/templates/install-wp-tests.sh) (local `mysql` and `mysqladmin` required). Without `WP_TESTS_DIR`, `composer test` exits early with a short reminder.
 
 Internal architecture notes, API hand-offs and Cursor rules are kept **outside** this repository (for example a local `.doc/` or `.cursor/` folder on your machine).
