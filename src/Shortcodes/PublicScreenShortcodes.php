@@ -63,7 +63,7 @@ final class PublicScreenShortcodes {
 		$out = '<div class="wpis-hero-stats-inner">';
 		foreach ( $items as $row ) {
 			$n    = (int) $row['n'];
-			$out .= '<p class="wp-block-paragraph"><strong>' . esc_html( (string) number_format_i18n( $n ) ) . '</strong>' . esc_html( $row['label'] ) . '</p>';
+			$out .= '<div class="wpis-hero-stat-item"><strong>' . esc_html( (string) number_format_i18n( $n ) ) . '</strong><span>' . esc_html( $row['label'] ) . '</span></div>';
 		}
 		$out .= '</div>';
 		return $out;

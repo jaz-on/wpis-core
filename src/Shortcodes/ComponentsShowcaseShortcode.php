@@ -320,7 +320,7 @@ final class ComponentsShowcaseShortcode {
 			. '<div class="upload-zone" tabindex="0">Drop a screenshot or click to upload — optional, deleted after moderation.</div>'
 			. '<div class="rgpd-notice"><strong>Data notice</strong>Submissions are moderated; screenshots are deleted after review. No personal data is shared.</div>'
 			. '<button type="button" class="btn-primary">Submit quote</button> <a class="btn-secondary" href="#">Cancel</a>'
-			. '<span class="queue-indicator">Typically reviewed within 48 hours.</span>'
+			. '<span class="queue-indicator">Volunteer project — reviewed when someone can. No turnaround commitment.</span>'
 			. '</div>';
 	}
 
@@ -423,7 +423,7 @@ final class ComponentsShowcaseShortcode {
 			. '<p class="wpis-confirm-mark" aria-hidden="true">…</p>'
 			. '<h2>Thanks — your quote is in the queue</h2>'
 			. '<p class="sub">A moderator will review it shortly. You don’t need an account to contribute, but signing in lets you track status.</p>'
-			. '<div class="wpis-confirm-queue">Typically reviewed within <strong>48h</strong>.</div>'
+			. '<div class="wpis-confirm-queue"><strong>Volunteer queue</strong> — no turnaround commitment</div>'
 			. '<p><a class="btn-secondary" href="/">Back to the feed</a></p>'
 			. '</div>';
 	}

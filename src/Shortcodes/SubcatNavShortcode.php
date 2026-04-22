@@ -38,7 +38,8 @@ final class SubcatNavShortcode {
 		$atts = shortcode_atts(
 			array(
 				'taxonomy' => 'claim_type',
-				'label'    => __( 'Narrow down', 'wpis-core' ),
+				'label'    => __( 'Narrow by sub-topic', 'wpis-core' ),
+				'blurb'    => '',
 			),
 			(array) $atts,
 			'wpis_subcat_nav'
@@ -98,8 +99,25 @@ final class SubcatNavShortcode {
 			}
 		}
 
-		$html  = '<p class="wpis-subcat-label">' . esc_html( (string) $atts['label'] ) . '</p>';
-		$html .= '<nav class="wpis-subcat-nav" aria-label="' . esc_attr__( 'Narrow down', 'wpis-core' ) . '">';
+		$taxonomy_label = '';
+		if ( $parent_id ) {
+			$tax_term = get_term( $parent_id, $taxonomy );
+			if ( $tax_term instanceof \WP_Term ) {
+				$taxonomy_label = $tax_term->name;
+			}
+		}
+		$blurb = (string) $atts['blurb'];
+		if ( '' === $blurb && '' !== $taxonomy_label ) {
+			/* translators: %s: parent taxonomy term name (e.g. Security). */
+			$blurb = sprintf( __( '(child terms of %s)', 'wpis-core' ), $taxonomy_label );
+		}
+
+		$html  = '<p class="wpis-subcat-label">' . esc_html( (string) $atts['label'] );
+		if ( '' !== $blurb ) {
+			$html .= ' <span class="wpis-subcat-blurb">' . esc_html( $blurb ) . '</span>';
+		}
+		$html .= '</p>';
+		$html .= '<nav class="wpis-subcat-nav" aria-label="' . esc_attr__( 'Narrow by sub-topic', 'wpis-core' ) . '">';
 
 		$all_url = $parent_id
 			? (string) get_term_link( (int) $parent_id, $taxonomy )

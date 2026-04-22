@@ -76,7 +76,7 @@ final class SubmitFormRenderer {
 				</label>
 			</p>
 			<button type="submit" class="btn-primary"><?php esc_html_e( 'Submit this quote', 'wpis-core' ); ?></button>
-			<span class="queue-indicator"><?php esc_html_e( 'Typically reviewed within 48 hours.', 'wpis-core' ); ?></span>
+			<span class="queue-indicator"><?php esc_html_e( 'Volunteer project — reviewed when someone can. No turnaround commitment.', 'wpis-core' ); ?></span>
 		</form>
 		<?php
 		return (string) ob_get_clean();

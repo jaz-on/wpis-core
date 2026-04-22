@@ -113,15 +113,26 @@ final class ProfileScreenShortcode {
 	 * @return string
 	 */
 	private static function render_logged_out(): string {
-		$profile_url = home_url( '/profile/' );
-		$login_url   = wp_login_url( $profile_url );
+		$profile_url  = home_url( '/profile/' );
+		$login_url    = wp_login_url( $profile_url );
+		$register_url = '';
+		if ( get_option( 'users_can_register' ) ) {
+			$register_url = wp_registration_url();
+		}
 
 		$html  = '<div class="wpis-profile wpis-profile--logged-out">';
-		$html .= '<div class="profile-header">';
-		$html .= '<h1 class="wp-block-heading">' . esc_html__( 'Your contributions', 'wpis-core' ) . '</h1>';
-		$html .= '<p>' . esc_html__( 'Log in to see your submissions and stats.', 'wpis-core' ) . '</p>';
+		$html .= '<div class="wpis-login-gate">';
+		$html .= '<p class="wpis-login-mark" aria-hidden="true">is</p>';
+		$html .= '<h1 class="wp-block-heading">' . esc_html__( 'Your profile', 'wpis-core' ) . '</h1>';
+		$html .= '<p class="sub">' . esc_html__( 'A profile is optional. Log in to track the status of your submissions (pending, validated, merged, rejected). Your profile stays private — only you can see it.', 'wpis-core' ) . '</p>';
+		$html .= '<p class="wpis-login-actions">';
+		$html .= '<a class="btn-primary" href="' . esc_url( $login_url ) . '">' . esc_html__( 'Log in', 'wpis-core' ) . '</a>';
+		if ( '' !== $register_url ) {
+			$html .= ' <a class="btn-secondary" href="' . esc_url( $register_url ) . '">' . esc_html__( 'Create an account', 'wpis-core' ) . '</a>';
+		}
+		$html .= '</p>';
+		$html .= '<p class="wpis-login-aside">' . esc_html__( 'You do not need an account to submit a quote. The submit form is open to everyone.', 'wpis-core' ) . ' <a href="' . esc_url( home_url( '/submit/' ) ) . '">' . esc_html__( 'Go to submit', 'wpis-core' ) . '</a></p>';
 		$html .= '</div>';
-		$html .= '<p class="wp-block-paragraph"><a href="' . esc_url( $login_url ) . '">' . esc_html__( 'Log in', 'wpis-core' ) . '</a></p>';
 		$html .= '</div>';
 
 		return $html;

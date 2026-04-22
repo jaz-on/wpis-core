@@ -39,11 +39,17 @@ final class FeedControlsShortcode {
 	public static function render_controls( $atts ): string {
 		$atts = shortcode_atts(
 			array(
-				'title' => __( 'The feed', 'wpis-core' ),
+				'title'          => __( 'The feed', 'wpis-core' ),
+				'show_sentiment' => '1',
+				'show_claim'     => '1',
+				'show_platform'  => '1',
 			),
 			(array) $atts,
 			'wpis_feed_controls'
 		);
+		$show_sentiment = (bool) (int) $atts['show_sentiment'];
+		$show_claim     = (bool) (int) $atts['show_claim'];
+		$show_platform  = (bool) (int) $atts['show_platform'];
 
 		$sort_tabs = array(
 			'recent'   => __( 'Recent', 'wpis-core' ),
@@ -64,13 +70,16 @@ final class FeedControlsShortcode {
 			++$i;
 		}
 
-		$sentiment_counts = self::taxonomy_counts( SentimentTaxonomy::TAXONOMY );
-		$claim_counts     = self::taxonomy_counts( ClaimTypeTaxonomy::TAXONOMY );
-		$platform_counts  = self::platform_counts();
-
-		$selects = self::select( 'sentiment', __( 'All sentiments', 'wpis-core' ), $sentiment_counts )
-			. self::select( 'claim', __( 'All claim types', 'wpis-core' ), $claim_counts )
-			. self::select( 'platform', __( 'All platforms', 'wpis-core' ), $platform_counts );
+		$selects = '';
+		if ( $show_sentiment ) {
+			$selects .= self::select( 'sentiment', __( 'All sentiments', 'wpis-core' ), self::taxonomy_counts( SentimentTaxonomy::TAXONOMY ) );
+		}
+		if ( $show_claim ) {
+			$selects .= self::select( 'claim', __( 'All claim types', 'wpis-core' ), self::taxonomy_counts( ClaimTypeTaxonomy::TAXONOMY ) );
+		}
+		if ( $show_platform ) {
+			$selects .= self::select( 'platform', __( 'All platforms', 'wpis-core' ), self::platform_counts() );
+		}
 
 		return '<div class="wpis-feed-controls" data-wpis-feed-controls>'
 			. '<div class="wpis-feed-header">'
@@ -79,7 +88,7 @@ final class FeedControlsShortcode {
 			. '</p>'
 			. '<div class="wpis-feed-sort" role="tablist" aria-label="' . esc_attr__( 'Sort feed', 'wpis-core' ) . '">' . $sort_html . '</div>'
 			. '</div>'
-			. '<div class="wpis-filter-selects" data-open="true">' . $selects . '</div>'
+			. ( '' !== $selects ? '<div class="wpis-filter-selects" data-open="true">' . $selects . '</div>' : '' )
 			. '<p class="wpis-no-results-msg" role="status" aria-live="polite" hidden>' . esc_html__( 'No quotes match these filters yet.', 'wpis-core' ) . '</p>'
 			. '</div>';
 	}
