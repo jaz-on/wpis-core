@@ -8,8 +8,5 @@
 # Local maintainer notes (not part of the deployable tree)
 .doc/
 
-# Local-only Composer dev install (tracked tree is minimal vendor/ + inc/autoload-runtime.php)
-vendor/*
-!vendor/autoload.php
-!vendor/composer/
-vendor/composer/autoload_files.php
+# Composer install (dev tools: PHPCS, PHPUnit; optional local autoload). Not committed.
+/vendor/
