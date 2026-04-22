@@ -92,7 +92,15 @@ final class DemoSeeder {
 			wp_set_object_terms( (int) $post_id, (string) $row['claim'], ClaimTypeTaxonomy::TAXONOMY, false );
 
 			if ( ! empty( $row['editorial'] ) ) {
-				update_post_meta( (int) $post_id, '_wpis_editorial_note', sanitize_textarea_field( (string) $row['editorial'] ) );
+				$editorial = wp_kses(
+					(string) $row['editorial'],
+					array(
+						'em'     => array(),
+						'strong' => array(),
+						'a'      => array( 'href' => array() ),
+					)
+				);
+				update_post_meta( (int) $post_id, '_wpis_editorial_note', $editorial );
 			}
 
 			$ids[] = (int) $post_id;

@@ -41,8 +41,16 @@ final class ProfileScreenShortcode {
 
 		$since = self::format_member_since( $user->user_registered );
 
+		$notice = '';
+		if ( isset( $_GET['wpis_claim'] ) && 'attached' === sanitize_key( (string) wp_unslash( $_GET['wpis_claim'] ) ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$notice = __( 'Welcome! Your submission is attached to your new account. You can follow its status below.', 'wpis-core' );
+		}
+
 		ob_start();
 		echo '<div class="wpis-profile">';
+		if ( '' !== $notice ) {
+			echo '<p class="wpis-profile-notice" role="status">' . esc_html( $notice ) . '</p>';
+		}
 		echo '<div class="profile-header">';
 		echo '<h1 class="wp-block-heading">' . esc_html__( 'Your contributions', 'wpis-core' ) . '</h1>';
 		$eyeb = sprintf(

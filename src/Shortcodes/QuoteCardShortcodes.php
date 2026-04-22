@@ -349,7 +349,7 @@ final class QuoteCardShortcodes {
 		if ( ! $post_id ) {
 			return '';
 		}
-		$note = (string) get_post_meta( $post_id, '_wpis_editor_note', true );
+		$note = (string) get_post_meta( $post_id, '_wpis_editorial_note', true );
 		if ( '' === trim( $note ) ) {
 			return '';
 		}

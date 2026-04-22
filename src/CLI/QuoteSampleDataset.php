@@ -49,6 +49,7 @@ final class QuoteSampleDataset {
 				'counter'   => 22,
 				'platform'  => 'bluesky',
 				'domain'    => 'bsky.app',
+				'editorial' => 'Both statements describe the same software. Performance is overwhelmingly a function of <em>operator choices</em>: hosting tier, plugin diet, caching layer. Benchmarks that strip those context signals mislead more than they inform.',
 			),
 			array(
 				'content'   => 'WordPress is easy until you need something off the happy path; then you are debugging hooks at midnight.',
@@ -65,6 +66,7 @@ final class QuoteSampleDataset {
 				'counter'   => 27,
 				'platform'  => 'linkedin',
 				'domain'    => 'linkedin.com',
+				'editorial' => 'The "easy" and "hard" takes both hold because WordPress is a <em>layered</em> tool. The first mile (install, publish, edit) is easier than almost any alternative; the tenth mile (custom fields, multisite, headless) is genuinely harder.',
 			),
 			array(
 				'content'   => 'WordPress is a dying ecosystem; everything interesting moved to React stacks.',
@@ -81,6 +83,7 @@ final class QuoteSampleDataset {
 				'counter'   => 40,
 				'platform'  => 'youtube',
 				'domain'    => 'youtube.com',
+				'editorial' => '"Dying ecosystem" is almost always a <em>relative</em> claim — measured against whatever stack the speaker works on today. Absolute usage numbers tell a different story, and both can be true at once.',
 			),
 			array(
 				'content'   => 'WordPress community events feel welcoming in a way most tech scenes are not.',
@@ -97,6 +100,7 @@ final class QuoteSampleDataset {
 				'counter'   => 9,
 				'platform'  => 'reddit',
 				'domain'    => 'reddit.com',
+				'editorial' => 'Large open-source communities cycle through governance crises; the WordPress one is <em>more visible</em> because the project is consumer-facing and commercially valuable. That visibility is both its strength and its strain.',
 			),
 			array(
 				'content'   => 'WordPress plugins let you integrate almost anything without forking the CMS.',
@@ -113,6 +117,7 @@ final class QuoteSampleDataset {
 				'counter'   => 21,
 				'platform'  => 'bluesky',
 				'domain'    => 'bsky.app',
+				'editorial' => 'The same <em>low barrier to publish</em> that makes the plugin repo feel like a lottery is also why WordPress covers niches no curated marketplace would. The tradeoff is inherent, not a design bug.',
 			),
 			array(
 				'content'   => 'WordPress is viable for agencies if you productize your stack and avoid one-off spaghetti.',

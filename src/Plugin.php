@@ -94,6 +94,7 @@ final class Plugin {
 		\WPIS\Core\Shortcodes\SiteNavShortcode::register();
 		\WPIS\Core\Submission\SubmissionHandler::register();
 		\WPIS\Core\Submission\SubmitFormRenderer::register();
+		\WPIS\Core\Submission\ClaimSubmissionHandler::register();
 		\WPIS\Core\Submission\CronCleanup::register();
 		\WPIS\Core\REST\RestRegistrar::register();
 		\WPIS\Core\REST\QuoteFeedEndpoint::register();
