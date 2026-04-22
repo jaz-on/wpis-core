@@ -1,6 +1,6 @@
 <?php
 /**
- * Shared curated quote rows for demo and starter seeders.
+ * Shared curated quote rows for sample quote seeding.
  *
  * @package WPIS\Core
  */

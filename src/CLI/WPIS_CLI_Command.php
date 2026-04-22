@@ -87,7 +87,7 @@ final class WPIS_CLI_Command {
 	}
 
 	/**
-	 * Seed demo quotes (flagged with _wpis_demo_seed). Use --erase to remove them.
+	 * Seed sample quotes (tracked with _wpis_demo_seed). Use --erase to remove sample quotes (including legacy starter-tagged).
 	 *
 	 * ## OPTIONS
 	 *
@@ -95,55 +95,50 @@ final class WPIS_CLI_Command {
 	 * : How many quotes to create (max dataset size). Default: all (24).
 	 *
 	 * [--erase]
-	 * : Delete previously seeded demo quotes only.
+	 * : Delete previously seeded sample quotes (demo and legacy starter meta).
 	 *
 	 * ## EXAMPLES
 	 *
-	 *     wp wpis seed_demo
-	 *     wp wpis seed_demo --count=12
-	 *     wp wpis seed_demo --erase
+	 *     wp wpis seed_quotes
+	 *     wp wpis seed_quotes --count=12
+	 *     wp wpis seed_quotes --erase
+	 *
+	 * @param array<int, string>   $args Positional args.
+	 * @param array<string, mixed> $assoc_args Flags.
+	 * @return void
+	 */
+	public function seed_quotes( array $args, array $assoc_args ): void {
+		unset( $args );
+		if ( ! empty( $assoc_args['erase'] ) ) {
+			$n = SampleQuoteSeeder::erase();
+			\WP_CLI::success( sprintf( 'Removed %d sample quotes.', $n ) );
+			return;
+		}
+		$count = isset( $assoc_args['count'] ) ? max( 0, (int) $assoc_args['count'] ) : 0;
+		$n     = SampleQuoteSeeder::seed( $count );
+		\WP_CLI::success( sprintf( 'Created %d sample quotes.', $n ) );
+	}
+
+	/**
+	 * Alias for wp wpis seed_quotes (same options).
 	 *
 	 * @param array<int, string>   $args Positional args.
 	 * @param array<string, mixed> $assoc_args Flags.
 	 * @return void
 	 */
 	public function seed_demo( array $args, array $assoc_args ): void {
-		unset( $args );
-		if ( ! empty( $assoc_args['erase'] ) ) {
-			$n = DemoSeeder::erase();
-			\WP_CLI::success( sprintf( 'Removed %d demo quotes.', $n ) );
-			return;
-		}
-		$count = isset( $assoc_args['count'] ) ? max( 0, (int) $assoc_args['count'] ) : 0;
-		$n     = DemoSeeder::seed( $count );
-		\WP_CLI::success( sprintf( 'Created %d demo quotes.', $n ) );
+		$this->seed_quotes( $args, $assoc_args );
 	}
 
 	/**
-	 * Seed sample quotes without the demo flag (meta _wpis_starter_content). Use --erase to remove them.
-	 *
-	 * ## OPTIONS
-	 *
-	 * [--count=<n>]
-	 * : How many quotes to create (max dataset size). Default: all (24).
-	 *
-	 * [--erase]
-	 * : Delete previously seeded starter quotes only.
+	 * Alias for wp wpis seed_quotes (same options).
 	 *
 	 * @param array<int, string>   $args       Positional args.
 	 * @param array<string, mixed> $assoc_args Flags.
 	 * @return void
 	 */
 	public function seed_starter( array $args, array $assoc_args ): void {
-		unset( $args );
-		if ( ! empty( $assoc_args['erase'] ) ) {
-			$n = StarterSeeder::erase();
-			\WP_CLI::success( sprintf( 'Removed %d starter quotes.', $n ) );
-			return;
-		}
-		$count = isset( $assoc_args['count'] ) ? max( 0, (int) $assoc_args['count'] ) : 0;
-		$n     = StarterSeeder::seed( $count );
-		\WP_CLI::success( sprintf( 'Created %d starter quotes.', $n ) );
+		$this->seed_quotes( $args, $assoc_args );
 	}
 
 	/**
