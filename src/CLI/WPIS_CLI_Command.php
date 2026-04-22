@@ -76,6 +76,7 @@ final class WPIS_CLI_Command {
 	public function doctor(): void {
 		global $wp_version;
 		\WP_CLI::log( 'WordPress: ' . ( is_string( $wp_version ) ? $wp_version : 'unknown' ) );
+		\WP_CLI::log( 'wp_register_ability_category: ' . ( function_exists( 'wp_register_ability_category' ) ? 'yes' : 'no' ) );
 		\WP_CLI::log( 'wp_register_ability: ' . ( function_exists( 'wp_register_ability' ) ? 'yes' : 'no' ) );
 		$cpt = post_type_exists( QuotePostType::POST_TYPE ) ? 'yes' : 'no';
 		\WP_CLI::log( 'quote CPT registered: ' . $cpt );

@@ -18,13 +18,50 @@ use WPIS\Core\Taxonomies\SentimentTaxonomy;
  * Registers wpis/* abilities and MCP allowlist entries.
  */
 final class AbilitiesRegistry {
+	/**
+	 * Shared category slug for all wpis/* abilities.
+	 */
+	private const ABILITY_CATEGORY = 'wpis';
+
+	/**
+	 * Canonical list of wpis abilities exposed to MCP and registered in WP.
+	 *
+	 * @var string[]
+	 */
+	private const ABILITIES = array(
+		'wpis/quote-create',
+		'wpis/quote-update',
+		'wpis/quote-merge',
+		'wpis/quote-find-duplicates',
+		'wpis/stats-summary',
+	);
 
 	/**
 	 * @return void
 	 */
 	public static function register(): void {
+		add_action( 'wp_abilities_api_categories_init', array( self::class, 'register_category' ) );
 		add_action( 'wp_abilities_api_init', array( self::class, 'register_abilities' ) );
 		add_filter( 'wpis_mcp_abilities', array( self::class, 'mcp_allowlist' ) );
+	}
+
+	/**
+	 * Register the wpis ability category before any wpis/* abilities (WordPress 6.9+).
+	 *
+	 * @return void
+	 */
+	public static function register_category(): void {
+		if ( ! function_exists( 'wp_register_ability_category' ) ) {
+			return;
+		}
+
+		wp_register_ability_category(
+			self::ABILITY_CATEGORY,
+			array(
+				'label'       => __( 'WordPress Is…', 'wpis-core' ),
+				'description' => __( 'Abilities for quotes, stats and WPIS content.', 'wpis-core' ),
+			)
+		);
 	}
 
 	/**
@@ -32,14 +69,7 @@ final class AbilitiesRegistry {
 	 * @return string[]
 	 */
 	public static function mcp_allowlist( array $abilities ): array {
-		$extra = array(
-			'wpis/quote-create',
-			'wpis/quote-update',
-			'wpis/quote-merge',
-			'wpis/quote-find-duplicates',
-			'wpis/stats-summary',
-		);
-		return array_merge( $abilities, $extra );
+		return array_merge( $abilities, self::ABILITIES );
 	}
 
 	/**
@@ -51,11 +81,11 @@ final class AbilitiesRegistry {
 		}
 
 		wp_register_ability(
-			'wpis/quote-create',
+			self::ABILITIES[0],
 			array(
 				'label'               => __( 'Create quote', 'wpis-core' ),
 				'description'         => __( 'Create a new quote submission.', 'wpis-core' ),
-				'category'            => 'wpis',
+				'category'            => self::ABILITY_CATEGORY,
 				'input_schema'        => array(
 					'type'       => 'object',
 					'properties' => array(
@@ -73,11 +103,11 @@ final class AbilitiesRegistry {
 		);
 
 		wp_register_ability(
-			'wpis/quote-update',
+			self::ABILITIES[1],
 			array(
 				'label'               => __( 'Update quote', 'wpis-core' ),
 				'description'         => __( 'Update quote content, status or terms.', 'wpis-core' ),
-				'category'            => 'wpis',
+				'category'            => self::ABILITY_CATEGORY,
 				'input_schema'        => array(
 					'type'       => 'object',
 					'properties' => array(
@@ -95,11 +125,11 @@ final class AbilitiesRegistry {
 		);
 
 		wp_register_ability(
-			'wpis/quote-merge',
+			self::ABILITIES[2],
 			array(
 				'label'               => __( 'Merge quotes', 'wpis-core' ),
 				'description'         => __( 'Merge a source quote into a target quote.', 'wpis-core' ),
-				'category'            => 'wpis',
+				'category'            => self::ABILITY_CATEGORY,
 				'input_schema'        => array(
 					'type'       => 'object',
 					'properties' => array(
@@ -114,11 +144,11 @@ final class AbilitiesRegistry {
 		);
 
 		wp_register_ability(
-			'wpis/quote-find-duplicates',
+			self::ABILITIES[3],
 			array(
 				'label'               => __( 'Find duplicate quotes', 'wpis-core' ),
 				'description'         => __( 'Rank similar existing quotes by string similarity.', 'wpis-core' ),
-				'category'            => 'wpis',
+				'category'            => self::ABILITY_CATEGORY,
 				'input_schema'        => array(
 					'type'       => 'object',
 					'properties' => array(
@@ -134,11 +164,11 @@ final class AbilitiesRegistry {
 		);
 
 		wp_register_ability(
-			'wpis/stats-summary',
+			self::ABILITIES[4],
 			array(
 				'label'               => __( 'WPIS stats summary', 'wpis-core' ),
 				'description'         => __( 'Aggregate quote counts by status, sentiment and claim type.', 'wpis-core' ),
-				'category'            => 'wpis',
+				'category'            => self::ABILITY_CATEGORY,
 				'input_schema'        => array(
 					'type' => 'object',
 				),
