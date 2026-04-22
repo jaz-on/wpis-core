@@ -90,6 +90,7 @@ final class Plugin {
 		\WPIS\Core\Shortcodes\ComponentsShowcaseShortcode::register();
 		\WPIS\Core\Shortcodes\QuoteCardShortcodes::register();
 		\WPIS\Core\Shortcodes\FeedControlsShortcode::register();
+		\WPIS\Core\Shortcodes\SubcatNavShortcode::register();
 		\WPIS\Core\Submission\SubmissionHandler::register();
 		\WPIS\Core\Submission\SubmitFormRenderer::register();
 		\WPIS\Core\Submission\CronCleanup::register();
