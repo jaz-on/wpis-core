@@ -48,6 +48,10 @@ if ( version_compare( PHP_VERSION, '8.2.0', '<' ) ) {
 }
 
 if ( $wpis_core_loaded ) {
+	if ( ! defined( 'WPIS_CORE_PLUGIN_FILE' ) ) {
+		define( 'WPIS_CORE_PLUGIN_FILE', __FILE__ );
+	}
+
 	/**
 	 * Recommend WordPress 6.9+ for Abilities API; still load CPT, taxonomies, and submission
 	 * even if abilities are unavailable (avoid bailing before Plugin registers).

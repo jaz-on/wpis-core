@@ -7,6 +7,7 @@
 
 namespace WPIS\Core;
 
+use WPIS\Core\Admin\PluginListLinks;
 use WPIS\Core\Admin\QuoteAdminColumns;
 use WPIS\Core\Meta\QuoteMeta;
 use WPIS\Core\PostTypes\QuotePostType;
@@ -59,6 +60,7 @@ final class Plugin {
 		if ( ! is_admin() ) {
 			return;
 		}
+		PluginListLinks::register();
 		QuoteAdminColumns::register();
 	}
 
