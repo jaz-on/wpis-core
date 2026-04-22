@@ -42,6 +42,7 @@ final class QuoteAdminColumns {
 				// Sentiment & claim type use core taxonomy columns (show_admin_column on each taxonomy).
 				$new['wpis_counter']           = __( 'Counter', 'wpis-core' );
 				$new['wpis_source_platform']   = __( 'Platform', 'wpis-core' );
+				$new['wpis_source_lang']       = __( 'Source lang.', 'wpis-core' );
 				$new['wpis_submission_source'] = __( 'Submission', 'wpis-core' );
 			}
 		}
@@ -63,6 +64,10 @@ final class QuoteAdminColumns {
 				break;
 			case 'wpis_source_platform':
 				$v = get_post_meta( $post_id, '_wpis_source_platform', true );
+				echo esc_html( $v ? (string) $v : '–' );
+				break;
+			case 'wpis_source_lang':
+				$v = get_post_meta( $post_id, '_wpis_source_language', true );
 				echo esc_html( $v ? (string) $v : '–' );
 				break;
 			case 'wpis_submission_source':

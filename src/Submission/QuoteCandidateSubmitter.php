@@ -33,10 +33,11 @@ final class QuoteCandidateSubmitter {
 	 *     @type string $text              Quote body.
 	 *     @type string $submission_source One of Constants::SUBMISSION_SOURCES.
 	 *     @type string $source_platform   One of Constants::SOURCE_PLATFORMS.
-	 *     @type string $lang              Dedup language hint. Default en.
-	 *     @type int    $dedup_threshold   0-100. Default 70.
-	 *     @type string $source_url        Optional canonical URL.
-	 *     @type string $polylang_slug     Optional Polylang language slug.
+	 *     @type string $lang                Dedup language hint. Default en.
+	 *     @type int    $dedup_threshold     0-100. Default 70.
+	 *     @type string $source_url          Optional canonical URL.
+	 *     @type string $polylang_slug      Optional Polylang language slug.
+	 *     @type string $source_language     Optional BCP-47 or short code. With `text`, used for the EN pivot; stored when not English.
 	 * }
 	 * @return array{result: string, post_id?: int, error?: string}
 	 */
@@ -55,6 +56,9 @@ final class QuoteCandidateSubmitter {
 		$dedup_threshold   = isset( $args['dedup_threshold'] ) ? max( 0, min( 100, (int) $args['dedup_threshold'] ) ) : 70;
 		$source_url        = isset( $args['source_url'] ) ? esc_url_raw( (string) $args['source_url'] ) : '';
 		$polylang_slug     = isset( $args['polylang_slug'] ) ? sanitize_key( (string) $args['polylang_slug'] ) : '';
+		$source_language   = isset( $args['source_language'] ) && '' !== (string) $args['source_language']
+			? sanitize_key( (string) $args['source_language'] )
+			: $lang;
 
 		if ( ! in_array( $submission_source, Constants::SUBMISSION_SOURCES, true ) ) {
 			return array(
@@ -74,7 +78,33 @@ final class QuoteCandidateSubmitter {
 			return array( 'result' => self::RESULT_SKIPPED_EMPTY );
 		}
 
-		$len = function_exists( 'mb_strlen' ) ? mb_strlen( $text, 'UTF-8' ) : strlen( $text );
+		$raw_len = function_exists( 'mb_strlen' ) ? mb_strlen( $text, 'UTF-8' ) : strlen( $text );
+		if ( $raw_len > self::BODY_MAX_CHARS ) {
+			return array( 'result' => self::RESULT_SKIPPED_LONG );
+		}
+
+		$context = array(
+			'submission_source' => $submission_source,
+			'source_platform'   => $source_platform,
+			'source_url'        => $source_url,
+		);
+		$body    = $text;
+		if ( ! self::is_english_source( $source_language ) ) {
+			/**
+			 * Return English body text for a non-English candidate. Default: unchanged (no paid API in core).
+			 *
+			 * @param string               $text         Trimmed source text.
+			 * @param string               $source_lang  Normalized key (e.g. fr, de).
+			 * @param array<string, mixed> $context     submission_source, source_platform, source_url.
+			 */
+			$body = (string) apply_filters( 'wpis_bot_translate_to_english', $text, $source_language, $context );
+		}
+		$body = trim( preg_replace( '/\s+/u', ' ', $body ) ?? '' );
+		if ( '' === $body ) {
+			return array( 'result' => self::RESULT_SKIPPED_EMPTY );
+		}
+
+		$len = function_exists( 'mb_strlen' ) ? mb_strlen( $body, 'UTF-8' ) : strlen( $body );
 		if ( $len > self::BODY_MAX_CHARS ) {
 			return array( 'result' => self::RESULT_SKIPPED_LONG );
 		}
@@ -93,8 +123,8 @@ final class QuoteCandidateSubmitter {
 			);
 		}
 
-		$title = self::title_from_text( $text );
-		$body  = self::truncate_body( $text, self::BODY_MAX_CHARS );
+		$title = self::title_from_text( $body );
+		$body  = self::truncate_body( $body, self::BODY_MAX_CHARS );
 
 		$post_id = wp_insert_post(
 			array(
@@ -135,6 +165,11 @@ final class QuoteCandidateSubmitter {
 			}
 		}
 
+		if ( ! self::is_english_source( $source_language ) ) {
+			update_post_meta( $post_id, '_wpis_source_language', $source_language );
+			update_post_meta( $post_id, '_wpis_original_text', $text );
+		}
+
 		/**
 		 * Fires after a programmatic quote candidate was stored as pending.
 		 *
@@ -146,6 +181,23 @@ final class QuoteCandidateSubmitter {
 			'result'  => self::RESULT_CREATED,
 			'post_id' => $post_id,
 		);
+	}
+
+	/**
+	 * BCP-47 / short code: treat "en" and tags starting with "en-" as English.
+	 *
+	 * @param string $code Sanitized key or BCP-47 style tag.
+	 * @return bool
+	 */
+	private static function is_english_source( string $code ): bool {
+		if ( '' === $code ) {
+			return true;
+		}
+		$c = str_replace( '_', '-', strtolower( $code ) );
+		if ( 'en' === $c ) {
+			return true;
+		}
+		return str_starts_with( $c, 'en-' );
 	}
 
 	/**

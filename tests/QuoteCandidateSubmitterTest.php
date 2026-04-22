@@ -66,4 +66,23 @@ class QuoteCandidateSubmitterTest extends \WP_UnitTestCase {
 		$this->assertSame( 'bot-mastodon', get_post_meta( $post->ID, '_wpis_submission_source', true ) );
 		$this->assertSame( 'mastodon', get_post_meta( $post->ID, '_wpis_source_platform', true ) );
 	}
+
+	public function test_submit_stores_source_meta_for_non_english(): void {
+		$text = 'WordPress is PHPUnit fr ' . wp_generate_password( 8, false, false );
+		$r    = wpis_submit_quote_candidate(
+			array(
+				'text'              => $text,
+				'submission_source' => 'bot-mastodon',
+				'source_platform'   => 'mastodon',
+				'lang'              => 'fr',
+				'source_language'   => 'fr',
+			)
+		);
+		$this->assertSame( QuoteCandidateSubmitter::RESULT_CREATED, $r['result'] );
+		$post_id = (int) $r['post_id'];
+		$this->assertSame( 'fr', get_post_meta( $post_id, '_wpis_source_language', true ) );
+		$this->assertSame( $text, get_post_meta( $post_id, '_wpis_original_text', true ) );
+		$post = get_post( $post_id );
+		$this->assertStringContainsString( 'WordPress is PHPUnit', (string) $post->post_content );
+	}
 }

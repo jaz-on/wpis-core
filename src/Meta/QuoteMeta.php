@@ -133,6 +133,30 @@ final class QuoteMeta {
 
 		register_post_meta(
 			QuotePostType::POST_TYPE,
+			'_wpis_source_language',
+			array(
+				'type'              => 'string',
+				'single'            => true,
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'sanitize_key',
+				'auth_callback'     => $auth,
+			)
+		);
+
+		register_post_meta(
+			QuotePostType::POST_TYPE,
+			'_wpis_original_text',
+			array(
+				'type'              => 'string',
+				'single'            => true,
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'sanitize_textarea_field',
+				'auth_callback'     => $auth,
+			)
+		);
+
+		register_post_meta(
+			QuotePostType::POST_TYPE,
 			'_wpis_opposing_quote_id',
 			array(
 				'type'              => 'integer',

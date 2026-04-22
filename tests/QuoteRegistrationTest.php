@@ -50,6 +50,8 @@ class QuoteRegistrationTest extends \WP_UnitTestCase {
 			'_wpis_moderated_at',
 			'_wpis_ai_snapshot',
 			'_wpis_submission_source',
+			'_wpis_source_language',
+			'_wpis_original_text',
 			'_wpis_opposing_quote_id',
 			'_wpis_editorial_note',
 		);
