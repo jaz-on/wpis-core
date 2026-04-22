@@ -21,9 +21,20 @@ final class CronCleanup {
 	 */
 	public static function register(): void {
 		add_action( self::CRON_HOOK, array( self::class, 'run' ) );
-		if ( ! wp_next_scheduled( self::CRON_HOOK ) ) {
-			wp_schedule_event( time() + HOUR_IN_SECONDS, 'daily', self::CRON_HOOK );
+		// Defer scheduling until core is ready (avoids issues during plugin activation and early load).
+		add_action( 'wp_loaded', array( self::class, 'maybe_schedule' ) );
+	}
+
+	/**
+	 * Register the daily cleanup event once.
+	 *
+	 * @return void
+	 */
+	public static function maybe_schedule(): void {
+		if ( wp_next_scheduled( self::CRON_HOOK ) ) {
+			return;
 		}
+		wp_schedule_event( time() + HOUR_IN_SECONDS, 'daily', self::CRON_HOOK );
 	}
 
 	/**

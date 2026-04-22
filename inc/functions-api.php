@@ -51,3 +51,13 @@ function wpis_find_potential_duplicates( string $text, string $lang = 'en', int 
 function wpis_get_user_stats( int $user_id ): array {
 	return \WPIS\Core\User\UserStats::get( $user_id );
 }
+
+/**
+ * Submit a quote candidate (bot, extension, CLI): deduplicate or create pending quote.
+ *
+ * @param array<string, mixed> $args See \WPIS\Core\Submission\QuoteCandidateSubmitter::submit().
+ * @return array{result: string, post_id?: int, error?: string}
+ */
+function wpis_submit_quote_candidate( array $args ): array {
+	return \WPIS\Core\Submission\QuoteCandidateSubmitter::submit( $args );
+}

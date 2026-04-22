@@ -7,6 +7,7 @@
 
 namespace WPIS\Core;
 
+use WPIS\Core\PostTypes\QuotePostType;
 use WPIS\Core\Taxonomies\ClaimTypeTaxonomy;
 use WPIS\Core\Taxonomies\SentimentTaxonomy;
 
