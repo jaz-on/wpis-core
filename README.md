@@ -47,13 +47,11 @@ composer lint
 
 Use the full `composer install` (with dev) locally for PHPCS and PHPUnit. Before pushing to `main`, refresh the committed production tree with `composer install --no-dev --optimize-autoloader` whenever autoload inputs changed.
 
-## Theme contract
-
-FSE block theme `wpis-theme` (separate path in the monorepo) expects the `quote` CPT, taxonomies, and REST rules documented in [docs/THEME-API-CONTRACT.md](docs/THEME-API-CONTRACT.md). If you add breaking URL or `register_post_type` changes, update that file and coordinate with the theme.
+Internal architecture notes, API hand-offs and Cursor rules are kept **outside** this repository (for example a local `.doc/` or `.cursor/` folder on your machine).
 
 ## Optional: Relevanssi (site search)
 
-Install [Relevanssi](https://wordpress.org/plugins/relevanssi/) as a normal plugin. This repo includes a small integration that keeps internal `_wpis_*` meta out of the search index. Admin steps: [docs/RELEVANSSI.md](docs/RELEVANSSI.md).
+Install [Relevanssi](https://wordpress.org/plugins/relevanssi/) as a normal plugin. This package includes a small integration that keeps internal `_wpis_*` meta out of the search index when Relevanssi is active.
 
 ## License
 
