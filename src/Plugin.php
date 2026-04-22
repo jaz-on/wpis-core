@@ -84,6 +84,7 @@ final class Plugin {
 	 */
 	private function register_front_features(): void {
 		\WPIS\Core\Submission\SubmissionHandler::register();
+		\WPIS\Core\Submission\SubmitFormRenderer::register();
 		\WPIS\Core\Submission\CronCleanup::register();
 		\WPIS\Core\REST\RestRegistrar::register();
 		\WPIS\Core\REST\QuoteFeedEndpoint::register();
