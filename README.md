@@ -2,7 +2,7 @@
 
 Core plugin for the [WordPress Is…](https://wpis.jasonrouet.com) project: the `quote` post type, taxonomies, merge and deduplication logic, public submission handling, REST endpoints and [Git Updater](https://git-updater.com/)–compatible metadata for installs that track this repository.
 
-**Repo name on GitHub:** [`jaz-on/wpis-core`](https://github.com/jaz-on/wpis-core) (was `jaz-on/wpis-plugin` — [rename the GitHub repo](https://docs.github.com/en/repositories/creating-and-managing-repositories/renaming-a-repository) to match if yours still uses the old slug).
+**Repository on GitHub:** [`jaz-on/wpis-core`](https://github.com/jaz-on/wpis-core).
 
 ### Monorepo and the canonical repository
 
