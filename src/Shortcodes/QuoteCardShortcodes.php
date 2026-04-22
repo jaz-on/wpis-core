@@ -60,9 +60,18 @@ final class QuoteCardShortcodes {
 		if ( $count < 0 ) {
 			$count = 0;
 		}
-		$count_badge = '<span class="wpis-count-badge is-style-wpis-count-badge">×' . esc_html( (string) $count ) . '</span>';
+		$count_label = sprintf(
+			/* translators: %d: number of times this claim has been repeated across platforms */
+			_n( 'repeated %d time', 'repeated %d times', $count, 'wpis-core' ),
+			$count
+		);
+		$count_badge = sprintf(
+			'<span class="wpis-count-badge is-style-wpis-count-badge" aria-label="%1$s"><span aria-hidden="true">&times;%2$s</span></span>',
+			esc_attr( $count_label ),
+			esc_html( (string) $count )
+		);
 
-		return $claim_tags . $count_badge;
+		return $claim_tags . ' ' . $count_badge;
 	}
 
 	/**
@@ -262,7 +271,16 @@ final class QuoteCardShortcodes {
 			$meta .= '<span class="wpis-claim-tag is-style-wpis-claim-tag">' . esc_html( $claims ) . '</span>';
 		}
 		if ( $count > 0 ) {
-			$meta .= '<span class="wpis-count-badge is-style-wpis-count-badge">×' . esc_html( (string) $count ) . '</span>';
+			$count_label = sprintf(
+				/* translators: %d: number of times this claim has been repeated across platforms */
+				_n( 'repeated %d time', 'repeated %d times', $count, 'wpis-core' ),
+				$count
+			);
+			$meta .= sprintf(
+				' <span class="wpis-count-badge is-style-wpis-count-badge" aria-label="%1$s"><span aria-hidden="true">&times;%2$s</span></span>',
+				esc_attr( $count_label ),
+				esc_html( (string) $count )
+			);
 		}
 		if ( ! empty( $platforms ) ) {
 			$meta .= '<span>' . esc_html(
