@@ -54,7 +54,10 @@ final class SubmitFormRenderer {
 			</div>
 			<div class="form-group">
 				<label for="wpis_screenshot"><?php esc_html_e( 'Or upload a screenshot', 'wpis-core' ); ?></label>
-				<input type="file" id="wpis_screenshot" name="wpis_screenshot" accept="image/*" />
+				<label class="upload-zone" for="wpis_screenshot">
+					<span><?php esc_html_e( 'Drop a screenshot or click to choose a file.', 'wpis-core' ); ?></span>
+					<input type="file" id="wpis_screenshot" name="wpis_screenshot" accept="image/*" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;" />
+				</label>
 				<div class="hint"><?php esc_html_e( '→ We will extract the text automatically. The image is deleted after validation.', 'wpis-core' ); ?></div>
 			</div>
 			<div class="form-group">
@@ -73,6 +76,7 @@ final class SubmitFormRenderer {
 				</label>
 			</p>
 			<button type="submit" class="btn-primary"><?php esc_html_e( 'Submit this quote', 'wpis-core' ); ?></button>
+			<span class="queue-indicator"><?php esc_html_e( 'Typically reviewed within 48 hours.', 'wpis-core' ); ?></span>
 		</form>
 		<?php
 		return (string) ob_get_clean();
